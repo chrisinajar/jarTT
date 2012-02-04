@@ -1,0 +1,10 @@
+jarTT is a tunrtable.fm modification written in Javascript.
+
+It was invented dominantly as a performance optimization due to the large number of users in the Coding Soundtrack room. The first of which is a mode that disabled rotation transformations on the bopping animation. It makes things look slightly less dynamic but speeds things up quite a lot.
+
+The other mode, which i prefer, is hiding the audience. It's amazing what hiding 100+ animated divs can do.
+
+There's also a built in autobop and a Will Smith mode.
+
+
+This mod supports being unloaded, it cleans up all event handlers and removes all dom elements added and unsets it's global variable. Loading the mod more than once will make it automatically unload the old version.
