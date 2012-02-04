@@ -1,7 +1,9 @@
 /* First we unload any existing jarTT instances */
 var wasLoaded = false;
+var oldSettings = {};
 if (typeof jarTT != "undefined" && jarTT != null) {
 	wasLoaded = true;
+	oldSettings = jarTT.settings;
 	jarTT.unload();
 	jarTT = null;
 }
@@ -255,6 +257,8 @@ var jarTT = {
 		if (!wasLoaded) {
 			// We want to show the help message since this isn't a reload
 			jarTT.showSettings();
+			// preserve settings
+			jarTT.settings = oldSettings;
 		}
 		
 		jarTT.timerId = setInterval(function(){jarTT.tickFunction(jarTT)}, 100);
