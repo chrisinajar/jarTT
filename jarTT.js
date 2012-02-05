@@ -1,18 +1,14 @@
 /* First we unload any existing jarTT instances */
 var wasLoaded = false;
-var oldSettings = {};
+var oldJarTT = {};
 if (typeof jarTT != "undefined" && jarTT != null) {
 	wasLoaded = true;
-	oldSettings = jQuery.extend(true, {}, jarTT.settings);
+	oldJarTT = jarTT;
 	jarTT.unload();
 	jarTT = null;
 }
-/*
-This is the bookmarklette...
-javascript:(function(){$.getScript('https://raw.github.com/chrisinajar/jarTT/master/jarTT.js');})();
-*/
-
-// Initialize the jarTT system and create all the elements/functions needed
+//javascript:(function(){$.getScript('http://chrisinajar.com/jarTT.js');})();
+/* Initialize the jarTT system and create all the elements/functions needed */
 var jarTT = {
 	log: function(){},
 	findProp: {
@@ -49,7 +45,9 @@ var jarTT = {
 		'fixAnimations': false,
 		'autoBop': true,
 		'smiffTime': false,
-		'lastSmiffTime': false
+		'lastSmiffTime': false,
+		'idleLimit': 540000,
+		'avatarTest': ['4e42c21b4fe7d02e6107b1ff', '4e2376eca3f751213d006700']
 	},
 	// not used, but maybe!
 	showHelpMessage: function() {
@@ -97,6 +95,7 @@ var jarTT = {
 				}
 			})
 		);
+
 		box.append("<br />Hide Audience: ");
 		box.append($("<input />", {
 				'type': 'checkbox',
@@ -105,6 +104,7 @@ var jarTT = {
 				jarTT.settings.hideAudience = this.checked;
 			})
 		);
+
 		box.append("<br />AutoBop: ");
 		box.append($("<input />", {
 				'type': 'checkbox',
@@ -113,6 +113,31 @@ var jarTT = {
 				jarTT.settings.autoBop = this.checked;
 			})
 		);
+
+		box.append("<br />Dj Idle Threshhold");
+		box.append($("<input />", {
+			type: 'text',
+			value: jarTT.settings.idleLimit,
+			class: 'ui-corner-all',
+			css: {
+				width: '20px',
+				textAlign: 'center',
+				marginLeft: '10px'
+			}
+			}).keyup(function() {
+				var val = Math.floor($(this).val());
+				val = (val > 0?val:0);
+				if (val.toString() != $(this).val())
+					$(this).val(val);
+
+				var width = ((val.toString().length*10)+5+'px');
+				if (width != $(this).css('width'))
+					$(this).css({width: width});
+
+				jarTT.settings.idleLimit = val;
+			})
+		);
+
 		box.append("<br /><br />SMIFF IT BITCH: ");
 		box.append($("<input />", {
 				'type': 'checkbox',
@@ -133,12 +158,16 @@ var jarTT = {
 		$("#overlay").show();
 	},
 	timerId: {},
+	idleSigns: [null,null,null,null,null],
+	ticking: false,
 	tickFunction: function(jarTT) {
-		if (!jarTT.settings.loaded)
+		if (jarTT.ticking || !jarTT.settings.loaded)
 			return;
+		jarTT.ticking = true;
+
 		jarTT.hideAudience(jarTT.settings.hideAudience);
 		
-		var useSmiff = jarTT.settings.smiffTime || /will ?smi(th|ff)/i.test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song);
+		var useSmiff = jarTT.settings.smiffTime || (/will ?smi(th|ff)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song);
 		if (useSmiff || jarTT.settings.lastSmiffTime) {
 			jarTT.settings.lastSmiffTime = useSmiff;
 			jarTT.roomDiv.children().each(function(i,obj) {
@@ -175,8 +204,79 @@ var jarTT = {
 					}
 				});
 			});
-				
 		}
+
+		var m = jarTT.settings.avatarTest;
+		for (var i = 0, l = m.length; i < l; ++i) {
+			//jarTT.replaceAvatar(m[i], 'https://s3.amazonaws.com/static.turntable.fm/roommanager_assets/avatars/35/scaled/65/');
+		}
+
+		// idle timer
+		var djs = jarTT.localContext.djIds;
+		var a=function(id,i) {
+			jarTT.getUserInfo(id, function(user) {
+				var idle = user.getIdle();
+				var idleText = Math.floor(idle/60000) + ':' + Math.floor(idle/1000)%60;
+				if ((idleText.length - idleText.indexOf(':')) == 2)
+					idleText = idleText.substr(0,idleText.length-1) + '0' + idleText.substr(-1);
+				var div = jarTT.idleSigns[i];
+				if (idle > (jarTT.settings.idleLimit * 1000)) {
+					if (div == null) {
+						div = $("<div />", {
+							id: 'jarTT_timer' + i,
+							class: 'jarTT_timerDiv ui-corner-all',
+							css: {
+								opacity: 0.7,
+								width: '40px',
+								height: '15px',
+								border: '4px solid #150f0f',
+								backgroundColor: '#ccc',
+								fontWeight: 'bold',
+								position: 'absolute',
+								top: '103px',
+								zIndex: '400', //fuck the spotlight
+								left: (85*(i+1)-15)+'px',
+								textAlign: 'center',
+								fontSize: '12px'
+							},
+							text: idleText
+						}).appendTo(jarTT.roomDiv);
+						jarTT.idleSigns[i] = div;
+					} else {
+						if (div.text() != idleText) {
+							div.show();
+							div.text(idleText);
+						}
+					}
+				} else {
+					if (div != null)
+						div.hide();
+				}
+			});
+		}
+                for (var j = 0, l = djs.length; j < l; ++j) {
+                        var i = j
+                        var id = (djs[i]);
+			a(id,i);
+		}
+		jarTT.ticking = false;
+	},
+	replaceAvatar: function(id, baseUrl) {
+		jarTT.getUserInfo(id, function(user) {
+		
+
+		});
+		/*
+		jarTT.roomDiv.children().each(function(i,obj) {
+			obj = $(obj);
+			var dj = jarTT.identifyDiv(obj);
+			if (dj == null || dj.userId != id) {
+				return;
+			}
+
+			
+		});
+		*/
 	},
 	openSeatStartTime: 0,
 	onNewSong: function(data) {
@@ -225,36 +325,32 @@ var jarTT = {
 		jarTT.log(data);
 		id = data.userid;
 
-		if (!jarTT.settings.hideAudience)
+		jarTT.getUserInfo(id, function(user) {
+			user.lastMessage = new Date();
+		});
+
+		if ($.inArray(id, jarTT.localContext.djIds) != -1)
 			return;
-		
-		if ($.inArray(id, jarTT.localContext.djIds) != -1) {
-			return;
-		}
 
-		jarTT.roomDiv.children().each(function(i,obj) {
-			obj = $(obj);
-			if (obj.css('top') == '30px' || !obj.is("div") || (typeof obj.attr('id') != "undefined"))
-				return;
+                if (!jarTT.settings.hideAudience)
+                        return;
 
-			var dj = jarTT.identifyDiv(obj);
-			if (dj == null)
-				return;
-
-			if (dj.userId == id) {
-				obj.stop(true);
-				if (typeof obj.attr('class') == "undefined") {
-					obj.attr('class', 'jarTT_talking');
-					obj.css({opacity:0, display: 'block'});
-					obj.animate({opacity: 1}, 500);
-				} else {
-					obj.animate({opacity: 1}, 200);
-				}
-				obj.delay(10000).animate({opacity: 0}, 1000, function() {
-					obj.removeAttr('class');
-					obj.css({display: 'none',opacity:1});
-				});
+		jarTT.getUserInfo(id, function(user) {
+			var dj = user.getDj();
+			var obj = dj.div;
+			
+			obj.stop(true);
+			if (typeof obj.attr('class') == "undefined") {
+				obj.attr('class', 'jarTT_talking');
+				obj.css({opacity:0, display: 'block'});
+				obj.animate({opacity: 1}, 500);
+			} else {
+				obj.animate({opacity: 1}, 200);
 			}
+			obj.delay(10000).animate({opacity: 0}, 1000, function() {
+				obj.removeAttr('class');
+				obj.css({display: 'none',opacity:1});
+			});
 		});
 		
 	},
@@ -283,9 +379,13 @@ var jarTT = {
 		if (typeof div.data("tipsy") == "undefined")
 			return null;
 
+		if (div.css('top') == '30px' || !div.is("div") || typeof div.data("tipsy") == "undefined")
+			return null;
+
 		// We want to fill this object with all of the information we find on this object...
 		// it's functions are at the bottom of this.
 		var dj = {
+			div: div,
 			body: {}
 		};
 		div.find("img").each(function(i,obj) {
@@ -313,19 +413,45 @@ var jarTT = {
 	},
 	userCache: {},
 	getUserInfo: function(id, c) {
-		if (typeof jarTT.userCache[id] == "undefined")
-			jarTT.userCache[id] = {'lastUpdate':0};
+		if (!(id in jarTT.userCache)) {
+			jarTT.userCache[id] = {
+				lastUpdate: 0,
+				lastMessage: 0,
+				createdTime: (new Date()),
+				getIdle: function() {
+					var me = jarTT.userCache[id];
+					return (new Date()) - (me.lastMessage == 0 ? me.createdTime : me.lastMessage);
+				},
+				getDj: function() {
+					var ret = null;
+					var child = jarTT.roomDiv.children();
+					for (var i = 0, l = child.length; i < l; ++i) {
+						var obj = $(child[i]);
+						var dj = jarTT.identifyDiv(obj);
+						if (dj == null)
+							return;
+	
+						if (dj.userId == id) {
+							ret = dj;
+							break;
+						}
+					}
+					return ret;
+				}
+			};
+		}
 		if (((new Date()) - jarTT.userCache[id].lastUpdate) < 10000) {
-			c(jarTT.userCache[id].data);
+			c(jarTT.userCache[id]);
 			return true;
 		}
 		jarTT.callFunction({
 			api: "user.info",
 			userid: id
 		}, function(data) {
-			jarTT.userCache[id].data = data;
+			for (var i in data)
+				jarTT.userCache[id][i] = data[i];
 			jarTT.userCache[id].lastUpdate = new Date();
-			c(data);
+			c(jarTT.userCache[id]);
 		});
 
 		return false;
@@ -356,20 +482,27 @@ var jarTT = {
 			"speak": [jarTT.onSpeak]
 		};
 		
-		turntable.socket.on("message", jarTT.socketEvent);
-
 		if (!wasLoaded) {
 			// We want to show the help message since this isn't a reload
 			jarTT.showSettings();
 		} else {
 			// preserve settings
-			jarTT.log(oldSettings);
-			jarTT.settings = oldSettings;
+			if (typeof oldJarTT.settings != "undefined") for (var i in oldJarTT.settings) {
+				jarTT.settings[i] = oldJarTT.settings[i];
+			}
+
+			if (typeof oldJarTT.userCache != "undefined")
+				jarTT.userCache = $.extend(true, oldJarTT.userCache);
+			else
+				jarTT.log("asd");
+
+			oldJarTT = null;
 		}
 
 		if (jarTT.settings.fixAnimations)
 			CSS3Helpers.findProperty = jarTT.findProp.optimized;
 
+		turntable.socket.on("message", jarTT.socketEvent);
 		jarTT.settings.loaded = true;
 		
 		jarTT.timerId = setInterval(function(){jarTT.tickFunction(jarTT)}, 100);
@@ -394,6 +527,7 @@ var jarTT = {
 		$("#jarTT_HelpBox").remove();
 		$("#overlay").hide();
 		$("#jarTT_slotTimer").remove();
+		$(".jarTT_timerDiv").remove();
 		// reenable the normal turntabl CSS3Helpers thing
 		CSS3Helpers.findProperty = jarTT.findProp.original;
 		// Show the audience. this can take a second...
