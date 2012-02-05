@@ -225,7 +225,31 @@ var jarTT = {
 			jarTT.eventMap[data.command](data);
 		} else {
 			jarTT.log("Unkown message type (" + data.command + ")");
+			jarTT.log(data);
 		}
+	},
+	// girllookatthatbody
+	identifyDiv: function(div) {
+		div=$(div);
+		
+		// We want to fill this object with all of the information we find on this object...
+		// it's functions are at the bottom of this.
+		var dj = {
+			body: {}
+		};
+		div.find("img").each(function(i,obj) {
+			obj=$(obj);
+			var img = obj.attr('src');
+			var bodyPart = img.substr(1+img.lastIndexOf("/"));
+			bodyPart = bodyPart.substr(0,bodyPart.length-4);
+			jarTT.log(bodyPart);
+			dj.body[bodyPart] = obj;
+
+			
+		});
+
+		// I work out...
+		return dj;
 	},
 	load: function() {
 		if (window.console && console.log)
