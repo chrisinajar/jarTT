@@ -1,7 +1,9 @@
 /* First we unload any existing jarTT instances */
 var wasLoaded = false;
+var oldSettings = {};
 if (typeof jarTT != "undefined" && jarTT != null) {
 	wasLoaded = true;
+	oldSettings = jQuery.extend(true, {}, jarTT.settings);
 	jarTT.unload();
 	jarTT = null;
 }
@@ -38,7 +40,7 @@ var jarTT = {
 		});
 	},
 	settings: {
-		'loaded': true,
+		'loaded': false,
 		'hideAudience': false,
 		'fixAnimations': false,
 		'autoBop': true,
@@ -255,7 +257,13 @@ var jarTT = {
 		if (!wasLoaded) {
 			// We want to show the help message since this isn't a reload
 			jarTT.showSettings();
+		} else {
+			// preserve settings
+			jarTT.log(oldSettings);
+			jarTT.settings = oldSettings;
 		}
+
+		jarTT.settings.loaded = true;
 		
 		jarTT.timerId = setInterval(function(){jarTT.tickFunction(jarTT)}, 100);
 		jarTT.log("jarTT successfully loaded!");
