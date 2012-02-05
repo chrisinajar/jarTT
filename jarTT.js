@@ -222,7 +222,13 @@ var jarTT = {
 		if (!data.command || typeof data.command == "undefined")
 			return;
 		if (data.command in jarTT.eventMap) {
-			jarTT.eventMap[data.command](data);
+			if (jarTT.eventMap[data.command] instanceof Array) {
+				for (var i = 0; i < jarTT.eventMap[data.command].length; ++i) {
+					jarTT.eventMap[data.command][i](data);
+				}
+			} else {
+				jarTT.eventMap[data.command](data);
+			}
 		} else {
 			jarTT.log("Unkown message type (" + data.command + ")");
 			jarTT.log(data);
@@ -244,9 +250,10 @@ var jarTT = {
 			bodyPart = bodyPart.substr(0,bodyPart.length-4);
 			jarTT.log(bodyPart);
 			dj.body[bodyPart] = obj;
-
-			
 		});
+
+		// ok... so now we use the img object for the torso to find the event listeners... or at least we hope...
+		
 
 		// I work out...
 		return dj;
@@ -271,8 +278,8 @@ var jarTT = {
 		}
 
 		jarTT.eventMap = {
-			"newsong": jarTT.onNewSong,
-			"add_dj": jarTT.onDjAdd,
+			"newsong": [jarTT.onNewSong],
+			"add_dj": [jarTT.onDjAdd],
 			"rem_dj": jarTT.onDjRemove
 		};
 		
