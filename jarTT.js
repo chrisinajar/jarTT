@@ -134,7 +134,7 @@ var jarTT = {
 			return;
 		jarTT.hideAudience(jarTT.settings.hideAudience);
 		
-		var useSmiff = jarTT.settings.smiffTime || /will ?smi(th|ff)/i.test(turntable.JWoOYVpCBoX.currentSong.metadata.artist + turntable.JWoOYVpCBoX.currentSong.metadata.song);
+		var useSmiff = jarTT.settings.smiffTime || /will ?smi(th|ff)/i.test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song);
 		if (useSmiff || jarTT.settings.lastSmiffTime) {
 			jarTT.settings.lastSmiffTime = useSmiff;
 			jarTT.roomDiv.children().each(function(i,obj) {
@@ -217,6 +217,43 @@ var jarTT = {
 			}).fadeIn().delay(10000).fadeOut(1000, function(){$(this).remove();}).appendTo(jarTT.roomDiv);
 		}
 	},
+	onSpeak: function(data) {
+		jarTT.log(data);
+		id = data.userid;
+
+		if (!jarTT.settings.hideAudience)
+			return;
+		
+		if ($.inArray(id, jarTT.localContext.djIds) != -1) {
+			return;
+		}
+
+		jarTT.roomDiv.children().each(function(i,obj) {
+			obj = $(obj);
+			if (obj.css('top') == '30px' || !obj.is("div") || (typeof obj.attr('id') != "undefined"))
+				return;
+
+			var dj = jarTT.identifyDiv(obj);
+			if (dj == null)
+				return;
+
+			if (dj.userId == id) {
+				obj.stop(true);
+				if (typeof obj.attr('class') == "undefined") {
+					obj.attr('class', 'jarTT_talking');
+					obj.css({opacity:0, display: 'block'});
+					obj.animate({opacity: 1}, 500);
+				} else {
+					obj.animate({opacity: 1}, 200);
+				}
+				obj.delay(10000).animate({opacity: 0}, 1000, function() {
+					obj.removeAttr('class');
+					obj.css({display: 'none',opacity:1});
+				});
+			}
+		});
+		
+	},
 	eventMap: {},
 	socketEvent: function(event) {
 		var data = JSON.parse(event);
@@ -239,6 +276,9 @@ var jarTT = {
 	identifyDiv: function(div) {
 		div=$(div);
 		
+		if (typeof div.data("tipsy") == "undefined")
+			return null;
+
 		// We want to fill this object with all of the information we find on this object...
 		// it's functions are at the bottom of this.
 		var dj = {
@@ -253,7 +293,7 @@ var jarTT = {
 		});
 		
 		// important..
-		var matches = (new RegExp(",'([a-z0-9]+)'\\)\"><b>(.*)</b><br>([0-9,]+) DJ points<br>([0-9,]+) fans", "i")).exec(div.data("tipsy").getTitle());
+		var matches = (new RegExp(",'([a-z0-9]+)'\\)\"><b>(.*)</b><br>([0-9,]+) DJ points?<br>([0-9,]+) fan", "i")).exec(div.data("tipsy").getTitle());
 		dj.userId = matches[1];
 		dj.userName = matches[2];
 		dj.points = matches[3];
@@ -275,7 +315,7 @@ var jarTT = {
 			c(jarTT.userCache[id].data);
 			return true;
 		}
-		turntable.UeSGBsHSPp({
+		jarTT.callFunction({
 			api: "user.info",
 			userid: id
 		}, function(data) {
@@ -308,7 +348,8 @@ var jarTT = {
 		jarTT.eventMap = {
 			"newsong": [jarTT.onNewSong],
 			"add_dj": [jarTT.onDjAdd],
-			"rem_dj": jarTT.onDjRemove
+			"rem_dj": [jarTT.onDjRemove],
+			"speak": [jarTT.onSpeak]
 		};
 		
 		turntable.socket.on("message", jarTT.socketEvent);
@@ -356,6 +397,9 @@ var jarTT = {
 		
 		jarTT.log("jarTT successfully unloaded!");
 		jarTT = null;
-	}
+	},
+	// OBFUSCATORZZZZZ
+	localContext: turntable.JWoOYVpCBoX,
+	callFunction: turntable.UeSGBsHSPp
 };
 jarTT.load();
