@@ -134,8 +134,9 @@ var jarTT = {
 			return;
 		jarTT.hideAudience(jarTT.settings.hideAudience);
 		
-		if (jarTT.settings.smiffTime || jarTT.settings.lastSmiffTime) {
-			jarTT.settings.lastSmiffTime = jarTT.settings.smiffTime;
+		var useSmiff = jarTT.settings.smiffTime || /will ?smi(th|ff)/i.test(turntable.JWoOYVpCBoX.currentSong.metadata.artist + turntable.JWoOYVpCBoX.currentSong.metadata.song);
+		if (useSmiff || jarTT.settings.lastSmiffTime) {
+			jarTT.settings.lastSmiffTime = useSmiff;
 			jarTT.roomDiv.children().each(function(i,obj) {
 				obj = $(obj);
 				if (obj.css('display') == 'none' || obj.css('top') != '30px')
@@ -152,7 +153,7 @@ var jarTT = {
 						par.data('originalTop', par.css('top'));
 						par.data('originalMargin', par.css('marginTop'));
 					}
-					if (jarTT.settings.smiffTime) {
+					if (useSmiff) {
 						obj.attr('src', 'http://chrisinajar.com/headfront.png');
 						par.css({
 							'top': '-20px'
@@ -248,15 +249,42 @@ var jarTT = {
 			var img = obj.attr('src');
 			var bodyPart = img.substr(1+img.lastIndexOf("/"));
 			bodyPart = bodyPart.substr(0,bodyPart.length-4);
-			jarTT.log(bodyPart);
 			dj.body[bodyPart] = obj;
 		});
-
-		// ok... so now we use the img object for the torso to find the event listeners... or at least we hope...
 		
+		// important..
+		var matches = (new RegExp(",'([a-z0-9]+)'\\)\"><b>(.*)</b><br>([0-9,]+) DJ points<br>([0-9,]+) fans", "i")).exec(div.data("tipsy").getTitle());
+		dj.userId = matches[1];
+		dj.userName = matches[2];
+		dj.points = matches[3];
+		dj.fans = matches[4];
+
+		// functions!
+		dj.getUserInfo = function(callback) {
+			jarTT.getUserInfo(dj.userId, callback);
+		}
 
 		// I work out...
 		return dj;
+	},
+	userCache: {},
+	getUserInfo: function(id, c) {
+		if (typeof jarTT.userCache[id] == "undefined")
+			jarTT.userCache[id] = {'lastUpdate':0};
+		if (((new Date()) - jarTT.userCache[id].lastUpdate) < 10000) {
+			c(jarTT.userCache[id].data);
+			return true;
+		}
+		turntable.UeSGBsHSPp({
+			api: "user.info",
+			userid: id
+		}, function(data) {
+			jarTT.userCache[id].data = data;
+			jarTT.userCache[id].lastUpdate = new Date();
+			c(data);
+		});
+
+		return false;
 	},
 	load: function() {
 		if (window.console && console.log)
@@ -293,6 +321,9 @@ var jarTT = {
 			jarTT.log(oldSettings);
 			jarTT.settings = oldSettings;
 		}
+
+		if (jarTT.settings.fixAnimations)
+			CSS3Helpers.findProperty = jarTT.findProp.optimized;
 
 		jarTT.settings.loaded = true;
 		
