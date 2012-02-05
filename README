@@ -8,3 +8,9 @@ There's also a built in autobop and a Will Smith mode.
 
 
 This mod supports being unloaded, it cleans up all event handlers and removes all dom elements added and unsets it's global variable. Loading the mod more than once will make it automatically unload the old version.
+
+
+
+Highlight the following and drag it onto your bookmarks bar
+javascript:(function(){$.getScript('https://raw.github.com/chrisinajar/jarTT/master/jarTT.js');})();
+

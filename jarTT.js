@@ -7,8 +7,12 @@ if (typeof jarTT != "undefined" && jarTT != null) {
 	jarTT.unload();
 	jarTT = null;
 }
-//javascript:(function(){$.getScript('http://chrisinajar.com/jarTT.js');})();
-/* Initialize the jarTT system and create all the elements/functions needed */
+/*
+This is the bookmarklette...
+javascript:(function(){$.getScript('https://raw.github.com/chrisinajar/jarTT/master/jarTT.js');})();
+*/
+
+// Initialize the jarTT system and create all the elements/functions needed
 var jarTT = {
 	log: function(){},
 	findProp: {
