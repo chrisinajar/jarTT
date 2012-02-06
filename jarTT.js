@@ -118,9 +118,9 @@ var jarTT = {
 		box.append($("<input />", {
 			type: 'text',
 			value: jarTT.settings.idleLimit,
-			class: 'ui-corner-all',
+			'class': 'ui-corner-all',
 			css: {
-				width: '20px',
+				width: (jarTT.settings.idleLimit.toString().length*10)+5+'px',
 				textAlign: 'center',
 				marginLeft: '10px'
 			}
@@ -224,7 +224,7 @@ var jarTT = {
 					if (div == null) {
 						div = $("<div />", {
 							id: 'jarTT_timer' + i,
-							class: 'jarTT_timerDiv ui-corner-all',
+							'class': 'jarTT_timerDiv ui-corner-all',
 							css: {
 								opacity: 0.7,
 								width: '40px',
@@ -306,7 +306,7 @@ var jarTT = {
 			$("<div />", {
 				html: "<center>Slot was open for<br />" + (now - before) + "ms</center>",
 				id: "jarTT_slotTimer",
-				class: "ui-corner-all",
+				'class': "ui-corner-all",
 				css: {
 					backgroundColor: "white",
 					border: "1px solid black",
@@ -385,7 +385,7 @@ var jarTT = {
 		// We want to fill this object with all of the information we find on this object...
 		// it's functions are at the bottom of this.
 		var dj = {
-			div: div,
+			'div': div,
 			body: {}
 		};
 		div.find("img").each(function(i,obj) {
