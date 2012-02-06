@@ -6,6 +6,8 @@ The other mode, which i prefer, is hiding the audience. It's amazing what hiding
 
 There's also a built in autobop and a Will Smith mode.
 
+For those who care, there is also a configurable timer that shows idle time for dj's on the stand.
+
 
 This mod supports being unloaded, it cleans up all event handlers and removes all dom elements added and unsets it's global variable. Loading the mod more than once will make it automatically unload the old version.
 
