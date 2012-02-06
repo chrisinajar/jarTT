@@ -122,7 +122,8 @@ var jarTT = {
 			css: {
 				width: (jarTT.settings.idleLimit.toString().length*10)+5+'px',
 				textAlign: 'center',
-				marginLeft: '10px'
+				marginLeft: '5px',
+				marginRight: '5px'
 			}
 			}).keyup(function() {
 				var val = Math.floor($(this).val());
@@ -137,6 +138,7 @@ var jarTT = {
 				jarTT.settings.idleLimit = val;
 			})
 		);
+		box.append("seconds");
 
 		box.append("<br /><br />SMIFF IT BITCH: ");
 		box.append($("<input />", {
