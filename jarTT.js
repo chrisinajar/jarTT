@@ -167,7 +167,7 @@ var jarTT = {
 
 		jarTT.hideAudience(jarTT.settings.hideAudience);
 		
-		var useSmiff = jarTT.settings.smiffTime || (/will ?smi(th|ff)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song);
+		var useSmiff = jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/will ?smi(th|ff)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
 		if (useSmiff || jarTT.settings.lastSmiffTime) {
 			jarTT.settings.lastSmiffTime = useSmiff;
 			jarTT.roomDiv.children().each(function(i,obj) {
@@ -337,6 +337,8 @@ var jarTT = {
 
 		jarTT.getUserInfo(id, function(user) {
 			var dj = user.getDj();
+			if (dj == null)
+				return;
 			var obj = dj.div;
 			
 			obj.stop(true);
@@ -429,7 +431,7 @@ var jarTT = {
 						var obj = $(child[i]);
 						var dj = jarTT.identifyDiv(obj);
 						if (dj == null)
-							return;
+							continue;
 	
 						if (dj.userId == id) {
 							ret = dj;
@@ -555,12 +557,12 @@ var jarTT = {
 		}
 		var d = JSON.stringify(c);
 		if (turntable.socketVerbose) {
-			jarTT.log(util.nowStr() + " Preparing message " + d);
+			//jarTT.log(util.nowStr() + " Preparing message " + d);
 		}
 		var b = $.Deferred();
 		turntable.whenSocketConnected(function () {
 			if (turntable.socketVerbose) {
-				jarTT.log(util.nowStr() + " Sending message " + c.msgid + " to " + turntable.socket.host);
+				//jarTT.log(util.nowStr() + " Sending message " + c.msgid + " to " + turntable.socket.host);
 			}
 			if (turntable.socket.transport.type == "websocket") {
 				turntable.socketLog(turntable.socket.transport.sockets[0].id + ":<" + c.msgid);
