@@ -254,9 +254,9 @@ var jarTT = {
 				}
 			});
 		}
-                for (var j = 0, l = djs.length; j < l; ++j) {
-                        var i = j
-                        var id = (djs[i]);
+				for (var j = 0, l = djs.length; j < l; ++j) {
+						var i = j
+						var id = (djs[i]);
 			a(id,i);
 		}
 		jarTT.ticking = false;
@@ -332,8 +332,8 @@ var jarTT = {
 		if ($.inArray(id, jarTT.localContext.djIds) != -1)
 			return;
 
-                if (!jarTT.settings.hideAudience)
-                        return;
+				if (!jarTT.settings.hideAudience)
+						return;
 
 		jarTT.getUserInfo(id, function(user) {
 			var dj = user.getDj();
@@ -474,6 +474,10 @@ var jarTT = {
 			jarTT.callback = window[i].callback;
 			break;
 		}
+		for (i in turntable) if (turntable[i] && turntable[i].djIds) {
+			jarTT.localContext = turntable[i];
+			break;
+		}
 
 		jarTT.eventMap = {
 			"newsong": [jarTT.onNewSong],
@@ -537,7 +541,41 @@ var jarTT = {
 		jarTT = null;
 	},
 	// OBFUSCATORZZZZZ
-	localContext: turntable.JWoOYVpCBoX,
-	callFunction: turntable.UeSGBsHSPp
+	localContext: {},
+	callFunction: function (c, a) {
+		if (c.api == "room.now") {
+			return;
+		}
+		c.msgid = turntable.messageId;
+		turntable.messageId += 1;
+		c.clientid = turntable.clientId;
+		if (turntable.user.id && !c.userid) {
+			c.userid = turntable.user.id;
+			c.userauth = turntable.user.auth;
+		}
+		var d = JSON.stringify(c);
+		if (turntable.socketVerbose) {
+			jarTT.log(util.nowStr() + " Preparing message " + d);
+		}
+		var b = $.Deferred();
+		turntable.whenSocketConnected(function () {
+			if (turntable.socketVerbose) {
+				jarTT.log(util.nowStr() + " Sending message " + c.msgid + " to " + turntable.socket.host);
+			}
+			if (turntable.socket.transport.type == "websocket") {
+				turntable.socketLog(turntable.socket.transport.sockets[0].id + ":<" + c.msgid);
+			}
+			turntable.socket.send(d);
+			turntable.socketKeepAlive(true);
+			turntable.pendingCalls.push({
+				msgid: c.msgid,
+				handler: a,
+				deferred: b,
+				time: util.now()
+			});
+		});
+		return b.promise();
+	}
 };
 jarTT.load();
+
