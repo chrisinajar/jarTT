@@ -24,19 +24,21 @@ var jarTT = {
 	hideAudience: function(toggle) {
 		jarTT.roomDiv.children().each(function(i,obj) {
 			obj = $(obj);
-			if (toggle == (obj.css('display') == 'none'))
+			if (obj.children().length < 1)
 				return;
-			if (obj.css('top') == '30px' || !obj.is("div") || (typeof obj.attr('class') != "undefined") || (typeof obj.attr('id') != "undefined"))
+			var child = $(obj.children()[0]);
+			if (toggle == (child.css('display') == 'none'))
 				return;
-			if (obj.css('display') != 'none')
-				obj.data('jarTT_wasShown', true);
-			else if (typeof obj.data('jarTT_wasHidden') == "undefined")
-				obj.data('jarTT_wasShown', false);
+			if (jarTT.identifyDiv(obj) == null)//if (obj.css('top') == '30px' || !obj.is("div") || (typeof obj.attr('class') != "undefined") || (typeof obj.attr('id') != "undefined"))
+				return;
+
+			if (child.hasClass('jarTT_talking'))
+				return;
 			
 			if (toggle)
-				obj.hide();
+				child.hide();
 			else
-				obj.show();
+				child.show();
 		});
 	},
 	settings: {
@@ -334,27 +336,37 @@ var jarTT = {
 		if ($.inArray(id, jarTT.localContext.djIds) != -1)
 			return;
 
-				if (!jarTT.settings.hideAudience)
-						return;
+		if (!jarTT.settings.hideAudience)
+			return;
 
 		jarTT.getUserInfo(id, function(user) {
+			jarTT.log("doing my thing");
 			var dj = user.getDj();
+			jarTT.log(dj);
 			if (dj == null)
 				return;
 			var obj = dj.div;
+			jarTT.log("wtf");
+			var child = $(obj.children()[0])
+			jarTT.log(child);
+			jarTT.log("classy: " + (typeof child.attr('class')));
 			
-			obj.stop(true);
-			if (typeof obj.attr('class') == "undefined") {
-				obj.attr('class', 'jarTT_talking');
-				obj.css({opacity:0, display: 'block'});
-				obj.animate({opacity: 1}, 500);
-			} else {
-				obj.animate({opacity: 1}, 200);
+			child.stop(true);
+			if (typeof child.attr('class') == "undefined") {
+				child.attr('class', 'jarTT_talking');
+				child.css({opacity:1, display:'block'});
 			}
-			obj.delay(10000).animate({opacity: 0}, 1000, function() {
-				obj.removeAttr('class');
-				obj.css({display: 'none',opacity:1});
-			});
+			var tid = child.data('jarTT_speakTimer');
+			if (tid)
+				clearTimeout(tid);
+			
+			child.data('jarTT_speakTimer', setTimeout(function() {
+				child.animate({opacity: 0}, 1000, function() {
+					child.removeAttr('class');
+					child.hide();
+					child.css({opacity:1});
+				});
+			}, 10000));
 		});
 		
 	},
@@ -383,7 +395,7 @@ var jarTT = {
 		if (typeof div.data("tipsy") == "undefined")
 			return null;
 
-		if (div.css('top') == '30px' || !div.is("div") || typeof div.data("tipsy") == "undefined")
+		if (div.css('top') == '30px' || !div.is("div") || typeof div.attr("id") != "undefined" || typeof div.attr("class") != "undefined")
 			return null;
 
 		// We want to fill this object with all of the information we find on this object...
@@ -392,6 +404,7 @@ var jarTT = {
 			'div': div,
 			body: {}
 		};
+
 		div.find("img").each(function(i,obj) {
 			obj=$(obj);
 			var img = obj.attr('src');
@@ -462,7 +475,7 @@ var jarTT = {
 	},
 	load: function() {
 		if (window.console && console.log)
-			jarTT.log = function(msg){console.log(msg);};
+			jarTT.log = function(msg){/*console.log(msg);*/};
 		else
 			jarTT.log = function(msg){};
 		
