@@ -10,6 +10,16 @@ if (typeof jarTT != "undefined" && jarTT != null) {
 //javascript:(function(){$.getScript('http://chrisinajar.com/jarTT.js');})();
 /* Initialize the jarTT system and create all the elements/functions needed */
 var jarTT = {
+        settings: {
+                'loaded': false,
+                'hideAudience': false,
+                'fixAnimations': false,
+                'autoBop': true,
+                'smiffTime': false,
+                'lastSmiffTime': false,
+                'idleLimit': 300,
+                'avatarTest': ['4e42c21b4fe7d02e6107b1ff', '4e2376eca3f751213d006700']
+        },
 	log: function(){},
 	findProp: {
 		original: CSS3Helpers.findProperty,
@@ -40,16 +50,6 @@ var jarTT = {
 			else
 				child.show();
 		});
-	},
-	settings: {
-		'loaded': false,
-		'hideAudience': false,
-		'fixAnimations': false,
-		'autoBop': true,
-		'smiffTime': false,
-		'lastSmiffTime': false,
-		'idleLimit': 540000,
-		'avatarTest': ['4e42c21b4fe7d02e6107b1ff', '4e2376eca3f751213d006700']
 	},
 	// not used, but maybe!
 	showHelpMessage: function() {
@@ -352,10 +352,8 @@ var jarTT = {
 			jarTT.log("classy: " + (typeof child.attr('class')));
 			
 			child.stop(true);
-			if (typeof child.attr('class') == "undefined") {
-				child.attr('class', 'jarTT_talking');
-				child.css({opacity:1, display:'block'});
-			}
+			child.attr('class', 'jarTT_talking');
+			child.css({opacity:1, display:'block'});
 			var tid = child.data('jarTT_speakTimer');
 			if (tid)
 				clearTimeout(tid);
