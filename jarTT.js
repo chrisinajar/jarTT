@@ -60,7 +60,7 @@ l = function(name) {
 	//console.log("loading " + name);
 	$.getScript(jarTTBaseUrl + 'jarTT.' + name + '.js', function() {
 		//n();
-		setTimeout(n, 500);
+		setTimeout(n, 1500);
 	});
 }
 n();
