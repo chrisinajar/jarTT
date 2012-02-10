@@ -11,6 +11,8 @@ For those who care, there is also a configurable timer that shows idle time for 
 
 This mod supports being unloaded, it cleans up all event handlers and removes all dom elements added and unsets it's global variable. Loading the mod more than once will make it automatically unload the old version.
 
+--> The menu is in Settings. <--
+Stop asking me ------^
 
 
 Highlight the following and drag it onto your bookmarks bar
