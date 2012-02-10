@@ -3,6 +3,7 @@
 /* First we unload any existing jarTT instances */
 var wasLoaded = false;
 var oldJarTT = {};
+(function() {
 if (typeof jarTT != "undefined" && jarTT != null) {
 	wasLoaded = true;
 	oldJarTT = jarTT;
@@ -16,6 +17,8 @@ if (wasLoaded && typeof oldJarTT.settings.baseUrl != "undefined")
 else
 	jarTTBaseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
 
-$.getScript(jarTTBaseUrl + "jarTT.main.js", function() {
-	setTimeout("$.getScript('" + jarTTBaseUrl + "jarTT.events.js');", 100);
-});
+var a = function() {
+	$.getScript(jarTTBaseUrl + 'jarTT.events.js');
+}
+$.getScript(jarTTBaseUrl + "jarTT.main.js", a);
+})();
