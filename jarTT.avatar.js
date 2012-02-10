@@ -164,3 +164,4 @@ jarTT.getUserInfo = function(id, c) {
 };
 
 jarTT.avatars.load();
+

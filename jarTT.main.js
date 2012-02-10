@@ -150,6 +150,7 @@ var jarTT = {
 			return;
 		jarTT.ticking = true;
 
+		jarTT.events.dispatchEvent("jarTT_tick");
 		// idle timer
 		var djs = jarTT.localContext.djIds;
 		var a=function(id,i) {
