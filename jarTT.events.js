@@ -1,3 +1,8 @@
+jarTT.registerEvent = function(type, func) {
+	if (!(type in jarTT.eventMap))
+		jarTT.eventMap[type] = [];
+	jarTT.eventMap[type].push(func);
+};
 jarTT.events = {
 	load: function() {
 			jarTT.registerEvent("newsong", jarTT.events.onNewSong);

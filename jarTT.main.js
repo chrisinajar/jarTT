@@ -266,23 +266,6 @@ var jarTT = {
 		}
 		jarTT.ticking = false;
 	},
-	replaceAvatar: function(id, baseUrl) {
-		jarTT.getUserInfo(id, function(user) {
-		
-
-		});
-		/*
-		jarTT.roomDiv.children().each(function(i,obj) {
-			obj = $(obj);
-			var dj = jarTT.identifyDiv(obj);
-			if (dj == null || dj.userId != id) {
-				return;
-			}
-
-			
-		});
-		*/
-	},
 	openSeatStartTime: 0,
 	eventMap: {},
 	socketEvent: function(event) {
@@ -301,96 +284,6 @@ var jarTT = {
 			jarTT.log("Unkown message type (" + data.command + ")");
 			jarTT.log(data);
 		}
-	},
-	// girllookatthatbody
-	identifyDiv: function(div) {
-		div=$(div);
-		
-		if (typeof div.data("tipsy") == "undefined")
-			return null;
-
-		if (div.css('top') == '30px' || !div.is("div") || typeof div.attr("id") != "undefined" || typeof div.attr("class") != "undefined")
-			return null;
-
-		// We want to fill this object with all of the information we find on this object...
-		// it's functions are at the bottom of this.
-		var dj = {
-			'div': div,
-			body: {}
-		};
-
-		div.find("img").each(function(i,obj) {
-			obj=$(obj);
-			var img = obj.attr('src');
-			var bodyPart = img.substr(1+img.lastIndexOf("/"));
-			bodyPart = bodyPart.substr(0,bodyPart.length-4);
-			dj.body[bodyPart] = obj;
-		});
-		
-		// important..
-		var matches = (new RegExp(",'([a-z0-9]+)'\\)\"><b>(.*)</b><br>([0-9,]+) DJ points?<br>([0-9,]+) fan", "i")).exec(div.data("tipsy").getTitle());
-		dj.userId = matches[1];
-		dj.userName = matches[2];
-		dj.points = matches[3];
-		dj.fans = matches[4];
-
-		// functions!
-		dj.getUserInfo = function(callback) {
-			jarTT.getUserInfo(dj.userId, callback);
-		}
-
-		// I work out...
-		return dj;
-	},
-	userCache: {},
-	getUserInfo: function(id, c) {
-		if (!(id in jarTT.userCache)) {
-			jarTT.userCache[id] = {
-				lastUpdate: 0,
-				lastMessage: 0,
-				createdTime: (new Date()),
-				getIdle: function() {
-					var me = jarTT.userCache[id];
-					return (new Date()) - (me.lastMessage == 0 ? me.createdTime : me.lastMessage);
-				},
-				getDj: function() {
-					var ret = null;
-					var child = jarTT.roomDiv.children();
-					for (var i = 0, l = child.length; i < l; ++i) {
-						var obj = $(child[i]);
-						var dj = jarTT.identifyDiv(obj);
-						if (dj == null)
-							continue;
-	
-						if (dj.userId == id) {
-							ret = dj;
-							break;
-						}
-					}
-					return ret;
-				}
-			};
-		}
-		if (((new Date()) - jarTT.userCache[id].lastUpdate) < 10000) {
-			c(jarTT.userCache[id]);
-			return true;
-		}
-		jarTT.callFunction({
-			api: "user.info",
-			userid: id
-		}, function(data) {
-			for (var i in data)
-				jarTT.userCache[id][i] = data[i];
-			jarTT.userCache[id].lastUpdate = new Date();
-			c(jarTT.userCache[id]);
-		});
-
-		return false;
-	},
-	registerEvent: function(type, func) {
-		if (!(type in jarTT.eventMap))
-			jarTT.eventMap[type] = [];
-		jarTT.eventMap[type].push(func);
 	},
 	load: function() {
 		if (wasLoaded) {

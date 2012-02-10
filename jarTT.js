@@ -1,9 +1,16 @@
 // Just loads jarTT
 
+
 /* First we unload any existing jarTT instances */
 var wasLoaded = false;
 var oldJarTT = {};
 (function() {
+// These are dependancies. To add a new file, add it here, and list anything that needs to be loaded first (usually just main)
+var comp = {
+	'events': ['main'],
+	'avatar': ['main'],
+	'main': [],
+};
 if (typeof jarTT != "undefined" && jarTT != null) {
 	wasLoaded = true;
 	oldJarTT = jarTT;
@@ -17,8 +24,29 @@ if (wasLoaded && typeof oldJarTT.settings.baseUrl != "undefined")
 else
 	jarTTBaseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
 
-var a = function() {
-	$.getScript(jarTTBaseUrl + 'jarTT.events.js');
+var ld = [];
+var l = function(){};
+var n = function(){};
+
+n = function() {
+	for (tl in comp) if ($.inArray(tl, ld) == -1) {
+		l(tl);
+	}
 }
-$.getScript(jarTTBaseUrl + "jarTT.main.js", a);
+l = function(name) {
+	if (!isNaN(name))
+		return;
+	if ($.inArray(name, ld) != -1)
+		return;
+	for (r in comp[name]) {
+		r = comp[name][r];
+		if (isNaN(r) && $.inArray(r, ld) == -1) {
+			l(r);
+			return;
+		}
+	}
+	ld.push(name);
+	$.getScript(jarTTBaseUrl + 'jarTT.' + name + '.js', n);
+}
+n();
 })();
