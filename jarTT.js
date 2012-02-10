@@ -8,7 +8,7 @@ var oldJarTT = {};
 // These are dependancies. To add a new file, add it here, and list anything that needs to be loaded first (usually just main)
 var comp = {
 	'events': ['main'],
-	'avatar': ['main'],
+	'avatar': ['main', 'events'],
 	'main': [],
 };
 if (typeof jarTT != "undefined" && jarTT != null) {
@@ -27,8 +27,16 @@ else
 var ld = [];
 var l = function(){};
 var n = function(){};
-
+var i = 0;
+var s = 1;
+for (tl in comp) s++;
 n = function() {
+	i++;
+	if (i == s) {
+		// We're done
+		jarTT.events.dispatchEvent("jarTT_loaded");
+		return;
+	}
 	for (tl in comp) if ($.inArray(tl, ld) == -1) {
 		l(tl);
 	}
@@ -46,7 +54,12 @@ l = function(name) {
 		}
 	}
 	ld.push(name);
-	$.getScript(jarTTBaseUrl + 'jarTT.' + name + '.js', n);
+	//console.log("loading " + name);
+	$.getScript(jarTTBaseUrl + 'jarTT.' + name + '.js', function() {
+		//n();
+		setTimeout(n, 500);
+	});
 }
 n();
 })();
+

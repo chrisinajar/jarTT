@@ -32,26 +32,6 @@ var jarTT = {
 	},
 	settingsButton: {},
 	roomDiv: {},
-	hideAudience: function(toggle) {
-		jarTT.roomDiv.children().each(function(i,obj) {
-			obj = $(obj);
-			if (obj.children().length < 1)
-				return;
-			var child = $(obj.children()[0]);
-			if (toggle == (child.css('display') == 'none'))
-				return;
-			if (jarTT.identifyDiv(obj) == null)//if (obj.css('top') == '30px' || !obj.is("div") || (typeof obj.attr('class') != "undefined") || (typeof obj.attr('id') != "undefined"))
-				return;
-
-			if (child.hasClass('jarTT_talking'))
-				return;
-			
-			if (toggle)
-				child.hide();
-			else
-				child.show();
-		});
-	},
 	// not used, but maybe!
 	showHelpMessage: function() {
 		var box = $("<div />", {
@@ -170,52 +150,6 @@ var jarTT = {
 			return;
 		jarTT.ticking = true;
 
-		jarTT.hideAudience(jarTT.settings.hideAudience);
-		
-		var useSmiff = jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/will ?smi(th|ff)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
-		if (useSmiff || jarTT.settings.lastSmiffTime) {
-			jarTT.settings.lastSmiffTime = useSmiff;
-			jarTT.roomDiv.children().each(function(i,obj) {
-				obj = $(obj);
-				if (obj.css('display') == 'none' || obj.css('top') != '30px')
-					return;
-				var par = $(obj.children()[0]);
-				obj.find("img").each(function(i,obj) {
-					obj = $(obj);
-					if (obj.css('display') == 'none')
-						return;
-					if (obj.attr('src').substr('-13') != "headfront.png")
-						return;
-					if (typeof obj.data('originalImage') == "undefined") {
-						obj.data('originalImage', obj.attr('src'));
-						par.data('originalTop', par.css('top'));
-						par.data('originalMargin', par.css('marginTop'));
-					}
-					if (useSmiff) {
-						obj.attr('src', 'http://chrisinajar.com/headfront.png');
-						par.css({
-							'top': '-20px'
-						});
-						// jitters
-						if (Math.random()>0.85)
-							par.css({'marginTop': ((Math.random()*4)-2) + 'px'});
-						
-					} else {
-						obj.attr('src', obj.data('originalImage'));
-						par.css({
-							'top': par.data('originalTop'),
-							'marginTop': par.data('originalMargin')
-						});
-					}
-				});
-			});
-		}
-
-		var m = jarTT.settings.avatarTest;
-		for (var i = 0, l = m.length; i < l; ++i) {
-			//jarTT.replaceAvatar(m[i], 'https://s3.amazonaws.com/static.turntable.fm/roommanager_assets/avatars/35/scaled/65/');
-		}
-
 		// idle timer
 		var djs = jarTT.localContext.djIds;
 		var a=function(id,i) {
@@ -259,32 +193,14 @@ var jarTT = {
 				}
 			});
 		}
-				for (var j = 0, l = djs.length; j < l; ++j) {
-						var i = j
-						var id = (djs[i]);
+		for (var j = 0, l = djs.length; j < l; ++j) {
+			var i = j
+			var id = (djs[i]);
 			a(id,i);
 		}
 		jarTT.ticking = false;
 	},
 	openSeatStartTime: 0,
-	eventMap: {},
-	socketEvent: function(event) {
-		var data = JSON.parse(event);
-		if (!data.command || typeof data.command == "undefined")
-			return;
-		if (data.command in jarTT.eventMap) {
-			if (jarTT.eventMap[data.command] instanceof Array) {
-				for (var i = 0; i < jarTT.eventMap[data.command].length; ++i) {
-					jarTT.eventMap[data.command][i](data);
-				}
-			} else {
-				jarTT.eventMap[data.command](data);
-			}
-		} else {
-			jarTT.log("Unkown message type (" + data.command + ")");
-			jarTT.log(data);
-		}
-	},
 	load: function() {
 		if (wasLoaded) {
 			// preserve settings
@@ -321,21 +237,6 @@ var jarTT = {
 			jarTT.localContext = turntable[i];
 			break;
 		}
-
-		if (jarTT.settings.fixAnimations)
-			CSS3Helpers.findProperty = jarTT.findProp.optimized;
-
-		turntable.socket.on("message", jarTT.socketEvent);
-		jarTT.settings.loaded = true;
-		
-		jarTT.timerId = setInterval(function(){jarTT.tickFunction(jarTT)}, 100);
-		
-		
-		if (!wasLoaded) {
-			// We want to show the help message since this isn't a reload
-			jarTT.showSettings();
-		}
-		jarTT.log("jarTT successfully loaded!");
 	},
 	unload: function() {
 		// Kill the ticker right away
@@ -346,9 +247,6 @@ var jarTT = {
 		jarTT.tickFunction(jarTT);
 		// disable loaded in case of accidental premature eventulation
 		jarTT.settings.loaded = false;
-
-		// unregister the event handler from whatever "socket" is
-		turntable.socket.removeEvent("message", jarTT.socketEvent);
 		
 		// clean up our ui shit
 		jarTT.settingsButton.remove();
@@ -359,8 +257,8 @@ var jarTT = {
 		$(".jarTT_timerDiv").remove();
 		// reenable the normal turntabl CSS3Helpers thing
 		CSS3Helpers.findProperty = jarTT.findProp.original;
-		// Show the audience. this can take a second...
-		jarTT.hideAudience(false);
+		
+		jarTT.events.dispatchEvent("jarTT_unloaded");
 		
 		jarTT.log("jarTT successfully unloaded!");
 		jarTT = null;
