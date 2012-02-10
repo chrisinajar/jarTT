@@ -15,6 +15,7 @@ if (wasLoaded && typeof oldJarTT.settings.baseUrl != "undefined")
 	jarTTBaseUrl = oldJarTT.settings.baseUrl;
 else
 	jarTTBaseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
-console.log(jarTTBaseUrl + "jarTT.main.js");
-$.getScript(jarTTBaseUrl + "jarTT.main.js");
-$.getScript(jarTTBaseUrl + "jarTT.events.js");
+
+$.getScript(jarTTBaseUrl + "jarTT.main.js", function() {
+	$.getScript(jarTTBaseUrl + "jarTT.events.js");
+});
