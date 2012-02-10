@@ -17,5 +17,5 @@ else
 	jarTTBaseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
 
 $.getScript(jarTTBaseUrl + "jarTT.main.js", function() {
-	$.getScript(jarTTBaseUrl + "jarTT.events.js");
+	setTimeout("$.getScript('" + jarTTBaseUrl + "jarTT.events.js');", 100);
 });
