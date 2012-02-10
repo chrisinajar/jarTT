@@ -46,13 +46,16 @@ l = function(name) {
 		return;
 	if ($.inArray(name, ld) != -1)
 		return;
+	var canGo = true;
 	for (r in comp[name]) {
 		r = comp[name][r];
 		if (isNaN(r) && $.inArray(r, ld) == -1) {
 			l(r);
-			return;
+			canGo = false;
 		}
 	}
+	if (!canGo)
+		return;
 	ld.push(name);
 	//console.log("loading " + name);
 	$.getScript(jarTTBaseUrl + 'jarTT.' + name + '.js', function() {
