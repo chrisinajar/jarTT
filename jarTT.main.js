@@ -6,7 +6,7 @@
  * javascript:(function(){$.getScript('https://raw.github.com/chrisinajar/jarTT/master/jarTT.js');})();
  *
  */
- 
+
 /* Initialize the jarTT system and create all the elements/functions needed */
 var jarTT = {
 	settings: {
@@ -21,7 +21,9 @@ var jarTT = {
 		'baseUrl': "https://raw.github.com/chrisinajar/jarTT/master/",
 		'avatarTest': ['4e42c21b4fe7d02e6107b1ff', '4e2376eca3f751213d006700']
 	},
-	log: function(){},
+	log: function(){
+		
+	},
 	findProp: {
 		original: CSS3Helpers.findProperty,
 		optimized: function(a,b){
@@ -30,118 +32,7 @@ var jarTT = {
 			return jarTT.findProp.original(a,b);
 		}
 	},
-	settingsButton: {},
 	roomDiv: {},
-	// not used, but maybe!
-	showHelpMessage: function() {
-		var box = $("<div />", {
-			'class': "modal",
-			'id': 'jarTT_HelpBox',
-			'css': {
-				'marginTop': '100px'
-			}
-		}).append($("<div />", {
-			'class': "close-x"
-		}).click(function() {
-			box.remove();
-			$("#overlay").hide();
-		}));
-		box.append("<h1>Welcome to jarTT</h1>");
-		box.appendTo($("#overlay"));
-		$("#overlay").show();
-	},
-	showSettings: function() {
-		var box = $("<div />", {
-			'class': "modal",
-			'id': 'jarTT_Settings',
-			'css': {
-				'marginTop': '100px'
-			}
-		}).append($("<div />", {
-				'class': "close-x"
-			}).click(function() {
-				box.remove();
-				$("#overlay").hide();
-			})
-		);
-		box.append("<h1>jarTT Settings</h1>");
-		box.append("<br />Speed up Animations: ");
-		box.append($("<input />", {
-				'type': 'checkbox',
-				'checked': jarTT.settings.fixAnimations
-			}).click(function() {
-				jarTT.settings.fixAnimations = this.checked;
-				if (this.checked) {
-					CSS3Helpers.findProperty = jarTT.findProp.optimized;
-				} else {
-					CSS3Helpers.findProperty = jarTT.findProp.original;
-				}
-			})
-		);
-
-		box.append("<br />Hide Audience: ");
-		box.append($("<input />", {
-				'type': 'checkbox',
-				'checked': jarTT.settings.hideAudience
-			}).click(function() {
-				jarTT.settings.hideAudience = this.checked;
-			})
-		);
-
-		box.append("<br />AutoBop: ");
-		box.append($("<input />", {
-				'type': 'checkbox',
-				'checked': jarTT.settings.autoBop
-			}).click(function() {
-				jarTT.settings.autoBop = this.checked;
-			})
-		);
-
-		box.append("<br />Dj Idle Threshhold");
-		box.append($("<input />", {
-			type: 'text',
-			value: jarTT.settings.idleLimit,
-			'class': 'ui-corner-all',
-			css: {
-				width: (jarTT.settings.idleLimit.toString().length*10)+5+'px',
-				textAlign: 'center',
-				marginLeft: '5px',
-				marginRight: '5px'
-			}
-			}).keyup(function() {
-				var val = Math.floor($(this).val());
-				val = (val > 0?val:0);
-				if (val.toString() != $(this).val())
-					$(this).val(val);
-
-				var width = ((val.toString().length*10)+5+'px');
-				if (width != $(this).css('width'))
-					$(this).css({width: width});
-
-				jarTT.settings.idleLimit = val;
-			})
-		);
-		box.append("seconds");
-
-		box.append("<br /><br />SMIFF IT BITCH: ");
-		box.append($("<input />", {
-				'type': 'checkbox',
-				'checked': jarTT.settings.smiffTime
-			}).click(function() {
-				jarTT.settings.smiffTime = this.checked;
-			})
-		);
-		box.append("<br />");
-		box.append("<br />");
-		box.append($("<button />", {
-				'text': 'Unload jarTT'
-			}).button().click(jarTT.unload)
-		);
-		box.append("<br /><br /><br /><p>This mod is optimized and based entirely on the suggestions of the <a href=\"http://codingsoundtrack.com\">Coding Soundtrack</a> family.</p>");
-		box.append("<p><span style=\"font-size: 8px;\"><i>(who are a bunch of creepy gingers and should not be trusted).<i></span></p>");
-		box.appendTo($("#overlay"));
-		$("#overlay").show();
-	},
 	timerId: {},
 	idleSigns: [null,null,null,null,null],
 	ticking: false,
@@ -164,7 +55,7 @@ var jarTT = {
 					if (div == null) {
 						div = $("<div />", {
 							id: 'jarTT_timer' + i,
-							'class': 'jarTT_timerDiv ui-corner-all',
+							'class': 'jarTT jarTT_timerDiv ui-corner-all',
 							css: {
 								opacity: 0.7,
 								width: '40px',
@@ -201,7 +92,6 @@ var jarTT = {
 		}
 		jarTT.ticking = false;
 	},
-	openSeatStartTime: 0,
 	load: function() {
 		if (wasLoaded) {
 			// preserve settings
@@ -217,18 +107,12 @@ var jarTT = {
 			oldJarTT = null;
 		}
 
-		if (window.console && console.log && jarTT.settings.debug)
-			jarTT.log = function(msg){console.log(msg);};
+		if (window.console && console.log)
+			jarTT.log = function(msg){if(jarTT.settings.debug)console.log(msg);};
 		else
 			jarTT.log = function(msg){};
 		
-		jarTT.settingsButton = $("<div />", {
-			'class': "menuItem",
-			'text': "jarTT Settings"
-		});
-		jarTT.settingsButton.click(jarTT.showSettings);
 		jarTT.roomDiv = $($(".roomView > div")[1]);
-		$("#menuh > div:last").before(jarTT.settingsButton);
 		
 		for (i in window) if (window[i] && window[i].callback) {
 			jarTT.callback = window[i].callback;
@@ -249,13 +133,6 @@ var jarTT = {
 		// disable loaded in case of accidental premature eventulation
 		jarTT.settings.loaded = false;
 		
-		// clean up our ui shit
-		jarTT.settingsButton.remove();
-		$("#jarTT_Settings").remove();
-		$("#jarTT_HelpBox").remove();
-		$("#overlay").hide();
-		$("#jarTT_slotTimer").remove();
-		$(".jarTT_timerDiv").remove();
 		// reenable the normal turntabl CSS3Helpers thing
 		CSS3Helpers.findProperty = jarTT.findProp.original;
 		
@@ -264,8 +141,7 @@ var jarTT = {
 		jarTT.log("jarTT successfully unloaded!");
 		jarTT = null;
 	},
-	// OBFUSCATORZZZZZ
-	localContext: {},
+	// This is copy and pasted from the TTfm source code, I couldn't find a good way to deobfuscate it...
 	callFunction: function (c, a) {
 		if (c.api == "room.now") {
 			return;
@@ -299,6 +175,9 @@ var jarTT = {
 			});
 		});
 		return b.promise();
-	}
+	},
+	localContext: {}
 };
-jarTT.load();
+jarTT.main = {
+	load: jarTT.load
+};

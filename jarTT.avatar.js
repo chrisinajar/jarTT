@@ -1,4 +1,4 @@
-jarTT.avatars = {
+jarTT.avatar = {
 	hideAudience: function(toggle) {
 		jarTT.roomDiv.children().each(function(i,obj) {
 			obj = $(obj);
@@ -19,8 +19,39 @@ jarTT.avatars = {
 				child.show();
 		});
 	},
+	showUser: function(id) {
+		if ($.inArray(id, jarTT.localContext.djIds) != -1)
+			return;
+
+		if (!jarTT.settings.hideAudience)
+			return;
+
+		jarTT.getUserInfo(id, function(user) {
+			var dj = user.getDj();
+			jarTT.log(dj);
+			if (dj == null)
+				return;
+			var obj = dj.div;
+			var child = $(obj.children()[0])
+			
+			child.stop(true);
+			child.attr('class', 'jarTT_talking');
+			child.css({opacity:1, display:'block'});
+			var tid = child.data('jarTT_speakTimer');
+			if (tid)
+				clearTimeout(tid);
+			
+			child.data('jarTT_speakTimer', setTimeout(function() {
+				child.animate({opacity: 0}, 1000, function() {
+					child.removeAttr('class');
+					child.hide();
+					child.css({opacity:1});
+				});
+			}, 10000));
+		});
+	},
 	tick: function() {
-		jarTT.avatars.hideAudience(jarTT.settings.hideAudience);
+		jarTT.avatar.hideAudience(jarTT.settings.hideAudience);
 		var useSmiff = jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/will ?smi(th|ff)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
 		if (useSmiff || jarTT.settings.lastSmiffTime) {
 			jarTT.settings.lastSmiffTime = useSmiff;
@@ -62,16 +93,21 @@ jarTT.avatars = {
 
 		var m = jarTT.settings.avatarTest;
 		for (var i = 0, l = m.length; i < l; ++i) {
-			//jarTT.replaceAvatar(m[i], 'https://s3.amazonaws.com/static.turntable.fm/roommanager_assets/avatars/35/scaled/65/');
+			//jarTT.replaceAvatar(m[i], 'https://s3.amazonaws.com/static.turntable.fm/roommanager_assets/avatar/35/scaled/65/');
 		}
 
 	},
+	showUserEvent: function(data) {
+		jarTT.avatar.showUser(data.userid);
+	},
 	load: function() {
-			jarTT.events.registerEvent("jarTT_unloaded", jarTT.avatars.unload);
-			jarTT.events.registerEvent("jarTT_tick", jarTT.avatars.tick);
+			jarTT.events.registerEvent("jarTT_unloaded", jarTT.avatar.unload);
+			jarTT.events.registerEvent("jarTT_tick", jarTT.avatar.tick);
+			jarTT.events.registerEvent("speak", jarTT.avatar.showUserEvent);
+			jarTT.events.registerEvent("snagged", jarTT.avatar.showUserEvent);
 	},
 	unload: function() {
-		jarTT.avatars.hideAudience(false);
+		jarTT.avatar.hideAudience(false);
 	},
 };
 
@@ -162,6 +198,3 @@ jarTT.getUserInfo = function(id, c) {
 
 	return false;
 };
-
-jarTT.avatars.load();
-

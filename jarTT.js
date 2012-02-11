@@ -1,16 +1,23 @@
 // Just loads jarTT
 
-
 /* First we unload any existing jarTT instances */
 var wasLoaded = false;
 var oldJarTT = {};
-$(function() {
-// These are dependancies. To add a new file, add it here, and list anything that needs to be loaded first (usually just main)
+(function() {
+// These are dependancies. To add a new file, add it here, and list anything that needs to be loaded first (usually just main and events)
 var comp = {
-	'events': ['main'],
-	'avatar': ['main', 'events'],
+	// main jarTT, most of the code is here
 	'main': [],
+	// Ability to hook onto events along with the basic event driven stuff like idle timers
+	'events': ['main'],
+	// Avatar related stuff, basically anything that uses identifyDiv
+	'avatar': ['main', 'events'],
+	// UI shit
+	'ui': ['main', 'events'],
 };
+
+
+// The following code is hideous, but makes the other code cleaner.
 if (typeof jarTT != "undefined" && jarTT != null) {
 	wasLoaded = true;
 	oldJarTT = jarTT;
@@ -26,19 +33,57 @@ else {
 }
 
 var ld = [];
+var cl = [];
 var l = function(){};
 var n = function(){};
 var dl = function(){};
 var i = 0;
 var s = 1;
 for (tl in comp) s++;
+n = (function() {
+	i++;
+	if (i == s) {
+		// We're done
+		jarTT.events.dispatchEvent("jarTT_loaded");
+		return;
+	}
+	for (tl in comp) if ($.inArray(tl, ld) == -1) {
+		l(tl, n);
+	}
+});
 // Code borrowed and altered from LABjs, http://labjs.com/
 // Specifically: https://gist.github.com/603980
 // Credit where credit is due.
-dl = (function (script, handler) {
+l = (function (name) {
+	if (!isNaN(name))
+		return;
+	if ($.inArray(name, ld) != -1)
+		return;
+	if ($.inArray(name, cl) != -1)
+		return;
+	var canGo = true;
+	for (r in comp[name]) {
+		r = comp[name][r];
+		if ($.inArray(r, ld) == -1) {
+			l(r);
+			canGo = false;
+		}
+	}
+	if (!canGo)
+		return;
+	cl.push(name);
+	var script = jarTTBaseUrl + 'jarTT.' + name + '.js';
 	var global = window;
 	var oDOC = document;
     var head = oDOC.head || oDOC.getElementsByTagName("head");
+	
+	var handler = function() {
+		var exec = "jarTT." + name + ".load()";
+		console.log(exec);
+		eval(exec);
+		ld.push(name);
+		n();
+	};
 
     // loading code borrowed directly from LABjs itself
     setTimeout(function () {
@@ -71,37 +116,7 @@ dl = (function (script, handler) {
             oDOC.readyState = "complete";
         }, false);
     }
-})
-n = function() {
-	i++;
-	if (i == s) {
-		// We're done
-		jarTT.events.dispatchEvent("jarTT_loaded");
-		return;
-	}
-	for (tl in comp) if ($.inArray(tl, ld) == -1) {
-		l(tl);
-	}
-}
-l = function(name) {
-	if (!isNaN(name))
-		return;
-	if ($.inArray(name, ld) != -1)
-		return;
-	var canGo = true;
-	for (r in comp[name]) {
-		r = comp[name][r];
-		if (isNaN(r) && $.inArray(r, ld) == -1) {
-			l(r);
-			canGo = false;
-		}
-	}
-	if (!canGo)
-		return;
-	ld.push(name);
-	//console.log("loading " + name);
-	dl(jarTTBaseUrl + 'jarTT.' + name + '.js', n);
-}
-n();
 });
+n();
+})();
 
