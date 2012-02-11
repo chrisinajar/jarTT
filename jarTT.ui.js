@@ -16,6 +16,7 @@ jarTT.ui = {
 	unload: function() {
 		// clean up our ui shit
 		$(".jarTT").remove();
+		$("#overlay").hide();
 	},
 	onFinishLoad: function() {
 		if (!wasLoaded) {

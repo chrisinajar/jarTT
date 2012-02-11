@@ -79,7 +79,6 @@ l = (function (name) {
 	
 	var handler = function() {
 		var exec = "jarTT." + name + ".load()";
-		console.log(exec);
 		eval(exec);
 		ld.push(name);
 		n();
