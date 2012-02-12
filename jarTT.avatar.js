@@ -1,3 +1,24 @@
+/*
+ * jarTT: A turntable.fm mod. Chris "inajar" Vickery <chrisinajar@gmail.com>
+ * javascript:(function(){$.getScript('https://raw.github.com/chrisinajar/jarTT/master/jarTT.js');})();
+ *
+ * Redistribution and use in source, minified, binary, or any other forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *  * Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *  * Neither the name, jarTT, nor the names of its contributors may be 
+ *    used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * No disclaimer, just don't be a dick.
+ *
+ */
+ 
+// avatar, anything involving fucking with the avatar images or avatar system code in TTfm.
+
 jarTT.avatar = {
 	hideAudience: function(toggle) {
 		jarTT.roomDiv.children().each(function(i,obj) {
@@ -52,7 +73,7 @@ jarTT.avatar = {
 	},
 	tick: function() {
 		jarTT.avatar.hideAudience(jarTT.settings.hideAudience);
-		var useSmiff = jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/will ?smi(th|ff)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
+		var useSmiff = jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh ?prince)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
 		if (useSmiff || jarTT.settings.lastSmiffTime) {
 			jarTT.settings.lastSmiffTime = useSmiff;
 			jarTT.roomDiv.children().each(function(i,obj) {
