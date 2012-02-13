@@ -26,8 +26,10 @@
 		jarTT.events.registerEvent("jarTT_unloaded", jarTT.ui.unload);
 		jarTT.events.registerEvent("add_dj", jarTT.ui.onDjAdd);
 		jarTT.events.registerEvent("rem_dj", jarTT.ui.onDjRemove);
-		jarTT.events.registerEvent("update_votes", jarTT.ui.redrawUpDown);
-		jarTT.events.registerEvent("newsong", jarTT.ui.redrawUpDown);
+		jarTT.events.registerEvent("jarTT_tick", jarTT.ui.redrawUpDown);
+		
+		// jarTT.events.registerEvent("update_votes", jarTT.ui.redrawUpDown);
+		// jarTT.events.registerEvent("newsong", jarTT.ui.redrawUpDown);
 		
 		$("<div />", {
 			'class': "jarTT menuItem",
