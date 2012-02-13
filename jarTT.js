@@ -17,11 +17,12 @@
  *
  */
 
-// Just loads jarTT
+// This file is just a big complicated loader.
+// The majority of this code is creating an object called jarTTLoad which can take either a 
 
-/* First we unload any existing jarTT instances */
 var wasLoaded = false;
 var oldJarTT = {};
+var jarTTLoad = function(){};
 (function() {
 // These are dependancies. To add a new file, add it here, and list anything that needs to be loaded first (usually just main and events)
 var comp = {
@@ -37,61 +38,71 @@ var comp = {
 
 
 // The following code is hideous, but makes the other code cleaner.
+/* First we unload any existing jarTT instances */
 if (typeof jarTT != "undefined" && jarTT != null) {
 	wasLoaded = true;
 	oldJarTT = jarTT;
 	jarTT.unload();
 	jarTT = null;
+} else {
+	oldJarTT.settings = {};
 }
 
-var jarTTBaseUrl = null;
-if (wasLoaded && typeof oldJarTT.settings.baseUrl != "undefined")
-	jarTTBaseUrl = oldJarTT.settings.baseUrl;
-else {
-	jarTTBaseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
-}
+if (typeof oldJarTT.settings.baseUrl != "string")
+	oldJarTT.settings.baseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
 
-var ld = [];
-var cl = [];
-var l = function(){};
-var n = function(){};
-var dl = function(){};
-var i = 0;
-var s = 1;
-for (tl in comp) s++;
-n = (function() {
-	i++;
-	if (i == s) {
-		// We're done
-		jarTT.events.dispatchEvent("jarTT_loaded");
-		return;
-	}
-	for (tl in comp) if ($.inArray(tl, ld) == -1) {
-		l(tl, n);
-	}
+jarTTLoad = function(arg1,arg2) {
+	if (typeof arg1 == "object")
+		jarTTLoad.dependency(arg1, arg2);
+	else if (typeof arg1 == "string")
+		jarTTLoad.loadScript(arg1, arg2);
+};
+jarTTLoad.ld = [];
+jarTTLoad.cl = [];
+jarTTLoad.dependency = (function(comp, h) {
+	var i = 0;
+	var s = 1;
+	for (tl in comp) s++;
+	jarTTLoad.n = (function() {
+		if (++i == s) {
+			// We're done
+			h();
+			return;
+		}
+		for (tl in comp) if ($.inArray(tl, jarTTLoad.ld) == -1) {
+			jarTTLoad.l(tl);
+		}
+	});
+	
+	jarTTLoad.l = (function (name) {
+		if (typeof name != "string")
+			return;
+		if (!isNaN(name))
+			return;
+		if ($.inArray(name, jarTTLoad.ld) != -1)
+			return;
+		if ($.inArray(name, jarTTLoad.cl) != -1)
+			return;
+		var canGo = true;
+		for (r in comp[name]) {
+			r = comp[name][r];
+			if ($.inArray(r, jarTTLoad.ld) == -1) {
+				jarTTLoad.l(r);
+				canGo = false;
+			}
+		}
+		if (!canGo)
+			return;
+		jarTTLoad.cl.push(name);
+		jarTTLoad(name, jarTTLoad.n);
+	});
+	jarTTLoad.n();
 });
 // Code borrowed and altered from LABjs, http://labjs.com/
 // Specifically: https://gist.github.com/603980
 // Credit where credit is due.
-l = (function (name) {
-	if (!isNaN(name))
-		return;
-	if ($.inArray(name, ld) != -1)
-		return;
-	if ($.inArray(name, cl) != -1)
-		return;
-	var canGo = true;
-	for (r in comp[name]) {
-		r = comp[name][r];
-		if ($.inArray(r, ld) == -1) {
-			l(r);
-			canGo = false;
-		}
-	}
-	if (!canGo)
-		return;
-	cl.push(name);
-	var script = jarTTBaseUrl + 'jarTT.' + name + '.js';
+jarTTLoad.loadScript = (function(name, h) {
+	var script = (oldJarTT == null ? jarTT.settings.baseUrl : oldJarTT.settings.baseUrl) + 'jarTT.' + name + '.js';
 	var global = window;
 	var oDOC = document;
     var head = oDOC.head || oDOC.getElementsByTagName("head");
@@ -99,8 +110,8 @@ l = (function (name) {
 	var handler = function() {
 		var exec = "jarTT." + name + ".load()";
 		eval(exec);
-		ld.push(name);
-		n();
+		jarTTLoad.ld.push(name);
+		h();
 	};
 
 	// Everything after this is stolen from LABjs, I never checked their license but lets just pretend it's definitely something friendly like GPL
@@ -136,6 +147,8 @@ l = (function (name) {
         }, false);
     }
 });
-n();
+jarTTLoad(comp, function() {
+	jarTT.events.dispatchEvent("jarTT_loaded");
+});
 })();
 

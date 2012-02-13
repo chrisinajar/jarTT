@@ -29,7 +29,6 @@ var jarTT = {
 		'lastSmiffTime': false,
 		'debug': false,
 		'idleLimit': 300,
-		'baseUrl': "https://raw.github.com/chrisinajar/jarTT/master/",
 		'avatarTest': ['4e42c21b4fe7d02e6107b1ff', '4e2376eca3f751213d006700']
 	},
 	log: function(){
@@ -104,19 +103,16 @@ var jarTT = {
 		jarTT.ticking = false;
 	},
 	load: function() {
-		if (wasLoaded) {
-			// preserve settings
-			if (typeof oldJarTT.settings != "undefined") for (var i in oldJarTT.settings) {
-				jarTT.settings[i] = oldJarTT.settings[i];
-			}
-
-			if (typeof oldJarTT.userCache != "undefined")
-				jarTT.userCache = $.extend(true, oldJarTT.userCache);
-			else
-				jarTT.log("asd");
-
-			oldJarTT = null;
+		if (typeof oldJarTT.settings != "undefined") for (var i in oldJarTT.settings) {
+			jarTT.settings[i] = oldJarTT.settings[i];
 		}
+
+		if (typeof oldJarTT.userCache != "undefined")
+			jarTT.userCache = $.extend(true, oldJarTT.userCache);
+		else
+			jarTT.log("asd");
+
+		oldJarTT = null;
 
 		if (window.console && console.log)
 			jarTT.log = function(msg){if(jarTT.settings.debug)console.log(msg);};

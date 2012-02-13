@@ -79,6 +79,20 @@
 			}).fadeIn().delay(10000).fadeOut(1000, function(){$(this).remove();}).appendTo(jarTT.roomDiv);
 		}
 	},
+	onNewSong: function() {
+		$(".jarTT_updown").remove(); $(".point_display[style!='display: none; ']").append($("<div />", {
+			'class': "jarTT jarTT_updown ui-state-default",
+			'height': "16px",
+			'width': "100%",
+			})
+			.append($('<span />', {
+				'class': "jarTT jarTT_up"
+			}))
+			.append($('<span />', {
+				'class': "jarTT ui-icon ui-icon-circle-check"
+			}))
+		);
+	},
 	showSettings: function() {
 		var box = $("<div />", {
 			'class': "modal jarTT",
