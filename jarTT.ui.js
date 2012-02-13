@@ -26,6 +26,8 @@
 		jarTT.events.registerEvent("jarTT_unloaded", jarTT.ui.unload);
 		jarTT.events.registerEvent("add_dj", jarTT.ui.onDjAdd);
 		jarTT.events.registerEvent("rem_dj", jarTT.ui.onDjRemove);
+		jarTT.events.registerEvent("update_votes", jarTT.ui.redrawUpDown);
+		jarTT.events.registerEvent("newsong", jarTT.ui.redrawUpDown);
 		
 		$("<div />", {
 			'class': "jarTT menuItem",
@@ -79,19 +81,44 @@
 			}).fadeIn().delay(10000).fadeOut(1000, function(){$(this).remove();}).appendTo(jarTT.roomDiv);
 		}
 	},
-	onNewSong: function() {
-		$(".jarTT_updown").remove(); $(".point_display[style!='display: none; ']").append($("<div />", {
+	redrawUpDown: function() {
+		$(".jarTT_updown").remove();
+		$(".point_display[style!='display: none; ']").append($("<div />", {
 			'class': "jarTT jarTT_updown ui-state-default",
-			'height': "16px",
-			'width': "100%",
+			'height': "16px"
 			})
 			.append($('<span />', {
-				'class': "jarTT jarTT_up"
+				'class': "jarTT jarTT_up",
+				'html': jarTT.events.room.upvotes
+			}))
+			.append($('<div />', {
+				'class': "jarTT",
+				'css': {
+					backgroundImage: 'url(https://s3.amazonaws.com/static.turntable.fm/images/down_arrow.png)',
+					display: 'inline-block',
+					marginTop: '3px',
+					transform: 'rotate(180deg)',
+					mozTransform: 'rotate(180deg)',
+					webkitTransform: 'rotate(180deg)',
+				},
+				'width': '12px',
+				'height': '10px',
+			}))
+			.append($('<div />', {
+				'class': "jarTT",
+				'css': {
+					backgroundImage: 'url(https://s3.amazonaws.com/static.turntable.fm/images/down_arrow.png)',
+					display: 'inline-block',
+					marginTop: '3px',
+				},
+				'width': '12px',
+				'height': '10px',
 			}))
 			.append($('<span />', {
-				'class': "jarTT ui-icon ui-icon-circle-check"
+				'class': "jarTT jarTT_down",
+				'html': jarTT.events.room.downvotes
 			}))
-		);
+		)
 	},
 	showSettings: function() {
 		var box = $("<div />", {

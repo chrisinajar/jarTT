@@ -21,6 +21,10 @@
  
  jarTT.events = {
 	eventMap: {},
+	room: {
+		upvotes: 0,
+		downvotes: 0
+	},
 	registerEvent: function(type, func) {
 		if (!(type in jarTT.events.eventMap))
 			jarTT.events.eventMap[type] = [];
@@ -47,10 +51,11 @@
 		}
 	},
 	load: function() {
-			jarTT.events.registerEvent("newsong", jarTT.events.onNewSong);
-			jarTT.events.registerEvent("speak", jarTT.events.onSpeak);
-			jarTT.events.registerEvent("jarTT_loaded", jarTT.events.onFinishLoad);
-			jarTT.events.registerEvent("jarTT_unloaded", jarTT.events.unload);
+		jarTT.events.registerEvent("newsong", jarTT.events.onNewSong);
+		jarTT.events.registerEvent("speak", jarTT.events.onSpeak);
+		jarTT.events.registerEvent("update_votes", jarTT.events.onUpdateVotes);
+		jarTT.events.registerEvent("jarTT_loaded", jarTT.events.onFinishLoad);
+		jarTT.events.registerEvent("jarTT_unloaded", jarTT.events.unload);
 	},
 	unload: function() {
 		turntable.socket.removeEvent("message", jarTT.events.socketEvent);
@@ -66,7 +71,14 @@
 
 		jarTT.log("jarTT successfully loaded!");
 	},
+	onUpdateVotes: function(data) {
+		jarTT.events.room = data.room.metadata;
+	},
 	onNewSong: function(data) {
+		jarTT.events.currentScore = {
+			awesome: 0,
+			lame: 0
+		};
 		if (!jarTT.settings.loaded)
 			return;
 		if (jarTT.settings.autoBop) {
