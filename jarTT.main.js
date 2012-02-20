@@ -121,12 +121,13 @@ var jarTT = {
 		
 		jarTT.roomDiv = $($(".roomView > div")[1]);
 		
-		for (i in window) if (window[i] && window[i].callback) {
-			jarTT.callback = window[i].callback;
-			break;
-		}
 		for (i in turntable) if (turntable[i] && turntable[i].djIds) {
 			jarTT.localContext = turntable[i];
+			break;
+		}
+		
+		for (i in jarTT.localContext) if (jarTT.localContext[i] && jarTT.localContext[i].callback) {
+			jarTT.callback = jarTT.localContext[i].callback;
 			break;
 		}
 	},
