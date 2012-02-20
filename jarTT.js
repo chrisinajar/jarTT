@@ -18,7 +18,10 @@
  */
 
 // This file is just a big complicated loader.
-// The majority of this code is creating an object called jarTTLoad which can take either a 
+// The majority of this code is creating an object called jarTTLoad which can take either an 
+// object or a string, and a success handler as the second parameter. The object works just like
+// the "comp" variable like 10 lines down from here, and the string will just be a dependencyless string value
+// that is loaded without any additional checking. Don't do that. I should probably make it private.
 
 var wasLoaded = false;
 var oldJarTT = {};
@@ -50,6 +53,10 @@ if (typeof jarTT != "undefined" && jarTT != null) {
 
 if (typeof oldJarTT.settings.baseUrl != "string")
 	oldJarTT.settings.baseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
+	
+	
+oldJarTT.settings.baseUrl = "http://chrisinajar.com/";
+oldJarTT.settings.debug = true;
 
 jarTTLoad = function(arg1,arg2) {
 	if (typeof arg1 == "object")
@@ -59,44 +66,54 @@ jarTTLoad = function(arg1,arg2) {
 };
 jarTTLoad.ld = [];
 jarTTLoad.cl = [];
-jarTTLoad.dependency = (function(comp, h) {
-	var i = 0;
-	var s = 1;
-	for (tl in comp) s++;
-	jarTTLoad.n = (function() {
-		if (++i == s) {
-			// We're done
-			h();
-			return;
+
+jarTTLoad.n = (function(data) {
+	if (++data.i == data.s) {
+		// We're done
+		data.callback();
+		return;
+	}
+	for (tl in data.comp) if ($.inArray(tl, jarTTLoad.ld) == -1) {
+		jarTTLoad.l(tl, data);
+	}
+});
+
+jarTTLoad.l = (function (name, data) {
+	if (typeof name != "string")
+		return;
+	if (!isNaN(name))
+		return;
+	if ($.inArray(name, jarTTLoad.ld) != -1)
+		return;
+	if ($.inArray(name, jarTTLoad.cl) != -1)
+		return;
+	var canGo = true;
+	for (r in data.comp[name]) {
+		r = data.comp[name][r];
+		if ($.inArray(r, jarTTLoad.ld) == -1) {
+			jarTTLoad.l(r, data);
+			canGo = false;
 		}
-		for (tl in comp) if ($.inArray(tl, jarTTLoad.ld) == -1) {
-			jarTTLoad.l(tl);
-		}
+	}
+	if (!canGo)
+		return;
+	jarTTLoad.cl.push(name);
+	jarTTLoad(name, function() {
+		jarTTLoad.n(data);
 	});
-	
-	jarTTLoad.l = (function (name) {
-		if (typeof name != "string")
-			return;
-		if (!isNaN(name))
-			return;
-		if ($.inArray(name, jarTTLoad.ld) != -1)
-			return;
-		if ($.inArray(name, jarTTLoad.cl) != -1)
-			return;
-		var canGo = true;
-		for (r in comp[name]) {
-			r = comp[name][r];
-			if ($.inArray(r, jarTTLoad.ld) == -1) {
-				jarTTLoad.l(r);
-				canGo = false;
-			}
-		}
-		if (!canGo)
-			return;
-		jarTTLoad.cl.push(name);
-		jarTTLoad(name, jarTTLoad.n);
-	});
-	jarTTLoad.n();
+});
+jarTTLoad.dependency = (function(c, h) {
+	var data = {
+		i: 0,
+		s: (function() {
+			var s = 0;
+			for (tl in c) s++;
+			return s;
+		})(),
+		comp: c,
+		callback: h
+	};
+	jarTTLoad.n(data);
 });
 // Code borrowed and altered from LABjs, http://labjs.com/
 // Specifically: https://gist.github.com/603980
