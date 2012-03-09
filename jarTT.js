@@ -54,10 +54,6 @@ if (typeof jarTT != "undefined" && jarTT != null) {
 if (typeof oldJarTT.settings.baseUrl != "string")
 	oldJarTT.settings.baseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
 	
-	
-oldJarTT.settings.baseUrl = "http://chrisinajar.com/";
-oldJarTT.settings.debug = true;
-
 jarTTLoad = function(arg1,arg2) {
 	if (typeof arg1 == "object")
 		jarTTLoad.dependency(arg1, arg2);
