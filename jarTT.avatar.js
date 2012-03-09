@@ -206,16 +206,18 @@ jarTT.getUserInfo = function(id, c) {
 	if (((new Date()) - jarTT.userCache[id].lastUpdate) < 10000) {
 		c(jarTT.userCache[id]);
 		return true;
-	}
-	jarTT.callFunction({
-		api: "user.info",
-		userid: id
-	}, function(data) {
-		for (var i in data)
-			jarTT.userCache[id][i] = data[i];
+	} else {
 		jarTT.userCache[id].lastUpdate = new Date();
-		c(jarTT.userCache[id]);
-	});
-
+		
+		jarTT.callFunction({
+			api: "user.info",
+			userid: id
+		}, function(data) {
+			for (var i in data)
+				jarTT.userCache[id][i] = data[i];
+			c(jarTT.userCache[id]);
+		});
+	}
+	
 	return false;
 };
