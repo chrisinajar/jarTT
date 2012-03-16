@@ -147,7 +147,7 @@ jarTTLoad.loadScript = (function(name, h) {
             scriptdone = true;
             handler();
         };
-        scriptElem.src = script;
+        scriptElem.src = script + '_=' + (Math.random()*9999999);
         head.insertBefore(scriptElem, head.firstChild);
     }, 0);
 
