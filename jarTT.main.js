@@ -103,7 +103,7 @@ var jarTT = {
 		jarTT.ticking = false;
 	},
 	load: function() {
-		if (typeof oldJarTT.settings != "undefined") for (var i in oldJarTT.settings) {
+		if (oldJarTT && 'settings' in oldJarTT) for (var i in oldJarTT.settings) {
 			jarTT.settings[i] = oldJarTT.settings[i];
 		}
 
