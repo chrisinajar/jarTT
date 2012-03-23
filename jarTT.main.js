@@ -24,7 +24,7 @@ var jarTT = {
 		'loaded': false,
 		'hideAudience': false,
 		'fixAnimations': false,
-		'autoBop': true,
+		'autoBop': false,
 		'smiffTime': false,
 		'lastSmiffTime': false,
 		'debug': false,

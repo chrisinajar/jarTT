@@ -161,11 +161,19 @@
 			})
 		);
 
+		var youSure = false; // you're so damn uncertain
 		box.append("<br />AutoBop: ");
 		box.append($("<input />", {
 				'type': 'checkbox',
 				'checked': jarTT.settings.autoBop
-			}).click(function() {
+			}).click(function(e) {
+				if (!youSure) {
+					$(this).prev().after("<br /><b><span class='ui-state-error'>Warning! Turntable.fm discourages the use of auto-bop (because they hate fun). <br />Click again to confirm: </span>");
+					$(this).attr('checked', false);
+					youSure = true;
+					return false;
+				}
+				
 				jarTT.settings.autoBop = this.checked;
 			})
 		);
