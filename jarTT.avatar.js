@@ -161,10 +161,14 @@ jarTT.identifyDiv = function(div) {
 	
 	// important..
 	var matches = (new RegExp(",'([a-z0-9]+)'\\)\"><b>(.*)</b><br>([0-9,]+) DJ points?<br>([0-9,]+) fan", "i")).exec(div.data("tipsy").getTitle());
-	dj.userId = matches[1];
-	dj.userName = matches[2];
-	dj.points = matches[3];
-	dj.fans = matches[4];
+	if (matches.length == 5) {
+		dj.userId = matches[1];
+		dj.userName = matches[2];
+		dj.points = matches[3];
+		dj.fans = matches[4];
+	} else {
+		// panic?
+	}
 
 	// functions!
 	dj.getUserInfo = function(callback) {
