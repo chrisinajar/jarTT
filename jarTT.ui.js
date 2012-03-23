@@ -168,7 +168,7 @@
 				'checked': jarTT.settings.autoBop
 			}).click(function(e) {
 				if (!youSure) {
-					$(this).prev().after("<br /><b><span class='ui-state-error'>Warning! Turntable.fm discourages the use of auto-bop (because they hate fun). <br />Click again to confirm: </span>");
+					$(this).prev().after("<b><span style='color: red'>Warning! Turntable.fm discourages the use of auto-bop (because they hate fun).</span><br />");
 					$(this).attr('checked', false);
 					youSure = true;
 					return false;
