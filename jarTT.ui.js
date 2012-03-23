@@ -169,9 +169,8 @@
 			}).click(function(e) {
 				if (!youSure) {
 					$(this).prev().after("<b><span style='color: red'>Warning! Turntable.fm staff strongly discourages the use of auto-bop.<br /><span style='font-size: 8px;'>(because they hate fun).</span></span><br />");
-					$(this).attr('checked', false);
 					youSure = true;
-					return false;
+					return (!this.checked);
 				}
 				
 				jarTT.settings.autoBop = this.checked;
