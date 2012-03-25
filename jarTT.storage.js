@@ -60,6 +60,13 @@ jarTT.storage = {
 		for (var s in settings) {
 			jarTT.settings[s] = settings[s];
 		}
+		
+		// This
+		if (jarTT.settings.fixAnimations) {
+			CSS3Helpers.findProperty = jarTT.findProp.optimized;
+		} else {
+			CSS3Helpers.findProperty = jarTT.findProp.original;
+		}
 	},
 	saveSettings: function() {
 		jarTT.storage.setNamedData('settings', jarTT.settings);
