@@ -92,9 +92,7 @@ jarTTLoad.l = (function (name, data) {
 			canGo = false;
 		}
 	}
-	console.log("Loading " + name);
 	if (!canGo) {
-		console.log("Nevermind " + name);
 		return;
 	}
 	jarTTLoad.cl.push(name);
