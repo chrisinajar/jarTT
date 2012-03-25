@@ -22,23 +22,46 @@
 jarTT.storage = {
 	load: function() {
 		jarTT.events.registerEvent("jarTT_unloaded", jarTT.storage.unload);
-		
-		if (!localStorage.jarTT) {
-			localStorage.jarTT = {
-				settings: {}
-			}
-		}
 	},
-	loadSettings: function() {
-		if (localStorage.jarTT && localStorage.jarTT.settings) {} else
+	getData: function() {
+		return JSON.parse(localStorage.jarTT);
+	},
+	setData: function(d) {
+		localStorage.jarTT = JSON.stringify(d);
+	},
+	getNamedData: function(name) {
+		return JSON.parse(localStorage["jarTT_"+name]);
+	},
+	setNamedData: function(name, d) {
+		localStorage["jarTT_"+name] = JSON.stringify(d);
+	},
+	/*
+	getNamedData: function(name) {
+		var d = jarTT.storage.getData();
+		if (!d)
 			return;
-		var settings = localStorage.jarTT.settings;
+		return d[name];
+	},
+	setNamedData: function(name, val) {
+		var d = jarTT.storage.getData();
+		if (!d)
+			return;
+		d[name] = val;
+		jarTT.storage.setData(d);
+		return d[name];
+	},
+	*/
+	loadSettings: function() {
+		var settings = jarTT.storage.getNamedData('settings');
+		if (settings) {} else
+			return;
+
 		for (var s in settings) {
 			jarTT.settings[s] = settings[s];
 		}
 	},
 	saveSettings: function() {
-		localStorage.jarTT.settings = jarTT.settings;
+		jarTT.storage.setNamedData('settings', jarTT.settings);
 	},
 	unload: function() {
 		jarTT.storage.saveSettings();
