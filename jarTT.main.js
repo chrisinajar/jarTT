@@ -75,7 +75,7 @@ var jarTT = {
 								fontWeight: 'bold',
 								position: 'absolute',
 								top: '5px',
-								zIndex: '400', //fuck the spotlight
+								zIndex: '20000', // between the UI and the chat box
 								left: (85*(i+1)-15)+'px',
 								textAlign: 'center',
 								fontSize: '12px'
