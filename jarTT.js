@@ -69,6 +69,7 @@ jarTTLoad.n = (function(data) {
 		data.callback();
 		return;
 	}
+	console.log(data.comp);
 	console.log(jarTTLoad.ld.length + ':' + data.i);
 	console.log(data.comp + ':' + data.s);
 	for (tl in data.comp) if ($.inArray(tl, jarTTLoad.ld) == -1) {
@@ -103,7 +104,7 @@ jarTTLoad.l = (function (name, data) {
 });
 jarTTLoad.dependency = (function(c, h) {
 	var data = {
-		i: 0,
+		i: -1,
 		s: (function() {
 			var s = 0;
 			for (tl in c) s++;
