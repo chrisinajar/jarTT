@@ -31,7 +31,11 @@ jarTT.storage = {
 		localStorage.jarTT = JSON.stringify(d);
 	},
 	getNamedData: function(name) {
+		if (!localStorage["jarTT_"+name])
+			return;
+		
 		return JSON.parse(localStorage["jarTT_"+name]);
+		
 	},
 	setNamedData: function(name, d) {
 		localStorage["jarTT_"+name] = JSON.stringify(d);
