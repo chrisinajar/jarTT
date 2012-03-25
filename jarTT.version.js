@@ -73,6 +73,7 @@ jarTT.version = {
 		var hasChanges = false;
 		switch(version) {
 			case 0.0: // first run
+				changes.push("Versioning! Welcome to 1.0!");
 				changes.push("Persistent settings! Set and forget my brothers.");
 				changes.push("Performance optimizations! No more spamming your DOM!");
 				changes.push("MOAR SMIFF!");
