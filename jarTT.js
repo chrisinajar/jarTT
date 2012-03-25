@@ -69,9 +69,6 @@ jarTTLoad.n = (function(data) {
 		data.callback();
 		return;
 	}
-	console.log(data.comp);
-	console.log(jarTTLoad.ld.length + ':' + data.i);
-	console.log(data.comp + ':' + data.s);
 	for (tl in data.comp) if ($.inArray(tl, jarTTLoad.ld) == -1) {
 		jarTTLoad.l(tl, data);
 	}
@@ -164,7 +161,6 @@ jarTTLoad.loadScript = (function(name, h) {
     }
 });
 jarTTLoad(comp, function() {
-	console.log("Done loading!");
 	jarTT.events.dispatchEvent("jarTT_loaded");
 });
 })();
