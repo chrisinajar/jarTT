@@ -83,9 +83,13 @@ jarTT.version = {
 				version = 1.0;
 				showSettings = true;
 				hasChanges = true;
+			case 1.0:
+				changes.push("Put version number into notes");
+
+				version = 1.01;
+				hasChanges = true;
 				break;
-			case 1.0: // current version
-				break;
+			case 1.1:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
@@ -94,6 +98,14 @@ jarTT.version = {
 				box.append("<br />");
 			};
 			box.append("<h1>jarTT!!! HI!!</h1><br />");
+			box.append($("<p>", {
+				html: "Version: " + version,
+				css: {
+					fontSize: 10,
+					marginTop: -20
+				}
+			}));
+			br();
 			box.append($("<p>", {
 				html: "Welcome! Unless you've already been using jarTT, in which case welcome <i>back</i>! We have some <b style='color: yellow;'>new</b> stuff for you, you're going to " + getWord(howAwesome) + ".<br />",
 				css: {
@@ -191,7 +203,7 @@ jarTT.version = {
 			}));
 		}
 		
-		jarTT.storage.setNamedData('version', version);
+		//jarTT.storage.setNamedData('version', version);
 	},
 	unload: function() {
 	},
