@@ -36,8 +36,8 @@ var comp = {
 	// Avatar related stuff, basically anything that uses identifyDiv
 	'avatar': ['main', 'events'],
 	// UI shit
-	'ui': ['main', 'events'],
-	'storage': ['main', 'events', 'ui'],
+	'ui': ['main', 'events', 'storage'],
+	'storage': ['main', 'events'],
 };
 
 

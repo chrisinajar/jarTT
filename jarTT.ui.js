@@ -19,7 +19,7 @@
  
 // ui, i put most of the awful dom shit here
  
- jarTT.ui = {
+jarTT.ui = {
 	load: function() {
 		jarTT.log("ui is loading");
 		jarTT.events.registerEvent("jarTT_loaded", jarTT.ui.onFinishLoad);
