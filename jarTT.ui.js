@@ -75,7 +75,7 @@
 					position: "absolute",
 					zIndex: "1001",
 					fontSize: "10px",
-					top: "78px",
+					top: "144px",
 					left: "388px",
 					display: "none",
 					padding: "5px"
@@ -84,6 +84,11 @@
 		}
 	},
 	redrawUpDown: function() {
+		if ($(".jarTT_updown").length == 1 && 
+			$(".jarTT_up").html() == jarTT.events.room.upvotes &&
+			$(".jarTT_down").html() == jarTT.events.room.downvotes) { // an attempt to not redraw this 40 billion million times.
+			return;
+		}
 		$(".jarTT_updown").remove();
 		$(".point_display[style!='display: none; ']").append($("<div />", {
 			'class': "jarTT jarTT_updown ui-state-default",

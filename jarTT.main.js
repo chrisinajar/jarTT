@@ -74,7 +74,7 @@ var jarTT = {
 								backgroundColor: '#ccc',
 								fontWeight: 'bold',
 								position: 'absolute',
-								top: '103px',
+								top: '5px',
 								zIndex: '400', //fuck the spotlight
 								left: (85*(i+1)-15)+'px',
 								textAlign: 'center',
