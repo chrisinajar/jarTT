@@ -116,7 +116,7 @@ jarTTLoad.dependency = (function(c, h) {
 // Specifically: https://gist.github.com/603980
 // Credit where credit is due.
 jarTTLoad.loadScript = (function(name, h) {
-	var script = (oldJarTT == null ? jarTT.settings.baseUrl : oldJarTT.settings.baseUrl) + 'jarTT.' + name + '.js';
+	var script = baseUrl + 'jarTT.' + name + '.js';
 	var global = window;
 	var oDOC = document;
     var head = oDOC.head || oDOC.getElementsByTagName("head");
