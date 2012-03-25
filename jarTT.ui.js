@@ -44,7 +44,7 @@
 		$("#overlay").hide();
 	},
 	onFinishLoad: function() {
-		if (!wasLoaded) {
+		if (!localStorage.jarTT_settings) {
 			// We want to show the help message since this isn't a reload
 			jarTT.ui.showSettings();
 		}
