@@ -37,6 +37,7 @@ var comp = {
 	'avatar': ['main', 'events'],
 	// UI shit
 	'ui': ['main', 'events'],
+	'storage': ['main', 'events', 'ui'],
 };
 
 

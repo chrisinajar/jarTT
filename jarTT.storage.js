@@ -22,6 +22,7 @@
 jarTT.storage = {
 	load: function() {
 		jarTT.events.registerEvent("jarTT_unloaded", jarTT.storage.unload);
+		jarTT.storage.loadSettings();
 	},
 	getData: function() {
 		return JSON.parse(localStorage.jarTT);

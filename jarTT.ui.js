@@ -128,6 +128,12 @@
 			}))
 		)
 	},
+	saveSettings: function() {
+		if (!jarTT.storage)
+			return;
+		
+		jarTT.storage.saveSettings();
+	},
 	showSettings: function() {
 		var box = $("<div />", {
 			'class': "modal jarTT",
@@ -149,6 +155,7 @@
 				'checked': jarTT.settings.fixAnimations
 			}).click(function() {
 				jarTT.settings.fixAnimations = this.checked;
+				jarTT.ui.saveSettings();
 				if (this.checked) {
 					CSS3Helpers.findProperty = jarTT.findProp.optimized;
 				} else {
@@ -163,6 +170,7 @@
 				'checked': jarTT.settings.hideAudience
 			}).click(function() {
 				jarTT.settings.hideAudience = this.checked;
+				jarTT.ui.saveSettings();
 			})
 		);
 
@@ -179,6 +187,7 @@
 				}
 				
 				jarTT.settings.autoBop = this.checked;
+				jarTT.ui.saveSettings();
 			})
 		);
 
@@ -204,6 +213,7 @@
 					$(this).css({width: width});
 
 				jarTT.settings.idleLimit = val;
+				jarTT.ui.saveSettings();
 			})
 		);
 		box.append("seconds");
@@ -214,6 +224,7 @@
 				'checked': jarTT.settings.smiffTime
 			}).click(function() {
 				jarTT.settings.smiffTime = this.checked;
+				jarTT.ui.saveSettings();
 			})
 		);
 		box.append("<br />");
