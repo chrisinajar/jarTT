@@ -204,7 +204,7 @@ jarTT.version = {
 			}));
 		}
 		
-		//jarTT.storage.setNamedData('version', version);
+		jarTT.storage.setNamedData('version', version);
 	},
 	unload: function() {
 	},
