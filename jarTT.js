@@ -123,8 +123,7 @@ jarTTLoad.loadScript = (function(name, h) {
     var head = oDOC.head || oDOC.getElementsByTagName("head");
 	
 	var handler = function() {
-		var exec = "jarTT." + name + ".load()";
-		eval(exec);
+		jarTT[name].load();
 		jarTTLoad.ld.push(name);
 		h();
 	};
@@ -163,6 +162,7 @@ jarTTLoad.loadScript = (function(name, h) {
     }
 });
 jarTTLoad(comp, function() {
+	console.log("Done loading!");
 	jarTT.events.dispatchEvent("jarTT_loaded");
 });
 })();
