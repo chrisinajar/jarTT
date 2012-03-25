@@ -37,6 +37,7 @@ var comp = {
 	'avatar': ['main', 'events'],
 	// UI shit
 	'ui': ['main', 'events', 'storage'],
+	// HTML5 storage
 	'storage': ['main', 'events'],
 };
 
@@ -48,12 +49,10 @@ if (typeof jarTT != "undefined" && jarTT != null) {
 	oldJarTT = jarTT;
 	jarTT.unload();
 	jarTT = null;
-} else {
-	oldJarTT.settings = {};
 }
-
-if (typeof oldJarTT.settings.baseUrl != "string")
-	oldJarTT.settings.baseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
+var baseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
+if (oldJarTT.settings && oldJarTT.settings.baseUrl)
+	baseUrl = oldJarTT.settings.baseUrl;
 	
 jarTTLoad = function(arg1,arg2) {
 	if (typeof arg1 == "object")
@@ -70,6 +69,8 @@ jarTTLoad.n = (function(data) {
 		data.callback();
 		return;
 	}
+	console.log(jarTTLoad.ld.length + ':' + data.i);
+	console.log(data.comp + ':' + data.s);
 	for (tl in data.comp) if ($.inArray(tl, jarTTLoad.ld) == -1) {
 		jarTTLoad.l(tl, data);
 	}
