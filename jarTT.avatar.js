@@ -73,7 +73,7 @@ jarTT.avatar = {
 	},
 	tick: function() {
 		jarTT.avatar.hideAudience(jarTT.settings.hideAudience);
-		var useSmiff = jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh ?prince)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
+		var useSmiff = jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh ?prince|bel[- ]?air)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
 		if (useSmiff || jarTT.settings.lastSmiffTime) {
 			jarTT.settings.lastSmiffTime = useSmiff;
 			jarTT.roomDiv.children().each(function(i,obj) {

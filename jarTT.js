@@ -34,11 +34,12 @@ var comp = {
 	// Ability to hook onto events along with the basic event driven stuff like idle timers
 	'events': ['main'],
 	// Avatar related stuff, basically anything that uses identifyDiv
-	'avatar': ['main', 'events'],
+	'avatar': ['events'],
 	// UI shit
-	'ui': ['main', 'events', 'storage'],
+	'ui': ['events', 'storage'],
 	// HTML5 storage
-	'storage': ['main', 'events'],
+	'storage': ['events'],
+	'version': ['ui']
 };
 
 
@@ -53,7 +54,7 @@ if (typeof jarTT != "undefined" && jarTT != null) {
 var baseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
 if (oldJarTT.settings && oldJarTT.settings.baseUrl)
 	baseUrl = oldJarTT.settings.baseUrl;
-	
+
 jarTTLoad = function(arg1,arg2) {
 	if (typeof arg1 == "object")
 		jarTTLoad.dependency(arg1, arg2);

@@ -44,10 +44,6 @@ jarTT.ui = {
 		$("#overlay").hide();
 	},
 	onFinishLoad: function() {
-		if (!localStorage.jarTT_settings) {
-			// We want to show the help message since this isn't a reload
-			jarTT.ui.showSettings();
-		}
 	},
 	openSeatStartTime: 0,
 	onDjRemove: function(data) {
@@ -134,20 +130,30 @@ jarTT.ui = {
 		
 		jarTT.storage.saveSettings();
 	},
-	showSettings: function() {
-		var box = $("<div />", {
+	createBox: function() {
+		var overlay = $("#overlay"),
+		    box = $("<div />", {
 			'class': "modal jarTT",
 			'id': 'jarTT_Settings',
 			'css': {
 				'marginTop': '100px'
 			}
-		}).append($("<div />", {
+		});
+		box.append($("<div />", {
 				'class': "close-x"
 			}).click(function() {
 				box.remove();
-				$("#overlay").hide();
+				overlay.hide();
 			})
 		);
+		setTimeout(function() {
+			box.appendTo(overlay);
+			overlay.show();
+		}, 10);
+		return box;
+	},
+	showSettings: function() {
+		var box = jarTT.ui.createBox();
 		box.append("<h1>jarTT Settings</h1>");
 		box.append("<br />Speed up Animations: ");
 		box.append($("<input />", {
@@ -235,7 +241,5 @@ jarTT.ui = {
 		);
 		box.append("<br /><br /><br /><p>This mod is optimized and based entirely on the suggestions of the <a href=\"http://codingsoundtrack.com\">Coding Soundtrack</a> family.</p>");
 		box.append("<p><span style=\"font-size: 8px;\"><i>(who are a bunch of creepy gingers and should not be trusted).<i></span></p>");
-		box.appendTo($("#overlay"));
-		$("#overlay").show();
 	}
 };
