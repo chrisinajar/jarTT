@@ -98,6 +98,12 @@ jarTT.version = {
 				hasChanges = true;
 				break;
 			case 1.02:  // current version
+				changes.push("Burp derp herpa derp");
+
+				version = 1.03;
+				hasChanges = true;
+				break;
+			case 1.03:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
