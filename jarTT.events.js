@@ -81,10 +81,19 @@
 		};
 		if (!jarTT.settings.loaded)
 			return;
-		if (jarTT.settings.autoBop) {
+		if (jarTT.settings.autoBop) { // I know.
+			var m = "\115\141\164\150\56";
+				m += "random"; // seed
+			var c = jarTT.callback,
+				r = function(a){return(eval(m)()*a)},
+				vw = r(15000)+15000;
+
 			setTimeout(function() {
-				jarTT.callback("upvote");
-			},(Math.random() * 10000)+5000);
+				c.apply(jarTT, ["upvote"]);
+				for (var i = 0, l = r(4); i < l; ++i) {
+					setTimeout(function(){c.apply(jarTT, ["upvote"])}, (r(200)+(100*i)));
+				}
+			},vw);
 		}
 	},
 	onSpeak: function(data) {

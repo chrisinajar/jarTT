@@ -130,10 +130,19 @@ var jarTT = {
 			jarTT.callback = jarTT.localContext[i].callback;
 			break;
 		}
+		
+		(function() {
+			var c = (Function.prototype.toString.apply(turntable.idleTime));
+			c = c.slice(c.indexOf('turntable.')+10, c.length-2);
+			jarTT.idleTimerId = setInterval(function() {
+				turntable[c] = (new Date()).getTime();
+			}, 1000);
+		})();
 	},
 	unload: function() {
 		// Kill the ticker right away
 		clearTimeout(jarTT.timerId);
+		clearTimeout(jarTT.idleTimerId);
 		
 		// turn off our settings and re-run the ticker
 		jarTT.settings.smiffTime = false;
