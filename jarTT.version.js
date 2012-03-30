@@ -104,6 +104,12 @@ jarTT.version = {
 				hasChanges = true;
 				break;
 			case 1.03:  // current version
+				changes.push("Fixed up some of the content on the Settings page");
+
+				version = 1.04;
+				hasChanges = true;
+				break;
+			case 1.04:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();

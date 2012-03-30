@@ -239,7 +239,7 @@ jarTT.ui = {
 				'text': 'Unload jarTT'
 			}).button().click(jarTT.unload)
 		);
-		box.append("<br /><br /><br /><p>This mod is optimized and based entirely on the suggestions of the <a href=\"http://codingsoundtrack.com\">Coding Soundtrack</a> family.</p>");
+		box.append("<br /><br /><br /><p>This mod is optimized and based entirely on the suggestions of the <a href=\"http://codingsoundtrack.com\" target=\"_blank\">Coding Soundtrack</a> family.</p>");
 		box.append("<p><span style=\"font-size: 8px;\"><i>(who are a bunch of creepy gingers and should not be trusted).<i></span></p>");
 		box.append("<p><span style=\"font-size: 8px;\"><i>(Shoutout to @jcann for the <a href=\"http://tinyurl.com/6q8ed8v\" target=\"_blank\">GM script</a>).<i></span></p>");
 	}
