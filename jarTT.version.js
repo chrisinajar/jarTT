@@ -90,7 +90,14 @@ jarTT.version = {
 				version = 1.01;
 				hasChanges = true;
 				break;
-			case 1.1:  // current version
+			case 1.01:
+				changes.push("Updated autobop to be more reliable");
+				changes.push("Fixed dj idle timers appearing behind settings window");
+
+				version = 1.02;
+				hasChanges = true;
+				break;
+			case 1.02:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
