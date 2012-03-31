@@ -55,7 +55,8 @@ jarTT.version = {
 			"probably love it.",
 			"be pretty indifferent to it.",
 			"fall in love.",
-			"found a religion on it."
+			"found a religion on it.",
+			"become a famous rapper."
 		];
 		
 		var doWhat = [
@@ -64,6 +65,7 @@ jarTT.version = {
 			"SUCK ON DEEZ NUTS!",
 			"THE LEMONS!",
 			"OH NO YOU DI'NT!",
+			"PARENTS DON'T UNDERSTAND!",
 			"GIVE ME ALL YOUR MONEY!"
 		];
 		
@@ -97,19 +99,26 @@ jarTT.version = {
 				version = 1.02;
 				hasChanges = true;
 				break;
-			case 1.02:  // current version
+			case 1.02:
 				changes.push("Burp derp herpa derp");
 
 				version = 1.03;
 				hasChanges = true;
 				break;
-			case 1.03:  // current version
+			case 1.03:
 				changes.push("Fixed up some of the content on the Settings page");
 
 				version = 1.04;
 				hasChanges = true;
 				break;
-			case 1.04:  // current version
+			case 1.04:
+				changes.push("Slightly more will smith...");
+				changes.push("Added the ability for developers to easily load 3rd party extensions to jarTT.");
+
+				version = 1.05;
+				hasChanges = true;
+				break;
+			case 1.05:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
