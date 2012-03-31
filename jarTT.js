@@ -17,6 +17,45 @@
  *
  */
 
+var oldJarTT = {};
+var jarTTLoad = function(){};
+(function() {
+
+/*********************************
+ ****** THIRD PARTY MODULES ******
+ *********************************/
+
+var modules = {
+	/*
+	myplugin: {
+		deps: ['events', 'storage'],
+		url: https://github.com/chrisinajar/myplugin.js
+	},
+	 */
+};
+
+/*
+ * Load  modules like this:
+ * 
+
+jarTTLoad.forceLoad('http://www.awesomemod.com/test/awesomemod.js', 'awesomemod', function(){
+	jarTT.log("That worked!");
+});
+
+ * 
+ * You'll notice that it doesn't work, try this out though:
+ * 
+
+jarTT.settings.debug = true;
+
+ * 
+ * There's no need to argue, parents just don't understand.
+ */
+
+
+
+
+
 // This file is just a big complicated loader.
 // The majority of this code is creating an object called jarTTLoad which can take either an 
 // object or a string, and a success handler as the second parameter. The object works just like
@@ -24,9 +63,6 @@
 // that is loaded without any additional checking. Don't do that. I should probably make it private.
 
 var wasLoaded = false;
-var oldJarTT = {};
-var jarTTLoad = function(){};
-(function() {
 // These are dependancies. To add a new file, add it here, and list anything that needs to be loaded first (usually just main and events)
 var comp = {
 	// main jarTT, most of the code is here
@@ -58,8 +94,12 @@ if (oldJarTT.settings && oldJarTT.settings.baseUrl)
 jarTTLoad = function(arg1,arg2) {
 	if (typeof arg1 == "object")
 		jarTTLoad.dependency(arg1, arg2);
-	else if (typeof arg1 == "string")
-		jarTTLoad.loadScript(arg1, arg2);
+	else if (typeof arg1 == "string") {
+		jarTTLoad.loadScript(baseUrl + 'jarTT.' + arg1 + '.js', arg1, arg2);
+	}
+};
+jarTTLoad.forceLoad = function(url, name, cb) {
+	jarTTLoad.loadScript(url, name, cb);
 };
 jarTTLoad.ld = [];
 jarTTLoad.cl = [];
@@ -116,8 +156,7 @@ jarTTLoad.dependency = (function(c, h) {
 // Code borrowed and altered from LABjs, http://labjs.com/
 // Specifically: https://gist.github.com/603980
 // Credit where credit is due.
-jarTTLoad.loadScript = (function(name, h) {
-	var script = baseUrl + 'jarTT.' + name + '.js';
+jarTTLoad.loadScript = (function(script, name, h) {
 	var global = window;
 	var oDOC = document;
     var head = oDOC.head || oDOC.getElementsByTagName("head");
