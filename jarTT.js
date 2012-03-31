@@ -91,6 +91,9 @@ var baseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
 if (oldJarTT.settings && oldJarTT.settings.baseUrl)
 	baseUrl = oldJarTT.settings.baseUrl;
 
+if (localStorage.jarTT_devurl)
+	baseUrl = localStorage.jarTT_devurl;
+
 jarTTLoad = function(arg1,arg2) {
 	if (typeof arg1 == "object")
 		jarTTLoad.dependency(arg1, arg2);
