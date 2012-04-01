@@ -123,6 +123,10 @@ var jarTT = {
 		
 		jarTT.localContext = ttObjects.getRoom();
 		jarTT.callFunction = ttObjects.getApi();
+		jarTT.manager = ttObjects.getManager();
+		
+		jarTT.manager.show_heart_orig = jarTT.manager.show_heart;
+		jarTT.manager.show_heart = function(l) {setTimeout(function(){ jarTT.manager.show_heart_orig(l);}, 500);};
 		
 		for (i in jarTT.localContext) if (jarTT.localContext[i] && jarTT.localContext[i].callback) {
 			jarTT.callback = jarTT.localContext[i].callback;
@@ -142,6 +146,12 @@ var jarTT = {
 		clearTimeout(jarTT.timerId);
 		clearTimeout(jarTT.idleTimerId);
 		
+		
+		if (jarTT.manager.show_heart_orig) {
+			jarTT.manager.show_heart = jarTT.manager.show_heart_orig;
+			delete jarTT.manager.show_heart_orig;
+		}
+		
 		// turn off our settings and re-run the ticker
 		jarTT.settings.smiffTime = false;
 		jarTT.tickFunction(jarTT);
@@ -156,9 +166,9 @@ var jarTT = {
 		jarTT.log("jarTT successfully unloaded!");
 		jarTT = null;
 	},
-	// This is copy and pasted from the TTfm source code, I couldn't find a good way to deobfuscate it...
 	callFunction: null,
-	localContext: null
+	localContext: null,
+	manager: null
 };
 jarTT.main = {
 	load: jarTT.load
