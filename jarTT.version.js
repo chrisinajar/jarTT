@@ -91,33 +91,28 @@ jarTT.version = {
 
 				version = 1.01;
 				hasChanges = true;
-				break;
 			case 1.01:
 				changes.push("Updated autobop to be more reliable");
 				changes.push("Fixed dj idle timers appearing behind settings window");
 
 				version = 1.02;
 				hasChanges = true;
-				break;
 			case 1.02:
 				changes.push("Burp derp herpa derp");
 
 				version = 1.03;
 				hasChanges = true;
-				break;
 			case 1.03:
 				changes.push("Fixed up some of the content on the Settings page");
 
 				version = 1.04;
 				hasChanges = true;
-				break;
 			case 1.04:
 				changes.push("Slightly more will smith...");
 				changes.push("Added the ability for developers to easily load 3rd party extensions to jarTT.");
 
 				version = 1.05;
 				hasChanges = true;
-				break;
 			case 1.05:  // current version
 		};
 		if (hasChanges) {
