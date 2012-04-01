@@ -81,8 +81,6 @@ jarTT.version = {
 				changes.push("MOAR SMIFF!");
 				changes.push("Mildly painful to view release notes!");
 				
-				notes += "I'll be using this window to inform you of new updates as they come out. Stay tuned, and feel free to send suggestions my way!";
-				
 				version = 1.0;
 				showSettings = true;
 				hasChanges = true;
@@ -105,15 +103,17 @@ jarTT.version = {
 			case 1.03:
 				changes.push("Fixed up some of the content on the Settings page");
 
-				version = 1.04;
-				hasChanges = true;
-			case 1.04:
-				changes.push("Slightly more will smith...");
-				changes.push("Added the ability for developers to easily load 3rd party extensions to jarTT.");
-
 				version = 1.05;
 				hasChanges = true;
-			case 1.05:  // current version
+			case 1.05:
+				changes.push("New module loading system with developer modes.");
+
+				notes += "I've built a module loading system into jarTT, currently it supports loading based on dependency trees and stores what modules are loaded between sessions. I'm still working on a module browser, " +
+						"but if you're a programmer and want to make a small mod, please get in touch with me and I'll walk you through my system :)";
+				
+				version = 1.06;
+				hasChanges = true;
+			case 1.06:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
