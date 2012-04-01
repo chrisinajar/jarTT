@@ -113,7 +113,12 @@ jarTT.version = {
 				
 				version = 1.06;
 				hasChanges = true;
-			case 1.06:  // current version
+			case 1.06:
+				changes.push("Fixed <3's not appearing when in hide audience mode.");
+
+				version = 1.07;
+				hasChanges = true;
+			case 1.07:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
