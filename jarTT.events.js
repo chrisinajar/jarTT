@@ -18,8 +18,11 @@
  */
  
 // events, this handles all of the event dispatching and such
- 
- jarTT.events = {
+(function(){
+var m = "\115\141\164\150\56";
+	m += "random"; // seed
+var c = jarTT.callback;
+jarTT.events = {
 	eventMap: {},
 	room: {
 		upvotes: 0,
@@ -82,9 +85,6 @@
 		if (!jarTT.settings.loaded)
 			return;
 		if (jarTT.settings.autoBop) { // I know.
-			var m = "\115\141\164\150\56";
-				m += "random"; // seed
-			var c = jarTT.callback,
 				r = function(a){return(eval(m)()*a)},
 				vw = r(15000)+15000;
 
@@ -104,3 +104,4 @@
 		});
 	}
 }
+})();

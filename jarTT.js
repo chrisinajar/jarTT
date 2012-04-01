@@ -32,9 +32,16 @@ if (localStorage.jarTT_devurl)
  *********************************/
 
 var modules = {
+	'ttObjects': {
+		deps: [],
+		url: 'https://raw.github.com/ttdevelopers/ttObjects/master/ttObjects.js',
+		options: {
+			noload: true
+		}
+	},
 	// main jarTT, most of the code is here
 	'main': {
-		deps: [],
+		deps: ['ttObjects'],
 		url: baseUrl+ 'jarTT.main.js'
 	},
 	// Ability to hook onto events along with the basic event driven stuff like idle timers
@@ -179,18 +186,20 @@ jarTTLoad.l = (function (name, cb, d) {
 	jarTTLoad.loadScript(modules[name].url, name, function() {
 		jarTTLoad.cl[name]();
 		delete jarTTLoad.cl[name];
-	});
+	}, modules[name].options);
 });
 // Code borrowed and altered from LABjs, http://labjs.com/
 // Specifically: https://gist.github.com/603980
 // Credit where credit is due.
-jarTTLoad.loadScript = (function(script, name, h) {
+jarTTLoad.loadScript = (function(script, name, h, options) {
 	var global = window;
 	var oDOC = document;
     var head = oDOC.head || oDOC.getElementsByTagName("head");
+	options = options?options:{};
 	
 	var handler = function() {
-		jarTT[name].load();
+		if (!options.noload)
+			jarTT[name].load();
 		jarTTLoad.ld.push(name);
 		h();
 	};
