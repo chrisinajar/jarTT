@@ -121,10 +121,8 @@ var jarTT = {
 		
 		jarTT.roomDiv = $($(".roomView > div")[1]);
 		
-		for (i in turntable) if (turntable[i] && turntable[i].djIds) {
-			jarTT.localContext = turntable[i];
-			break;
-		}
+		jarTT.localContext = ttObjects.getRoom();
+		jarTT.callFunction = ttObjects.getApi();
 		
 		for (i in jarTT.localContext) if (jarTT.localContext[i] && jarTT.localContext[i].callback) {
 			jarTT.callback = jarTT.localContext[i].callback;
@@ -159,41 +157,8 @@ var jarTT = {
 		jarTT = null;
 	},
 	// This is copy and pasted from the TTfm source code, I couldn't find a good way to deobfuscate it...
-	callFunction: function (c, a) {
-		if (c.api == "room.now") {
-			return;
-		}
-		c.msgid = turntable.messageId;
-		turntable.messageId += 1;
-		c.clientid = turntable.clientId;
-		if (turntable.user.id && !c.userid) {
-			c.userid = turntable.user.id;
-			c.userauth = turntable.user.auth;
-		}
-		var d = JSON.stringify(c);
-		if (turntable.socketVerbose) {
-			//jarTT.log(util.nowStr() + " Preparing message " + d);
-		}
-		var b = $.Deferred();
-		turntable.whenSocketConnected(function () {
-			if (turntable.socketVerbose) {
-				//jarTT.log(util.nowStr() + " Sending message " + c.msgid + " to " + turntable.socket.host);
-			}
-			if (turntable.socket.transport.type == "websocket") {
-				turntable.socketLog(turntable.socket.transport.sockets[0].id + ":<" + c.msgid);
-			}
-			turntable.socket.send(d);
-			turntable.socketKeepAlive(true);
-			turntable.pendingCalls.push({
-				msgid: c.msgid,
-				handler: a,
-				deferred: b,
-				time: util.now()
-			});
-		});
-		return b.promise();
-	},
-	localContext: {}
+	callFunction: null,
+	localContext: null
 };
 jarTT.main = {
 	load: jarTT.load
