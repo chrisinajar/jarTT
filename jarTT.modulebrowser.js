@@ -35,12 +35,33 @@ jarTT.modulebrowser = {
 		mods_enabled=mods_enabled?mods_enabled:[];
 		
 		for (var mod in modules) {
+			jarTT.log('testing ' + mod);
 			if (!modules[mod].options)
 				modules[mod].options = {};
 			if (modules[mod].options.required) // don't bother showing any of the modules that aren't optional
 				continue;
+			jarTT.log('testing ' + mod);
 			mod_ar.push(mod);
 			var checked = ($.inArray(mod, mods_enabled) != -1);
+			
+			box.append("<br />");
+			box.append($("<p>", {
+				text: mod,
+				css: {
+					fontSize: '16px',
+					fontWeight: checked?"bold":"none"
+				}
+			}).append($("<input />",
+				{
+					'type': 'checkbox',
+					'checked': checked,
+					css: {
+						marginLeft: '4px'
+					}
+				}).click(function() {
+					this.checked;
+				})
+			));
 		}
 	}
 }
