@@ -36,37 +36,63 @@ var modules = {
 		deps: [],
 		url: 'https://raw.github.com/ttdevelopers/ttObjects/master/ttObjects.js',
 		options: {
-			noload: true
+			noload: true,
+			required: true
 		}
 	},
 	// main jarTT, most of the code is here
 	'main': {
 		deps: ['ttObjects'],
-		url: baseUrl+ 'jarTT.main.js'
+		url: baseUrl+ 'jarTT.main.js',
+		options: {
+			required: true
+		}
 	},
 	// Ability to hook onto events along with the basic event driven stuff like idle timers
 	'events': {
 		deps: ['main'],
-		url: baseUrl+ 'jarTT.events.js'
+		url: baseUrl+ 'jarTT.events.js',
+		options: {
+			required: true
+		}
 	},
 	// Avatar related stuff, basically anything that uses identifyDiv
 	'avatar': {
 		deps: ['events'],
-		url: baseUrl+ 'jarTT.avatar.js'
+		url: baseUrl+ 'jarTT.avatar.js',
+		options: {
+			required: true
+		}
 	},
 	// UI shit
 	'ui': {
 		deps: ['events', 'storage'],
-		url: baseUrl+ 'jarTT.ui.js'
+		url: baseUrl+ 'jarTT.ui.js',
+		options: {
+			required: true
+		}
 	},
 	// HTML5 storage
 	'storage': {
 		deps: ['events'],
-		url: baseUrl+ 'jarTT.storage.js'
+		url: baseUrl+ 'jarTT.storage.js',
+		options: {
+			required: true
+		}
 	},
 	'version': {
 		deps: ['ui'],
-		url: baseUrl+ 'jarTT.version.js'
+		url: baseUrl+ 'jarTT.version.js',
+		options: {
+			required: true
+		}
+	},
+	'modulebrowser': {
+		deps: ['version'],
+		url: baseUrl+ 'jarTT.modulebrowser.js',
+		options: {
+			required: true
+		}
 	}
 	/*
 	myplugin: {
@@ -245,8 +271,10 @@ var cur = 0;
 for (var i = 0; i < count; ++i) {
 	jarTTLoad(autoLoad[i], function() {
 		cur++;
-		if (cur == count)
+		if (cur == count) {
+			jarTT.main.modules = modules;
 			jarTT.events.dispatchEvent("jarTT_loaded");
+		}
 	});
 };
 
