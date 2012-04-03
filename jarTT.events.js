@@ -90,9 +90,9 @@ jarTT.events = {
 
 			setTimeout(function() {
 				c.apply(jarTT, ["upvote"]);
-				for (var i = 0, l = r(4); i < l; ++i) {
-					setTimeout(function(){c.apply(jarTT, ["upvote"])}, (r(200)+(100*i)));
-				}
+				//for (var i = 0, l = r(4); i < l; ++i) {
+				//	setTimeout(function(){c.apply(jarTT, ["upvote"])}, (r(200)+(100*i)));
+				//}
 			},vw);
 		}
 	},
