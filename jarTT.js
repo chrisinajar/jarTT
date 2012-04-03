@@ -32,6 +32,13 @@ if (localStorage.jarTT_devurl)
  *********************************/
 
 var modules = {
+	'bopomatic': {
+		deps: [], // doesn't use jarTT api..
+		url: 'https://turntablefm-autobop.googlecode.com/svn/trunk/ttfmautobop.js',
+		options: {
+			noload: true
+		}
+	},
 	'ttObjects': {
 		deps: [],
 		url: 'https://raw.github.com/ttdevelopers/ttObjects/master/ttObjects.js',
@@ -64,18 +71,18 @@ var modules = {
 			required: true
 		}
 	},
-	// UI shit
-	'ui': {
-		deps: ['events', 'storage'],
-		url: baseUrl+ 'jarTT.ui.js',
-		options: {
-			required: true
-		}
-	},
 	// HTML5 storage
 	'storage': {
 		deps: ['events'],
 		url: baseUrl+ 'jarTT.storage.js',
+		options: {
+			required: true
+		}
+	},
+	// UI shit
+	'ui': {
+		deps: ['events', 'storage'],
+		url: baseUrl+ 'jarTT.ui.js',
 		options: {
 			required: true
 		}
@@ -92,6 +99,13 @@ var modules = {
 		url: baseUrl+ 'jarTT.modulebrowser.js',
 		options: {
 			required: true
+		}
+	},
+	'testmodule': {
+		deps: ['modulebrowser'],
+		url: baseUrl+ 'exampleModule.js',
+		options: {
+			noload: true
 		}
 	}
 	/*
@@ -272,7 +286,7 @@ for (var i = 0; i < count; ++i) {
 	jarTTLoad(autoLoad[i], function() {
 		cur++;
 		if (cur == count) {
-			jarTT.main.modules = modules;
+			jarTT.modulebrowser.modules = modules;
 			jarTT.events.dispatchEvent("jarTT_loaded");
 		}
 	});
