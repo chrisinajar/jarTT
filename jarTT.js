@@ -286,7 +286,8 @@ for (var i = 0; i < count; ++i) {
 	jarTTLoad(autoLoad[i], function() {
 		cur++;
 		if (cur == count) {
-			jarTT.modulebrowser.modules = modules;
+			if (jarTT.modulebrowser)
+				jarTT.modulebrowser.modules = modules;
 			jarTT.events.dispatchEvent("jarTT_loaded");
 		}
 	});
