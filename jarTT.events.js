@@ -70,7 +70,7 @@ jarTT.events = {
 		turntable.socket.on("message", jarTT.events.socketEvent);
 		jarTT.settings.loaded = true;
 
-		jarTT.timerId = setInterval(function(){jarTT.tickFunction(jarTT)}, 100);
+		jarTT.timerId = setInterval(function(){jarTT.tickFunction(jarTT)}, 2000);
 
 		jarTT.log("jarTT successfully loaded!");
 	},
