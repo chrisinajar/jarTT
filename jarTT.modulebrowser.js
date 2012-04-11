@@ -26,9 +26,14 @@ jarTT.modulebrowser = {
 	},
 	showModuleBrowser: function() {
 		var box = jarTT.ui.createBox();
+		
+		box.width(600);
+		
 		box.append("<h1>jarTT Modules</h1>");
-		box.append("<p style='font-size: 14px;'>Browse and install modules to jarTT. These modules will be preserved between sessions</p>");
-		box.append("<p style='font-size: 14px;'>This module system is in its infancy. Use at your own risk, and please don't use it while DJing. You might need to F5.</p>");
+		box.append($("<center />")
+			.append("<p style='width:400px;font-size: 14px;'>Browse and install modules to jarTT. These modules will be preserved between sessions</p>")
+			.append("<p style='width:400px;font-size: 14px;'>This module system is in its infancy. Use at your own risk, and please don't use it while DJing. You might need to F5.</p>")
+		);
 		var modules = jarTT.modulebrowser.modules,
 			mod_ar = [],
 			mods_enabled = jarTT.storage.getNamedData('modules');
