@@ -29,7 +29,8 @@ var jarTT = {
 		'lastSmiffTime': false,
 		'debug': false,
 		'idleLimit': 300,
-		'avatarTest': ['4e42c21b4fe7d02e6107b1ff', '4e2376eca3f751213d006700']
+		'avatarTest': ['4e42c21b4fe7d02e6107b1ff', '4e2376eca3f751213d006700'],
+		'killbubbles': false
 	},
 	log: function(){
 		

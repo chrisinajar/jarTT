@@ -56,7 +56,8 @@ jarTT.version = {
 			"be pretty indifferent to it.",
 			"fall in love.",
 			"found a religion on it.",
-			"become a famous rapper."
+			"become a famous rapper.",
+			"win a grammy."
 		];
 		
 		var doWhat = [
@@ -66,7 +67,8 @@ jarTT.version = {
 			"THE LEMONS!",
 			"OH NO YOU DI'NT!",
 			"PARENTS DON'T UNDERSTAND!",
-			"GIVE ME ALL YOUR MONEY!"
+			"GIVE ME ALL YOUR MONEY!",
+			"KILL IT WITH FIRE!"
 		];
 		
 		var changes = [];
@@ -119,6 +121,12 @@ jarTT.version = {
 				version = 1.07;
 				hasChanges = true;
 			case 1.07:  // current version
+				changes.push("Added toggleable option to kill the awful bubbles with the smite of jar.");
+
+				version = 1.08;
+				hasChanges = true;
+				showSettings = true;
+			case 1.08:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();

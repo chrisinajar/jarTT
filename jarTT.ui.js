@@ -27,6 +27,7 @@ jarTT.ui = {
 		jarTT.events.registerEvent("add_dj", jarTT.ui.onDjAdd);
 		jarTT.events.registerEvent("rem_dj", jarTT.ui.onDjRemove);
 		jarTT.events.registerEvent("jarTT_tick", jarTT.ui.redrawUpDown);
+		jarTT.events.registerEvent("jarTT_tick", jarTT.ui.killBubbles);
 		
 		// jarTT.events.registerEvent("update_votes", jarTT.ui.redrawUpDown);
 		// jarTT.events.registerEvent("newsong", jarTT.ui.redrawUpDown);
@@ -39,9 +40,32 @@ jarTT.ui = {
 		.insertBefore($("#menuh > div:last"));
 	},
 	unload: function() {
+		// remove event listeners
+		$(".avatar_laptop").off('mouseover.jarTT');
+		
 		// clean up our ui shit
 		$(".jarTT").remove();
 		$("#overlay").hide();
+	},
+	killBubbles: function() {
+		if (!jarTT.settings.killbubbles)
+			return;
+
+		$(".laptopCanvas").hide();
+		
+		$(".avatar_laptop").each(function(){
+			var self = $(this);
+			
+			self.off('mouseover.jarTT');
+			self.on('mouseover.jarTT', function() {
+				jarTT.ui.laptopHover(self);
+			});
+		});
+	},
+	laptopHover: function(self) {
+		if (!jarTT.settings.killbubbles)
+			return;
+		self.next().find('img[src$="headfront.png"]').mouseover();
 	},
 	onFinishLoad: function() {
 	},
@@ -177,6 +201,19 @@ jarTT.ui = {
 			}).click(function() {
 				jarTT.settings.hideAudience = this.checked;
 				jarTT.ui.saveSettings();
+			})
+		);
+		
+		box.append("<br />Kill Bubbles: ");
+		box.append($("<input />", {
+				'type': 'checkbox',
+				'checked': jarTT.settings.killbubbles
+			}).click(function() {
+				jarTT.settings.killbubbles = this.checked;
+				jarTT.ui.saveSettings();
+				
+				if (!jarTT.settings.killbubbles)
+					$(".laptopCanvas").show();
 			})
 		);
 
