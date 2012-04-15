@@ -51,7 +51,8 @@ jarTT.ui = {
 		if (!jarTT.settings.killbubbles)
 			return;
 
-		$(".laptopCanvas").hide();
+		//$(".laptopCanvas").hide();
+		$("#zoomView").hide();
 		
 		$(".avatar_laptop").each(function(){
 			var self = $(this);
@@ -66,6 +67,7 @@ jarTT.ui = {
 		if (!jarTT.settings.killbubbles)
 			return;
 		self.next().find('img[src$="headfront.png"]').mouseover();
+		$("#zoomView").hide();
 	},
 	onFinishLoad: function() {
 	},

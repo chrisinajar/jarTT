@@ -120,13 +120,18 @@ jarTT.version = {
 
 				version = 1.07;
 				hasChanges = true;
-			case 1.07:  // current version
+			case 1.07:
 				changes.push("Added toggleable option to kill the awful bubbles with the smite of jar.");
 
 				version = 1.08;
 				hasChanges = true;
 				showSettings = true;
-			case 1.08:  // current version
+			case 1.08:
+				changes.push("Laptop stickers no longer go away when you disable the bubbles! :)");
+
+				version = 1.09;
+				hasChanges = true;
+			case 1.09:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
