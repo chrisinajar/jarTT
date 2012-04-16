@@ -32,6 +32,13 @@ if (localStorage.jarTT_devurl)
  *********************************/
 
 var modules = {
+	'flow': {
+		deps: [],
+		url: 'https://raw.github.com/willconant/flow-js/master/flow.js',
+		options: {
+			noload: true
+		}
+	},
 	'bopomatic': {
 		deps: [], // doesn't use jarTT api..
 		url: 'https://turntablefm-autobop.googlecode.com/svn/trunk/ttfmautobop.js',
@@ -46,7 +53,7 @@ var modules = {
 			noload: true
 		}
 	},
-	'hivemind': {
+	'hivemind_raw': {
 		deps: ['socket.io', 'ttObjects'],
 		url: 'https://raw.github.com/chrisinajar/ttfm-hivemind/master/client.js',
 		options: {
@@ -106,6 +113,13 @@ var modules = {
 		url: baseUrl+ 'jarTT.version.js',
 		options: {
 			required: true
+		}
+	},
+	// hivemind realtime communication
+	'hivemind': {
+		deps: ['ttObjects', 'flow'],
+		url: baseUrl+ 'jarTT.hivemind.js',
+		options: {
 		}
 	},
 	'modulebrowser': {

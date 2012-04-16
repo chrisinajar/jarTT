@@ -285,10 +285,10 @@ jarTT.ui = {
 					jarTT.storage.setNamedData('modules', mods_enabled);
 					jarTTLoad('hivemind',function(){});
 				} else {
-					for (var i = 0; i < mods_enabled.length; ++i) {
+					for (var i = 0; i < mods_enabled.length; ++i)
 						if (mods_enabled[i] === 'hivemind')
 							mods_enabled.splice(i--, 1);
-					}
+
 					jarTT.storage.setNamedData('modules', mods_enabled);
 					setTimeout((function(){$.getScript('https://raw.github.com/chrisinajar/jarTT/master/jarTT.js');}), 10);
 					setTimeout((function(){jarTT.ui.showSettings();}), 2000);
