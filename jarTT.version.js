@@ -138,7 +138,14 @@ jarTT.version = {
 				version = 1.10;
 				hasChanges = true;
 				showSettings = true;
-			case 1.10:  // current version
+			case 1.10:
+				changes.push("Fixed the Hivemind loader");
+
+				notes += "Go enable Hivemind. Currently we're just testing the infastructure, but eventually this will change the way you use turntable.fm";
+				version = 1.11;
+				hasChanges = true;
+				showSettings = true;
+			case 1.11:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
