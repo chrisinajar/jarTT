@@ -73,6 +73,8 @@ jarTT.events = {
 		jarTT.timerId = setInterval(function(){jarTT.tickFunction(jarTT)}, 2000);
 
 		jarTT.log("jarTT successfully loaded!");
+		// Spin it once
+		setTimeout(function(){jarTT.tickFunction(jarTT)}, 10);
 	},
 	onUpdateVotes: function(data) {
 		jarTT.events.room = data.room.metadata;

@@ -185,6 +185,8 @@ if (typeof jarTT != "undefined" && jarTT != null) {
 }
 
 jarTTLoad = function(mod, cb) {
+	if (!cb)
+		cb = function(){};
 	if (mod in modules) {
 		jarTTLoad.dependency(mod, cb);
 	} else {
@@ -227,7 +229,7 @@ jarTTLoad.l = (function (name, cb, d) {
 	if (!isNaN(name))
 		return;
 	if ($.inArray(name, jarTTLoad.ld) != -1)
-		return cb(d);
+		return cb?cb(d):null;
 	
 	if (name in jarTTLoad.cl) {
 		var oldcb = jarTTLoad.cl[name];

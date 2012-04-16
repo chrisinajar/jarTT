@@ -131,7 +131,14 @@ jarTT.version = {
 
 				version = 1.09;
 				hasChanges = true;
-			case 1.09:  // current version
+			case 1.09:
+				changes.push("Created Hivemind system for realtime inter-plugin communication! Opt-in!");
+				changes.push("Improved loading/reloading time");
+
+				version = 1.10;
+				hasChanges = true;
+				showSettings = true;
+			case 1.10:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
