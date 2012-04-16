@@ -280,6 +280,8 @@ jarTT.ui = {
 				'checked': ($.inArray('hivemind', mods_enabled) !== -1)
 			}).click(function() {
 				var mods_enabled = jarTT.storage.getNamedData('modules');
+				if (!mods_enabled)
+					mods_enabled = [];
 				if (this.checked) {
 					mods_enabled.push('hivemind');
 					jarTT.storage.setNamedData('modules', mods_enabled);
