@@ -39,6 +39,20 @@ var modules = {
 			noload: true
 		}
 	},
+	'socket.io': {
+		deps: [],
+		url: 'http://chrisinajar.com:64277/socket.io/socket.io.js',
+		options: {
+			noload: true
+		}
+	},
+	'hivemind': {
+		deps: ['socket.io', 'ttObjects'],
+		url: 'https://raw.github.com/chrisinajar/ttfm-hivemind/master/client.js',
+		options: {
+			noload: true
+		}
+	},
 	'ttObjects': {
 		deps: [],
 		url: 'https://raw.github.com/ttdevelopers/ttObjects/master/ttObjects.js',
