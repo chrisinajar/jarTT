@@ -160,9 +160,12 @@ jarTT.avatar = {
 					for (var user in cache) {
 						jarTT.log('Loading cache for user: ' + user);
 						jarTT.userCache[user] = msg.msg.cache[user];
-						jarTT.userCache[user].createdTime = new Date(jarTT.userCache[user].createdTime);
-						jarTT.userCache[user].lastMessage = new Date(jarTT.userCache[user].lastMessage);
-						jarTT.userCache[user].lastUpdate = new Date(jarTT.userCache[user].lastUpdate);
+						if (typeof jarTT.userCache[user].createdTime === 'string')
+							jarTT.userCache[user].createdTime = new Date(jarTT.userCache[user].createdTime);
+						if (typeof jarTT.userCache[user].lastMessage === 'string')
+							jarTT.userCache[user].lastMessage = new Date(jarTT.userCache[user].lastMessage);
+						if (typeof jarTT.userCache[user].lastUpdate === 'string')
+							jarTT.userCache[user].lastUpdate = new Date(jarTT.userCache[user].lastUpdate);
 						jarTT.fixCachePrototype(user);
 					}
 					return;
