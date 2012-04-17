@@ -129,7 +129,7 @@ jarTT.avatar = {
 			jarTT.events.registerEvent("snagged", jarTT.avatar.showUserEvent);
 	},
 	initCache: function() {
-		if (jarTT.hivemind && !hivemind)
+		if (jarTT.hivemind && !window.hivemind)
 			return setTimeout(jarTT.avatar.initCache, 50);
 		// Fetch user cache from another user!
 		var wantsCache = true;
@@ -155,11 +155,15 @@ jarTT.avatar = {
 				jarTT.log("Msg from " + msg.from);
 				jarTT.log(msg);
 				if (wantsCache && msg.msg.api == "userCache") {
-					wantsCache = false;
+					//wantsCache = false;
 					var cache = msg.msg.cache;
 					for (var user in cache) {
 						jarTT.log('Loading cache for user: ' + user);
 						jarTT.userCache[user] = msg.msg.cache[user];
+						jarTT.userCache[user].createdTime = new Date(jarTT.userCache[user].createdTime);
+						jarTT.userCache[user].lastMessage = new Date(jarTT.userCache[user].lastMessage);
+						jarTT.userCache[user].lastUpdate = new Date(jarTT.userCache[user].lastUpdate);
+						jarTT.fixCachePrototype(user);
 					}
 					return;
 				}
@@ -228,34 +232,43 @@ jarTT.identifyDiv = function(div) {
 	return dj;
 };
 jarTT.userCache = {};
+jarTT.fixCachePrototypes = function() {
+	for (var id in jarTT.userCache)
+		jarTT.fixCachePrototype(id);
+}
+jarTT.fixCachePrototype = function(id) {
+	jarTT.userCache[id].getIdle = function() {
+		var me = jarTT.userCache[id];
+		return (new Date()) - (me.lastMessage == 0 ? me.createdTime : me.lastMessage);
+	};
+	jarTT.userCache[id].getDj = function() {
+		var ret = null;
+		var child = jarTT.roomDiv.children();
+		for (var i = 0, l = child.length; i < l; ++i) {
+			var obj = $(child[i]);
+			var dj = jarTT.identifyDiv(obj);
+			if (dj == null)
+				continue;
+
+			if (dj.userId == id) {
+				ret = dj;
+				break;
+			}
+		}
+		return ret;
+	};
+}
 jarTT.getUserInfo = function(id, c) {
 	if (!(id in jarTT.userCache)) {
 		jarTT.userCache[id] = {
 			lastUpdate: 0,
 			lastMessage: 0,
-			createdTime: (new Date()),
-			getIdle: function() {
-				var me = jarTT.userCache[id];
-				return (new Date()) - (me.lastMessage == 0 ? me.createdTime : me.lastMessage);
-			},
-			getDj: function() {
-				var ret = null;
-				var child = jarTT.roomDiv.children();
-				for (var i = 0, l = child.length; i < l; ++i) {
-					var obj = $(child[i]);
-					var dj = jarTT.identifyDiv(obj);
-					if (dj == null)
-						continue;
-
-					if (dj.userId == id) {
-						ret = dj;
-						break;
-					}
-				}
-				return ret;
-			}
+			createdTime: (new Date())
 		};
 	}
+	if (!("getDj" in jarTT.userCache[id]))
+		jarTT.fixCachePrototype(id);
+
 	if (((new Date()) - jarTT.userCache[id].lastUpdate) < 10000) {
 		c(jarTT.userCache[id]);
 		return true;

@@ -34,6 +34,7 @@ jarTT.hivemind = {
 				jarTT.hivemind.io.socket = io;
 				jarTTLoad.loadScript('https://raw.github.com/chrisinajar/ttfm-hivemind/master/client.js', 'hivemind_raw', this, {noload:true});
 			}, function() {
+				hivemind.debug = true;
 				io = window.io = jarTT.hivemind.io.ttfm;
 			}
 		);
