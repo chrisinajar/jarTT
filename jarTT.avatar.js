@@ -151,7 +151,7 @@ jarTT.avatar = {
 					return;
 				}
 			});
-			hivemind.on('room.jarTT', function(msg) {
+			hivemind.on('message.jarTT', function(msg) {
 				jarTT.log("Msg from " + msg.from);
 				jarTT.log(msg);
 				if (wantsCache && msg.msg.api == "userCache") {
