@@ -129,13 +129,15 @@ jarTT.avatar = {
 			jarTT.events.registerEvent("snagged", jarTT.avatar.showUserEvent);
 	},
 	initCache: function() {
+		if (jarTT.hivemind && !hivemind)
+			return setTimeout(jarTT.avatar.initCache, 50);
 		// Fetch user cache from another user!
 		var wantsCache = true;
 		setTimeout(function() {
 			jarTT.log('Didn\'t get a fresh user cache in time, no longer listening for one.');
 			wantsCache = false;
 		}, 5000);
-		if (jarTT.hivemind) {
+		if (hivemind) {
 			hivemind.on('room.jarTT', function(msg) {
 				jarTT.log("THE HIVE HUNGERS!");
 				jarTT.log(msg);
@@ -162,7 +164,7 @@ jarTT.avatar = {
 	},
 	unload: function() {
 		jarTT.avatar.hideAudience(false);
-		if (jarTT.hivemind)
+		if (hivemind)
 			hivemind.off('room.jarTT');
 	},
 };
