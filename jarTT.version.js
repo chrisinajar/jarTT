@@ -145,7 +145,14 @@ jarTT.version = {
 				version = 1.11;
 				hasChanges = true;
 				showSettings = true;
-			case 1.11:  // current version
+			case 1.11:
+				changes.push("Idle times made much much more accurate using hivemind");
+				changes.push("About a billion hivemind bugfixes");
+				
+				version = 1.12;
+				hasChanges = true;
+				showSettings = true;
+			case 1.12:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
