@@ -242,7 +242,7 @@ jarTT.fixCachePrototypes = function() {
 jarTT.fixCachePrototype = function(id) {
 	jarTT.userCache[id].getIdle = function() {
 		var me = jarTT.userCache[id];
-		return (new Date()) - (me.lastMessage == 0 ? me.createdTime : me.lastMessage);
+		return (new Date()).getTime() - (me.lastMessage == 0 ? me.createdTime : me.lastMessage).getTime();
 	};
 	jarTT.userCache[id].getDj = function() {
 		var ret = null;
