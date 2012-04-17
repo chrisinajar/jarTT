@@ -156,20 +156,11 @@ jarTT.avatar = {
 				jarTT.log(msg);
 				if (wantsCache && msg.msg.api == "userCache") {
 					wantsCache = false;
-					jarTT.userCache = msg.msg.cache;
-					return;
-				}
-			});
-			hivemind.on('room.jarTT', function(msg) {
-				jarTT.log("THE HIVE HUNGERS!");
-				jarTT.log(msg);
-				if (msg.from == msg.to) // We don't care about the self-broadcast
-					return;
-				if (msg.msg.api == "getUserCache") {
-					hivemind.send(msg.from, {
-						api: 'userCache',
-						cache: jarTT.userCache
-					});
+					var cache = msg.msg.cache;
+					for (var user in cache) {
+						jarTT.log('Loading cache for user: ' + user);
+						jarTT.userCache[user] = msg.msg.cache[user];
+					}
 					return;
 				}
 			});
