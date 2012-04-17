@@ -117,7 +117,7 @@ var modules = {
 	},
 	// hivemind realtime communication
 	'hivemind': {
-		deps: ['ttObjects', 'flow', 'main'],
+		deps: ['ttObjects', 'flow', 'events'],
 		url: baseUrl+ 'jarTT.hivemind.js',
 		options: {
 		}

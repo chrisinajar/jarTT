@@ -25,6 +25,7 @@ jarTT.hivemind = {
 		ttfm: null
 	},
 	load: function() {
+		jarTT.events.registerEvent("jarTT_unloaded", jarTT.hivemind.unload);
 		flow.exec(
 			function() {
 				jarTT.hivemind.io.ttfm = io;
@@ -36,7 +37,8 @@ jarTT.hivemind = {
 				io = window.io = jarTT.hivemind.io.ttfm;
 			}
 		);
-		
+	},
+	unload: function() {
 	}
 };
 

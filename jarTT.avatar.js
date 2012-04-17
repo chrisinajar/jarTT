@@ -122,13 +122,48 @@ jarTT.avatar = {
 		jarTT.avatar.showUser(data.userid);
 	},
 	load: function() {
+			jarTT.events.registerEvent("jarTT_loaded", jarTT.avatar.initCache);
 			jarTT.events.registerEvent("jarTT_unloaded", jarTT.avatar.unload);
 			jarTT.events.registerEvent("jarTT_tick", jarTT.avatar.tick);
 			jarTT.events.registerEvent("speak", jarTT.avatar.showUserEvent);
 			jarTT.events.registerEvent("snagged", jarTT.avatar.showUserEvent);
 	},
+	initCache: function() {
+		// Fetch user cache from another user!
+		var wantsCache = true;
+		setTimeout(function() {
+			jarTT.log('Didn\'t get a fresh user cache in time, no longer listening for one.');
+			wantsCache = false;
+		}, 5000);
+		if (jarTT.hivemind) {
+			hivemind.on('room.jarTT', function(msg) {
+				jarTT.log("THE HIVE HUNGERS!");
+				jarTT.log(msg);
+				if (msg.from == msg.to) // We don't care about the self-broadcast
+					return;
+				if (msg.msg.api == "getUserCache") {
+					hivemind.send(msg.from, {
+						api: 'userCache',
+						cache: jarTT.userCache
+					});
+					return;
+				}
+				if (wantsCache && msg.msg.api == "userCache") {
+					wantsCache = false;
+					jarTT.userCache = msg.msg.cache;
+					return;
+				}
+			});
+			hivemind.sendRoom({
+				module: 'jarTT',
+				api: 'getUserCache'
+			});
+		}
+	},
 	unload: function() {
 		jarTT.avatar.hideAudience(false);
+		if (jarTT.hivemind)
+			hivemind.off('room.jarTT');
 	},
 };
 
