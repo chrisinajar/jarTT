@@ -129,8 +129,12 @@ jarTT.avatar = {
 			jarTT.events.registerEvent("snagged", jarTT.avatar.showUserEvent);
 	},
 	initCache: function() {
-		if (jarTT.hivemind && !window.hivemind)
-			return setTimeout(jarTT.avatar.initCache, 50);
+		if ("hivemind" in jarTT) {
+			if (typeof window.hivemind !== 'object')
+				return setTimeout(jarTT.avatar.initCache, 50);
+		} else { // we don't use hivemind...
+			return;
+		}
 		// Fetch user cache from another user!
 		var wantsCache = true;
 		setTimeout(function() {
