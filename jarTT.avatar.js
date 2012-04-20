@@ -183,7 +183,7 @@ jarTT.avatar = {
 	},
 	unload: function() {
 		jarTT.avatar.hideAudience(false);
-		if (hivemind) {
+		if (window.hivemind) {
 			hivemind.off('room.jarTT');
 			hivemind.off('message.jarTT');
 		}
