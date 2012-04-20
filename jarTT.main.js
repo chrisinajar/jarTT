@@ -169,7 +169,7 @@ var jarTT = {
 	},
 	ding: function() {
 		turntablePlayer.playEphemeral(UI_SOUND_MENTION, true);
-	}
+	},
 	callFunction: null,
 	localContext: null,
 	manager: null
