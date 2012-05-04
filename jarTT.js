@@ -150,13 +150,14 @@ var autoLoad = [
 	'avatar',
 	'ui',
 	'storage',
-	'version'
+	'version',
+	'hivemind'
 ];
 
 if (localStorage.jarTT_modules) {
 	var module_ar = JSON.parse(localStorage.jarTT_modules);
 	autoLoad = autoLoad.concat(module_ar);
-};
+}
 
 /*
  * Load  modules like this:
