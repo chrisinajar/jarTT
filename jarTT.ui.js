@@ -273,31 +273,6 @@ jarTT.ui = {
 				jarTT.ui.saveSettings();
 			})
 		);
-
-		var mods_enabled = jarTT.storage.getNamedData('modules');
-		box.append("<br /><br />Enable Hivemind: ");
-		box.append($("<input />", {
-				'type': 'checkbox',
-				'checked': ($.inArray('hivemind', mods_enabled) !== -1)
-			}).click(function() {
-				var mods_enabled = jarTT.storage.getNamedData('modules');
-				if (!mods_enabled)
-					mods_enabled = [];
-				if (this.checked) {
-					mods_enabled.push('hivemind');
-					jarTT.storage.setNamedData('modules', mods_enabled);
-					jarTTLoad('hivemind',function(){});
-				} else {
-					for (var i = 0; i < mods_enabled.length; ++i)
-						if (mods_enabled[i] === 'hivemind')
-							mods_enabled.splice(i--, 1);
-
-					jarTT.storage.setNamedData('modules', mods_enabled);
-					setTimeout((function(){$.getScript('https://raw.github.com/chrisinajar/jarTT/master/jarTT.js');}), 10);
-					setTimeout((function(){jarTT.ui.showSettings();}), 2000);
-				}
-			})
-		);
 		
 		box.append("<br />");
 		box.append("<br />");
