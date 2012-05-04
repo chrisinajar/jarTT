@@ -162,7 +162,8 @@ jarTT.ui = {
 			'class': "modal jarTT",
 			'id': 'jarTT_Settings',
 			'css': {
-				'marginTop': '100px'
+				'marginTop': '100px',
+				'textAlign': 'center'
 			}
 		});
 		box.append($("<div />", {
