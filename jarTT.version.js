@@ -152,7 +152,15 @@ jarTT.version = {
 				version = 1.12;
 				hasChanges = true;
 				showSettings = true;
-			case 1.12:  // current version
+			case 1.12:
+				changes.push("Hivemind is now enabled by default");
+				changes.push("Fixes to flow for compatibility with some other TTfm plugins");
+				
+				notes += "Hivemind is now live for everyone, let me know if you have any major problems please! <3";
+				version = 1.13;
+				hasChanges = true;
+				showSettings = true;
+			case 1.13:  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
