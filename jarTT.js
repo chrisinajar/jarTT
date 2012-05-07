@@ -34,7 +34,7 @@ if (localStorage.jarTT_devurl)
 var modules = {
 	'flow': {
 		deps: [],
-		url: 'https://raw.github.com/willconant/flow-js/master/flow.js',
+		url: 'https://raw.github.com/chrisinajar/flow-js/master/flow.js',
 		options: {
 			noload: true
 		}
