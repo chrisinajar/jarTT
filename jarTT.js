@@ -135,6 +135,13 @@ var modules = {
 		options: {
 			noload: true
 		}
+	},
+	'muteonlame': {
+		deps: ['events'],
+		url: baseUrl+ 'jarTT.muteonlame.js',
+		optione: {
+			required: true
+		}
 	}
 	/*
 	myplugin: {
@@ -151,7 +158,8 @@ var autoLoad = [
 	'ui',
 	'storage',
 	'version',
-	'hivemind'
+	'hivemind',
+	'muteonlame'
 ];
 
 if (localStorage.jarTT_modules) {

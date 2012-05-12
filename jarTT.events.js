@@ -35,8 +35,14 @@ jarTT.events = {
 	},
 	socketEvent: function(event) {
 		var data = JSON.parse(event);
-		if (!data.command || typeof data.command == "undefined")
-			return;
+		if (!data.command || typeof data.command == "undefined") {
+			if (data.err) {
+				data.command = 'error';
+			}
+			else {
+				return;
+			}
+		}
 		jarTT.events.dispatchEvent(data.command, data);
 	},
 	dispatchEvent: function(eventName, data) {
