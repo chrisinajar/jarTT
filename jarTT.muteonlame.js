@@ -45,6 +45,7 @@ jarTT.muteonlame = {
 	onNewSong: function(data) {
 		if (jarTT.muteonlame.unmutenext) {
 			$('div.mv_container:visible a.mute_btn:eq(0)').trigger('click').trigger('mouseover').trigger('mouseout');
+			jarTT.muteonlame.unmutenext = false;
 		}
 	}
 }
