@@ -180,7 +180,7 @@ var jarTT = {
 		if (!jarTT.isMuted())
 			return;
 		// mouseover and mouseout are needed to trigger the UI change
-		$('div.mv_container:hidden a.mute_btn:eq(0)').trigger('click').trigger('mouseover').trigger('mouseout');
+		$('div.mv_container:visible a.mute_btn:eq(0)').trigger('click').trigger('mouseover').trigger('mouseout');
 	},
 	isMuted: function() {
 		return (turntablePlayer.volume === 0 ? true : false);
