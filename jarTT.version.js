@@ -25,7 +25,7 @@ jarTT.version = {
 		
 		var version = jarTT.storage.getNamedData('version');
 		if (!version)
-			version = 0.0;
+			version = 1.11;
 		
 		var getWord = function(ar) {
 			return ar[Math.round(Math.random()*ar.length)];
@@ -57,7 +57,8 @@ jarTT.version = {
 			"fall in love.",
 			"found a religion on it.",
 			"become a famous rapper.",
-			"win a grammy."
+			"win a grammy.",
+			"become a famous rapper"
 		];
 		
 		var doWhat = [
@@ -68,7 +69,8 @@ jarTT.version = {
 			"OH NO YOU DI'NT!",
 			"PARENTS DON'T UNDERSTAND!",
 			"GIVE ME ALL YOUR MONEY!",
-			"KILL IT WITH FIRE!"
+			"KILL IT WITH FIRE!",
+			"SAIL!"
 		];
 		
 		var changes = [];
@@ -156,11 +158,20 @@ jarTT.version = {
 				changes.push("Hivemind is now enabled by default");
 				changes.push("Fixes to flow for compatibility with some other TTfm plugins");
 				
-				notes += "Hivemind is now live for everyone, let me know if you have any major problems please! <3";
+				notes += "Hivemind is now live for everyone, let me know if you have any major problems please! <3 ";
 				version = 1.13;
 				hasChanges = true;
 				showSettings = true;
-			case 1.13:  // current version
+			case 1.13: 
+				changes.push("New modules to mute just this song if you click lame multiple times.");
+				changes.push("Better version number schema");
+				
+				notes += "Major.Minor.Bugfix sersion numbering schema. Major number is architecture changes, minor is new features, bug fix is any smaller change.";
+				
+				version = "1.2.0";
+				hasChanges = true;
+				showSettings = true;
+			case "1.2.0":  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
