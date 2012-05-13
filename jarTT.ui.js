@@ -219,6 +219,16 @@ jarTT.ui = {
 					$(".laptopCanvas").show();
 			})
 		);
+		
+		box.append("<br />Mute on double lame: ");
+		box.append($("<input />", {
+				'type': 'checkbox',
+				'checked': jarTT.settings.muteonlame
+			}).click(function() {
+				jarTT.settings.muteonlame = this.checked;
+				jarTT.ui.saveSettings();
+			})
+		);
 
 		var youSure = false; // you're so damn uncertain
 		box.append("<br />AutoBop: ");

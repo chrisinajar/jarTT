@@ -170,6 +170,21 @@ var jarTT = {
 	ding: function() {
 		turntablePlayer.playEphemeral(UI_SOUND_MENTION, true);
 	},
+	mute: function() {
+		if (jarTT.isMuted())
+			return;
+		// mouseover and mouseout are needed to trigger the UI change
+		$('div.mv_container:hidden a.mute_btn:eq(0)').trigger('click').trigger('mouseover').trigger('mouseout');
+	},
+	unmute: function() {
+		if (!jarTT.isMuted())
+			return;
+		// mouseover and mouseout are needed to trigger the UI change
+		$('div.mv_container:hidden a.mute_btn:eq(0)').trigger('click').trigger('mouseover').trigger('mouseout');
+	},
+	isMuted: function() {
+		return (turntablePlayer.volume === 0 ? true : false);
+	},
 	callFunction: null,
 	localContext: null,
 	manager: null

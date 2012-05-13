@@ -28,24 +28,19 @@ jarTT.muteonlame = {
 		jarTT.muteonlame.unmutenext = false;
 	},
 	unload: function() {
-		/*
-		 * Unload your damn event listeners. Eventually this will be handled automatically.
-		 * 
-		 * jarTT.events.registerEvent("newsong", jarTT.myplugin.onNewSong);
-		 * 
-		 */
+		jarTT.events.unregisterEvent("error", jarTT.muteonlame.onError);
+		jarTT.events.unregisterEvent("newsong", jarTT.muteonlame.onNewSong);
 	},
 	onError: function(data) {
-		if (data.err == "User has already voted down") {
+		if (jarTT.settings.muteonlame && data.err == "User has already voted down") {
 			jarTT.muteonlame.unmutenext = true;
-			// mouseover and mouseout are needed to trigger the UI change
-			$('div.mv_container:hidden a.mute_btn:eq(0)').trigger('click').trigger('mouseover').trigger('mouseout');
+			jarTT.mute();
 		}
 	},
 	onNewSong: function(data) {
 		if (jarTT.muteonlame.unmutenext) {
-			$('div.mv_container:visible a.mute_btn:eq(0)').trigger('click').trigger('mouseover').trigger('mouseout');
 			jarTT.muteonlame.unmutenext = false;
+			jarTT.unmute();
 		}
 	}
 }
