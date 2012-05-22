@@ -270,22 +270,37 @@ jarTT.getUserInfo = function(id, c) {
 		jarTT.userCache[id] = {
 			lastUpdate: 0,
 			lastMessage: 0,
+			updating: false,
 			createdTime: (new Date())
 		};
 	}
 	if (!("getDj" in jarTT.userCache[id]))
 		jarTT.fixCachePrototype(id);
-
-	if (((new Date()) - jarTT.userCache[id].lastUpdate) < 10000) {
+	
+	var age = ((new Date()) - jarTT.userCache[id].lastUpdate);
+	if (age < 20000) {
 		c(jarTT.userCache[id]);
 		return true;
+	} else if (age < 120000) {
+		if (!jarTT.userCache[id].updating) {
+			jarTT.userCache[id].updating = true;
+			jarTT.callFunction({
+				api: "user.info",
+				userid: id
+			}, function(data) {
+				jarTT.userCache[id].updating = false;
+				jarTT.userCache[id].lastUpdate = new Date();
+				for (var i in data)
+					jarTT.userCache[id][i] = data[i];
+			});
+		}
+		c(jarTT.userCache[id]);
 	} else {
-		jarTT.userCache[id].lastUpdate = new Date();
-		
 		jarTT.callFunction({
 			api: "user.info",
 			userid: id
 		}, function(data) {
+			jarTT.userCache[id].lastUpdate = new Date();
 			for (var i in data)
 				jarTT.userCache[id][i] = data[i];
 			c(jarTT.userCache[id]);
