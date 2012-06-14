@@ -87,7 +87,7 @@ jarTT.modulebrowser = {
 				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
 
 				$(this).animate({ backgroundColor: 'white' }, 50, function() {
-					$(this).animate({backgroundCOlor: 'transparent', 200 });
+					$(this).animate({ backgroundColor: 'transparent' }, 200);
 				});
 			}).hover(function() {
 				//$(this).animate({color: '#'+(Math.random()*0xFFFFFF<<0).toString(16)}, 200);
