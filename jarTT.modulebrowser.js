@@ -40,7 +40,7 @@ jarTT.modulebrowser = {
 			css: { }, // contains list of modules
 			html: jarTT.modulebrowser.getModuleList()
 		}).attr('rowspan', '2')).append($('<td />', {
-			// module title, version and install button
+			html: jarTT.modulebrowser.getInfoPanel()// module title, version and install button
 		}))).append($('<tr />', {
 			// this row contains details
 		}).append($('<td />', {
@@ -71,6 +71,7 @@ jarTT.modulebrowser = {
 			$('<div />', {
 				css: { width: '150px', height: '75px', border: '1px solid pink' }
 			}).data('mod', mod).click(function() {
+				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
 				$('#jarTT_module_details').html(m+' '+modules[m].url);
 			}).hover(function() {
@@ -88,6 +89,26 @@ jarTT.modulebrowser = {
 		}
 
 		return sideBar;
+	},
+	getInfoPanel: function() {
+		var infoPanel = $('<div />', {
+			id: 'jartt_module_info_panel'
+		}).append($('<div />', {
+			html: 'Module Title',
+			css: { fontSize: '20px', float: 'left' }
+		})).append($('<div />', {
+			html: 'v 0.0.1',
+			css: { fontSize: '12px', float: 'left' }
+		})).append($('<div />', {
+			html: 'Your name',
+			css: { fontSize: '12px', float: 'left' }
+		})).append($('<button />', {
+			text: 'Install!'
+		}).button().click(function() {
+			// Thru some sort of magic, this will install a module
+		}));
+
+		return infoPanel;
 	}
 		/*
 		box.append("<h1>jarTT Modules</h1>");
