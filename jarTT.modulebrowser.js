@@ -30,6 +30,7 @@ jarTT.modulebrowser = {
 		var box = jarTT.ui.createBox();
 		
 		box.width(600);
+		box.height(600);
 
 		box.append('<h1>jarTT Modules</h1>');
 		box.append($('<table />', {
@@ -50,7 +51,8 @@ jarTT.modulebrowser = {
 	},
 	getModuleList: function() {
 		var sideBar = $('<div />', {
-			id: 'jarTT_module_side_bar'
+			id: 'jarTT_module_side_bar',
+			css: { overflowY: 'scroll' }
 		});
 
 		var modules = jarTT.modulebrowser.modules,
@@ -113,7 +115,7 @@ jarTT.modulebrowser = {
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			text: 'Install!',
-			css: { float: 'right', textAlign: 'center', height: '30px', width: '90px' }
+			css: { float: 'right', bottom: '0px', textAlign: 'center', height: '30px', width: '90px' }
 		}).button().click(function() {
 			// Thru some sort of magic, this will install a module
 		}));
