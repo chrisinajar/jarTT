@@ -42,7 +42,8 @@ jarTT.modulebrowser = {
 			css: { }, // contains list of modules
 			html: jarTT.modulebrowser.getModuleList()
 		}).attr('rowspan', '2')).append($('<td />', {
-			html: jarTT.modulebrowser.getHeaderPanel()
+			html: jarTT.modulebrowser.getHeaderPanel(),
+			css: { border: '1px solid #FBD863', padding: '2px' }
 		}))).append($('<tr />', {
 			// this row contains details
 		}).append($('<td />', {
@@ -75,7 +76,7 @@ jarTT.modulebrowser = {
 
 			// Not worth trying to comprehend
 			$('<div />', {
-				css: { width: '150px', height: '75px', border: '1px solid pink' }
+				css: { width: '150px', height: '75px', border: '1px solid #FBD863' }
 			}).data('mod', mod).click(function() {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
@@ -84,10 +85,10 @@ jarTT.modulebrowser = {
 				$('#jarTT_selected_mod_version').html(modules[m].version?modules[m].version:'No version # provided');
 				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
 			}).hover(function() {
-				$(this).animate({ backgroundColor: 'white' }, 200);
+				$(this).animate({ border: '2px solid white' }, 200);
 			}, function() {
 				$(this).stop(true);
-				$(this).css({ backgroundColor: 'transparent' });
+				$(this).css({ border: '1px solid #FBD863' });
 			}).append($('<div />', { 
 					html: mod//,
 					//css: { position:'absolute', top:'0px', left:'0px' }
