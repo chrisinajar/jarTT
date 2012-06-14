@@ -33,7 +33,7 @@ jarTT.modulebrowser = {
 
 		box.append('<h1>jarTT Modules</h1>');
 		box.append($('<table />', {
-			css: { border:'1px solid white', width: '100px' }
+			css: { border:'1px solid white', width: '100%' }
 		}).append($('<tr />', {
 			// this row contains top of side_bar, Module title, version and install button
 		}).append($('<td />', {
