@@ -45,7 +45,7 @@ jarTT.modulebrowser = {
 		}))).append($('<tr />', {
 			// this row contains details
 		}).append($('<td />', {
-			html: $('<div />', {id:'jarTT_module_details'})
+			html: $('<div />', {id:'jarTT_module_details', html:'<h2>Welcome to the jarTT Module Browser, check out all the cool stuff over on the side bar <.<</h2>'})
 		}))));
 	},
 	getModuleList: function() {
