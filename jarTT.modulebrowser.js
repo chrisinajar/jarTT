@@ -57,7 +57,7 @@ jarTT.modulebrowser = {
 		});
 		var sideBar = $('<div />', {
 			id: 'jarTT_module_side_bar',
-			css: { overflowY: 'scroll', height: '450px' }
+			css: { overflowY: 'scroll', height: '450px', border: '1px solid #FBD863' }
 		}).appendTo(sideBarWrapper);
 
 		var modules = jarTT.modulebrowser.modules,
@@ -77,7 +77,7 @@ jarTT.modulebrowser = {
 
 			// Not worth trying to comprehend
 			$('<div />', {
-				css: { width: '150px', height: '75px', border: '1px solid #FBD863' }
+				css: { width: '150px', height: '75px', borderBottom: '1px solid #FBD863' }
 			}).data('mod', mod).click(function() {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
