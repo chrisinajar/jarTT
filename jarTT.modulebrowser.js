@@ -95,16 +95,16 @@ jarTT.modulebrowser = {
 		var infoPanel = $('<div />', {
 			id: 'jartt_module_info_panel'
 		}).append($('<div />', {
-			css: { display: 'block' }
+			css: { float: 'left' }
 		}).append($('<span />', {
 			html: 'Module Title',
-			css: { fontSize: '20px', float: 'left' }
+			css: { fontSize: '20px', display: 'block' }
 		})).append($('<span />', {
 			html: 'v 0.0.1',
-			css: { fontSize: '12px', float: 'left' }
+			css: { fontSize: '12px', display: 'block' }
 		})).append($('<span />', {
 			html: 'Your name',
-			css: { fontSize: '12px', float: 'left' }
+			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			text: 'Install!',
 			css: { float: 'right' }
