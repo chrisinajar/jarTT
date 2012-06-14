@@ -87,10 +87,16 @@ jarTT.modulebrowser = {
 				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
 			}).hover(function() {
 				//$(this).animate({color: '#'+(Math.random()*0xFFFFFF<<0).toString(16)}, 200);
-				$(this).animate({ border: '1px solid white' }, 200);
+				$(this).animate({ 
+					backgroundColor: '#FBD863',
+					color: 'black'
+				}, 200);
 			}, function() {
 				$(this).stop(true);
-				$(this).css({ borderBottom: '1px solid #FBD863' });
+				$(this).css({ 
+					backgroundColor: 'transparent',
+					color: 'white'
+				});
 			}).append($('<div />', { 
 					html: mod//,
 					//css: { position:'absolute', top:'0px', left:'0px' }
