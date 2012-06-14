@@ -41,11 +41,11 @@ jarTT.modulebrowser = {
 			css: { }, // contains list of modules
 			html: jarTT.modulebrowser.getModuleList()
 		}).attr('rowspan', '2')).append($('<td />', {
-			html: jarTT.modulebrowser.getInfoPanel()// module title, version and install button
+			html: jarTT.modulebrowser.getHeaderPanel()
 		}))).append($('<tr />', {
 			// this row contains details
 		}).append($('<td />', {
-			html: $('<div />', {id:'jarTT_module_details', html:'<h2>Welcome to the jarTT Module Browser, check out all the cool stuff over on the side bar <.<</h2>'})
+			html: $('<div />', { id:'jarTT_module_details', html:'<h3>Welcome to the jarTT Module Browser, check out all the cool stuff over on the side bar <.<</h3>' })
 		}))));
 	},
 	getModuleList: function() {
@@ -91,28 +91,31 @@ jarTT.modulebrowser = {
 
 		return sideBar;
 	},
-	getInfoPanel: function() {
-		var infoPanel = $('<div />', {
-			id: 'jartt_module_info_panel'
+	getHeaderPanel: function() {
+		var headerPanel = $('<div />', {
+			id: 'jarTT_module_info_panel'
 		}).append($('<div />', {
 			css: { float: 'left', textAlign: 'left' }
 		}).append($('<span />', {
+			id: 'jarTT_selected_mod_title'
 			html: 'Module Title',
 			css: { fontSize: '20px', display: 'block' }
 		})).append($('<span />', {
+			id: 'jarTT_selected_mod_version'
 			html: 'v 0.0.1',
 			css: { fontSize: '12px', display: 'block' }
 		})).append($('<span />', {
+			id: 'jarTT_select_mod_author'
 			html: 'Your name',
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			text: 'Install!',
-			css: { float: 'right' }
+			css: { float: 'right', height: '30px', width: '125px', backgroundColor: 'green' }
 		}).button().click(function() {
 			// Thru some sort of magic, this will install a module
 		}));
 
-		return infoPanel;
+		return headerPanel;
 	}
 		/*
 		box.append("<h1>jarTT Modules</h1>");
