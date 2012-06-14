@@ -159,7 +159,8 @@ var autoLoad = [
 	'storage',
 	'version',
 	'hivemind',
-	'muteonlame'
+	'muteonlame',
+	'modulebrowser'
 ];
 
 if (localStorage.jarTT_modules) {
