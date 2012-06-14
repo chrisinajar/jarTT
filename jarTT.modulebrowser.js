@@ -94,7 +94,8 @@ jarTT.modulebrowser = {
 					html: mod//,
 					//css: { position:'absolute', top:'0px', left:'0px' }
 			})).append($('<input />', { 
-					type: 'checkbox'//,
+					type: 'checkbox',
+					'checked': checked
 					//css: { position:'absolute', bottom:'0px', right:'0px' }
 			})).appendTo(sideBar);
 		}
