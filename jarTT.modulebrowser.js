@@ -68,8 +68,9 @@ jarTT.modulebrowser = {
 			var checked = ($.inArray(mod, mods_enabled) != -1);
 			$('<div />', {
 				css: { width: '150px', height: '75px', border: '1px solid pink' }
-			}).click(function() {
-				$('#jarTT_module_details').html(mod+' '+mod.url);
+			}).data('mod', mod).click(function() {
+				var m = $(this).data('mod');
+				$('#jarTT_module_details').html(m+' '+m.url);
 			}).hover(function() {
 				$(this).animate({ backgroundColor: 'white' }, 200);
 			}, function() {
