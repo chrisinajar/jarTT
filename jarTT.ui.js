@@ -287,7 +287,7 @@ jarTT.ui = {
 		box.append("<br />");
 		box.append("<br />");
 		box.append($("<button />", {
-				'text': 'Unlad jarTT'
+				'text': 'Unload jarTT'
 			}).button().click(jarTT.unload)
 		);
 
@@ -297,7 +297,7 @@ jarTT.ui = {
 				'text': 'Module Browser'
 			}).button().click(function() {
 				jarTT.modulebrowser.showModuleBrowser();
-			});
+			})
 		);
 		box.append("<br /><br /><br /><p>This mod is optimized and based entirely on the suggestions of the <a href=\"http://codingsoundtrack.com\" target=\"_blank\">Coding Soundtrack</a> family.</p>");
 		box.append("<p><span style=\"font-size: 8px;\"><i>(who are a bunch of creepy gingers and should not be trusted).<i></span></p>");
