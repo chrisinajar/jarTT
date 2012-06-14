@@ -35,20 +35,20 @@ jarTT.modulebrowser = {
 		box.append('<h1>jarTT Modules</h1>');
 		box.append($('<table />', {
 			css: { border:'5px solid #FBD863', width: '100%', height: '90%' }
-		}).append($('<tr />', {
-			// this row contains top of side_bar, Module title, version and install button
-			css: { height: '20%' }
-		}).append($('<td />', {
-			css: { }, // contains list of modules
-			html: jarTT.modulebrowser.getModuleList()
-		}).attr('rowspan', '2')).append($('<td />', {
-			html: jarTT.modulebrowser.getHeaderPanel(),
-			css: { border: '1px solid #FBD863', padding: '5px' }
-		}))).append($('<tr />', {
-			// this row contains details
-		}).append($('<td />', {
-			html: $('<div />', { id:'jarTT_module_details', html:'<h4>Welcome to the jarTT Module Browser, check out all the cool stuff over on the side bar <.<</h4>' })
-		}).attr('valign', 'top'))));
+			}).append($('<tr />', {
+				// this row contains top of side_bar, Module title, version and install button
+				css: { height: '20%' }
+			}).append($('<td />', {
+				css: { }, // contains list of modules
+				html: jarTT.modulebrowser.getModuleList()
+			}).attr('rowspan', '2')).append($('<td />', {
+				html: jarTT.modulebrowser.getHeaderPanel(),
+				css: { border: '1px solid #FBD863', padding: '5px' }
+			}))).append($('<tr />', {
+				// this row contains details
+			}).append($('<td />', {
+				html: $('<div />', { id:'jarTT_module_details', html:'<h4>Welcome to the jarTT Module Browser, check out all the cool stuff over on the side bar <.<</h4>' })
+			}).attr('valign', 'top'))));
 	},
 	getModuleList: function() {
 		var sideBarWrapper = $('<div />', {
@@ -86,10 +86,11 @@ jarTT.modulebrowser = {
 				$('#jarTT_selected_mod_version').html(modules[m].version?'v '+modules[m].version:'No version # provided');
 				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
 			}).hover(function() {
-				//$(this).animate({ border: '2px solid white' }, 200);
+				//$(this).animate({color: '#'+(Math.random()*0xFFFFFF<<0).toString(16)}, 200);
+				$(this).animate({ border: '1px solid white' }, 200);
 			}, function() {
 				$(this).stop(true);
-				//$(this).css({ border: '1px solid #FBD863' });
+				$(this).css({ borderBottom: '1px solid #FBD863' });
 			}).append($('<div />', { 
 					html: mod//,
 					//css: { position:'absolute', top:'0px', left:'0px' }
@@ -99,8 +100,6 @@ jarTT.modulebrowser = {
 					//css: { position:'absolute', bottom:'0px', right:'0px' }
 			})).appendTo(sideBar);
 		}
-
-		//$('#wrapper').css({ width: $('#jarTT-module_side_bar').scrollWidth });
 
 		return sideBarWrapper;
 	},
@@ -122,52 +121,13 @@ jarTT.modulebrowser = {
 			html: 'Your name',
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
-			text: 'Install!',
-			css: { float: 'right', bottom: '0px', textAlign: 'center', height: '30px', width: '90px' }
+			id: 'jarTT_module_install_btn',
+			text: 'Install',
+			css: { float: 'right', textAlign: 'center', height: '30px', width: '90px' }
 		}).button().click(function() {
 			// Thru some sort of magic, this will install a module
 		}));
 
 		return headerPanel;
 	}
-		/*
-		box.append("<h1>jarTT Modules</h1>");
-		box.append($("<center />")
-			.append("<p style='width:400px;font-size: 14px;'>Browse and install modules to jarTT. These modules will be preserved between sessions</p>")
-			.append("<p style='width:400px;font-size: 14px;'>This module system is in its infancy. Use at your own risk, and please don't use it while DJing. You might need to F5.</p>")
-		);
-		var modules = jarTT.modulebrowser.modules,
-			mod_ar = [],
-			mods_enabled = jarTT.storage.getNamedData('modules');
-		mods_enabled=mods_enabled?mods_enabled:[];
-		
-		for (var mod in modules) {
-			jarTT.log('testing ' + mod);
-			if (!modules[mod].options)
-				modules[mod].options = {};
-			if (modules[mod].options.required) // don't bother showing any of the modules that aren't optional
-				continue;
-			jarTT.log('testing ' + mod);
-			mod_ar.push(mod);
-			var checked = ($.inArray(mod, mods_enabled) != -1);
-			
-			box.append("<br />");
-			box.append($("<p>", {
-				text: mod,
-				css: {
-					fontSize: '16px',
-					fontWeight: checked?"bold":"none"
-				}
-			}).append($("<input />",
-				{
-					'type': 'checkbox',
-					'checked': checked,
-					css: {
-						marginLeft: '4px'
-					}
-				}).click(function() {
-					this.checked;
-				})
-			));
-		}*/
 }
