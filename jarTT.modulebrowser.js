@@ -96,7 +96,7 @@ jarTT.modulebrowser = {
 	},
 	getHeaderPanel: function() {
 		var headerPanel = $('<div />', {
-			id: 'jarTT_module_info_panel'
+			id: 'jarTT_module_header_panel'
 		}).append($('<div />', {
 			css: { float: 'left', textAlign: 'left' }
 		}).append($('<span />', {
@@ -113,7 +113,7 @@ jarTT.modulebrowser = {
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			text: 'Install!',
-			css: { float: 'right', textAlign: 'center', height: '15px', width: '45px' }
+			css: { float: 'right', textAlign: 'center', height: '30px', width: '90px' }
 		}).button().click(function() {
 			// Thru some sort of magic, this will install a module
 		}));
