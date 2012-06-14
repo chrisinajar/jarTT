@@ -37,13 +37,13 @@ jarTT.modulebrowser = {
 			css: { border:'5px solid #FBD863', width: '100%', height: '90%' }
 		}).append($('<tr />', {
 			// this row contains top of side_bar, Module title, version and install button
-			css: { height: '15%' }
+			css: { height: '20%' }
 		}).append($('<td />', {
 			css: { }, // contains list of modules
 			html: jarTT.modulebrowser.getModuleList()
 		}).attr('rowspan', '2')).append($('<td />', {
 			html: jarTT.modulebrowser.getHeaderPanel(),
-			css: { border: '1px solid #FBD863', padding: '2px' }
+			css: { border: '1px solid #FBD863', padding: '5px' }
 		}))).append($('<tr />', {
 			// this row contains details
 		}).append($('<td />', {
