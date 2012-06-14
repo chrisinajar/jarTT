@@ -94,6 +94,8 @@ jarTT.modulebrowser = {
 		var infoPanel = $('<div />', {
 			id: 'jartt_module_info_panel'
 		}).append($('<div />', {
+			css: { display: block }
+		}).append($('<div />', {
 			html: 'Module Title',
 			css: { fontSize: '20px', float: 'left' }
 		})).append($('<div />', {
@@ -102,8 +104,9 @@ jarTT.modulebrowser = {
 		})).append($('<div />', {
 			html: 'Your name',
 			css: { fontSize: '12px', float: 'left' }
-		})).append($('<button />', {
-			text: 'Install!'
+		}))).append($('<button />', {
+			text: 'Install!',
+			css: { float: 'right' }
 		}).button().click(function() {
 			// Thru some sort of magic, this will install a module
 		}));
