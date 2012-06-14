@@ -41,11 +41,11 @@ jarTT.modulebrowser = {
 			html: jarTT.modulebrowser.getModuleList()
 		})).append($('<td />', {
 			// module title, version and install button
-		})))).append($('<tr />', {
+		}))).append($('<tr />', {
 			// this row contains details
 		}).append($('<td />', {
 			html: $('<div />', {id:'jarTT_module_details'})
-		})));
+		}))));
 	},
 	getModuleList: function() {
 		var sideBar = $('<div />', {
