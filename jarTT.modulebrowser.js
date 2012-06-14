@@ -97,15 +97,15 @@ jarTT.modulebrowser = {
 		}).append($('<div />', {
 			css: { float: 'left', textAlign: 'left' }
 		}).append($('<span />', {
-			id: 'jarTT_selected_mod_title'
+			id: 'jarTT_selected_mod_title',
 			html: 'Module Title',
 			css: { fontSize: '20px', display: 'block' }
 		})).append($('<span />', {
-			id: 'jarTT_selected_mod_version'
+			id: 'jarTT_selected_mod_version',
 			html: 'v 0.0.1',
 			css: { fontSize: '12px', display: 'block' }
 		})).append($('<span />', {
-			id: 'jarTT_select_mod_author'
+			id: 'jarTT_select_mod_author',
 			html: 'Your name',
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
