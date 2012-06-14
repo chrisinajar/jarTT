@@ -25,12 +25,26 @@ jarTT.modulebrowser = {
 	unload: function() {
 	},
 	showModuleBrowser: function() {
-		$('#jarTT_Settings').hide();
+		$('#jarTT_Settings').hide(); // Not final, but for fuck sake go away, we don't all have 1600p monitors...
+
 		var box = jarTT.ui.createBox();
 		
 		box.width(600);
 
 		box.append('<h1>jarTT Modules</h1>');
+		box.append($('<table />', {
+			css: { border:'1px solid white' }
+		}).append($('<tr />', {
+			// this row contains top of side_bar, Module title, version and install button
+		})).append($('<td />', {
+			css: { rowSpan:'2' } // contains list of modules 
+		})).append($('<td />', {
+			// module title, version and install button
+		}))).append($('<tr />', {
+			// this row contains Module details
+		})).append($('<td />', {
+			// Module details
+		}));
 
 		/*
 		box.append("<h1>jarTT Modules</h1>");
