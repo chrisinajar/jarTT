@@ -50,10 +50,13 @@ jarTT.modulebrowser = {
 		}))));
 	},
 	getModuleList: function() {
+		var sideBarWrapper = $('<div />', {
+			id: 'wrapper'
+		});
 		var sideBar = $('<div />', {
 			id: 'jarTT_module_side_bar',
 			css: { overflowY: 'scroll', height: '450px' }
-		});
+		}).appendTo(sideBarWrapper);
 
 		var modules = jarTT.modulebrowser.modules,
 			mod_ar = [],
@@ -94,7 +97,9 @@ jarTT.modulebrowser = {
 			})).appendTo(sideBar);
 		}
 
-		return sideBar;
+		sideBarWrapper.css({ width: sideBar.scrollWidth });
+
+		return sideBarWrapper;
 	},
 	getHeaderPanel: function() {
 		var headerPanel = $('<div />', {
