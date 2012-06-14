@@ -37,7 +37,8 @@ jarTT.modulebrowser = {
 		}).append($('<tr />', {
 			// this row contains top of side_bar, Module title, version and install button
 		})).append($('<td />', {
-			css: { rowSpan:'2' } // contains list of modules 
+			css: { rowSpan:'2' }, // contains list of modules
+			html: jarTT.modulebrowser.getModuleList()
 		})).append($('<td />', {
 			// module title, version and install button
 		}))).append($('<tr />', {
@@ -45,7 +46,41 @@ jarTT.modulebrowser = {
 		})).append($('<td />', {
 			// Module details
 		}));
+	},
+	getModuleList: function() {
+		var sideBar = $('<div />', {
+			id: 'jartt_module_side_bar'
+		});
 
+		var modules = jarTT.modulebrowser.modules,
+			mod_ar = [],
+			mods_enabled = jarTT.storage.getNamedData('modules');
+		mods_enabled=mods_enabled?mods_enabled:[];
+		
+		for (var mod in modules) {
+			jarTT.log('testing ' + mod);
+			if (!modules[mod].options)
+				modules[mod].options = {};
+			if (modules[mod].options.required) // don't bother showing any of the modules that aren't optional
+				continue;
+			jarTT.log('testing ' + mod);
+			mod_ar.push(mod);
+			var checked = ($.inArray(mod, mods_enabled) != -1);
+			$('<div />', {
+				css: { width: '150px', height: '75px' }
+			}).click(function() {
+				// Show details 
+			}).append($('<div />', { 
+					html: mod,
+					css: { position:'absolute', top:'0px', left:'0px' }
+			})).append($('<input />', { 
+					type: 'checkbox'
+					css: { position:'absolute', bottom:'0px', right:'0px' }
+			})).appendTo(sideBar);
+		}
+
+		return sideBar;
+	}
 		/*
 		box.append("<h1>jarTT Modules</h1>");
 		box.append($("<center />")
@@ -86,5 +121,4 @@ jarTT.modulebrowser = {
 				})
 			));
 		}*/
-	}
 }
