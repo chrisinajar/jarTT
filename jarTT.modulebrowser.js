@@ -75,6 +75,9 @@ jarTT.modulebrowser = {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
 				$('#jarTT_module_details').html(m+' '+modules[m].url);
+				$('#jarTT_selected_mod_title').html(m);
+				$('#jarTT_selected_mod_version').html(modules[m].version?modules[m].version:'No version # provided');
+				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
 			}).hover(function() {
 				$(this).animate({ backgroundColor: 'white' }, 200);
 			}, function() {
