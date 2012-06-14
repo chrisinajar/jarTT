@@ -21,7 +21,7 @@ var oldJarTT = {};
 var jarTTLoad = function(){};
 (function() {
 
-var baseUrl = "https://raw.github.com/chrisinajar/jarTT/master/";
+var baseUrl = "https://raw.github.com/cannjeff/jarTT/master/";
 
 if (localStorage.jarTT_devurl)
 	baseUrl = localStorage.jarTT_devurl;
