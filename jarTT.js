@@ -37,28 +37,36 @@ var modules = {
 		url: 'https://raw.github.com/chrisinajar/flow-js/master/flow.js',
 		options: {
 			noload: true
-		}
+		},
+		author: 'chrisinajar',
+		version: '1.0.0'
 	},
 	'bopomatic': {
 		deps: [], // doesn't use jarTT api..
 		url: 'https://turntablefm-autobop.googlecode.com/svn/trunk/ttfmautobop.js',
 		options: {
 			noload: true
-		}
+		},
+		author: 'Google',
+		version: '1.0.1'
 	},
 	'socket.io': {
 		deps: [],
 		url: 'http://chrisinajar.com:64277/socket.io/socket.io.js',
 		options: {
 			noload: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	'hivemind_raw': {
 		deps: ['socket.io', 'ttObjects'],
 		url: 'https://raw.github.com/chrisinajar/ttfm-hivemind/master/client.js',
 		options: {
 			noload: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	'ttObjects': {
 		deps: [],
@@ -66,7 +74,9 @@ var modules = {
 		options: {
 			noload: true,
 			required: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	// main jarTT, most of the code is here
 	'main': {
@@ -74,7 +84,9 @@ var modules = {
 		url: baseUrl+ 'jarTT.main.js',
 		options: {
 			required: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	// Ability to hook onto events along with the basic event driven stuff like idle timers
 	'events': {
@@ -82,7 +94,9 @@ var modules = {
 		url: baseUrl+ 'jarTT.events.js',
 		options: {
 			required: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	// Avatar related stuff, basically anything that uses identifyDiv
 	'avatar': {
@@ -90,7 +104,9 @@ var modules = {
 		url: baseUrl+ 'jarTT.avatar.js',
 		options: {
 			required: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	// HTML5 storage
 	'storage': {
@@ -98,7 +114,9 @@ var modules = {
 		url: baseUrl+ 'jarTT.storage.js',
 		options: {
 			required: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	// UI shit
 	'ui': {
@@ -106,42 +124,54 @@ var modules = {
 		url: baseUrl+ 'jarTT.ui.js',
 		options: {
 			required: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	'version': {
 		deps: ['ui'],
 		url: baseUrl+ 'jarTT.version.js',
 		options: {
 			required: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	// hivemind realtime communication
 	'hivemind': {
 		deps: ['ttObjects', 'flow', 'events'],
 		url: baseUrl+ 'jarTT.hivemind.js',
 		options: {
-		}
+		},
+		author: null,
+		version: null
 	},
 	'modulebrowser': {
 		deps: ['version'],
 		url: baseUrl+ 'jarTT.modulebrowser.js',
 		options: {
 			required: true
-		}
+		},
+		author: null,
+		version: null
 	},
 	'testmodule': {
 		deps: ['modulebrowser'],
 		url: baseUrl+ 'exampleModule.js',
 		options: {
 			noload: true
-		}
+		},
+		author: 'Frank Smith',
+		version: '1.2.3'
 	},
 	'muteonlame': {
 		deps: ['events'],
 		url: baseUrl+ 'jarTT.muteonlame.js',
 		optione: {
 			required: true
-		}
+		},
+		author: 'Pete Jones',
+		version: '0.0.1'
 	}
 	/*
 	myplugin: {

@@ -83,7 +83,7 @@ jarTT.modulebrowser = {
 				var m = $(this).data('mod');
 				$('#jarTT_module_details').html(m+' '+modules[m].url);
 				$('#jarTT_selected_mod_title').html(m);
-				$('#jarTT_selected_mod_version').html(modules[m].version?modules[m].version:'No version # provided');
+				$('#jarTT_selected_mod_version').html(modules[m].version?'v '+modules[m].version:'No version # provided');
 				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
 			}).hover(function() {
 				//$(this).animate({ border: '2px solid white' }, 200);
