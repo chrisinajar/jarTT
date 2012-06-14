@@ -25,10 +25,14 @@ jarTT.modulebrowser = {
 	unload: function() {
 	},
 	showModuleBrowser: function() {
+		$('#jarTT_Settings').hide();
 		var box = jarTT.ui.createBox();
 		
 		box.width(600);
-		
+
+		box.append('<h1>jarTT Modules</h1>');
+
+		/*
 		box.append("<h1>jarTT Modules</h1>");
 		box.append($("<center />")
 			.append("<p style='width:400px;font-size: 14px;'>Browse and install modules to jarTT. These modules will be preserved between sessions</p>")
@@ -67,6 +71,6 @@ jarTT.modulebrowser = {
 					this.checked;
 				})
 			));
-		}
+		}*/
 	}
 }
