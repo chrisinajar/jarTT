@@ -70,7 +70,7 @@ jarTT.modulebrowser = {
 				css: { width: '150px', height: '75px', border: '1px solid pink' }
 			}).data('mod', mod).click(function() {
 				var m = $(this).data('mod');
-				$('#jarTT_module_details').html(m+' '+m.url);
+				$('#jarTT_module_details').html(m+' '+modules[m].url);
 			}).hover(function() {
 				$(this).animate({ backgroundColor: 'white' }, 200);
 			}, function() {
