@@ -30,7 +30,7 @@ jarTT.modulebrowser = {
 		var box = jarTT.ui.createBox();
 		
 		box.width(600);
-		box.height(600);
+		box.height(500);
 
 		box.append('<h1>jarTT Modules</h1>');
 		box.append($('<table />', {
