@@ -53,7 +53,7 @@ jarTT.modulebrowser = {
 	getModuleList: function() {
 		var sideBarWrapper = $('<div />', {
 			id: 'wrapper',
-			css: { overflow: 'hidden' }
+			css: { overflow: 'hidden', width: '150px' }
 		});
 		var sideBar = $('<div />', {
 			id: 'jarTT_module_side_bar',
@@ -99,7 +99,7 @@ jarTT.modulebrowser = {
 			})).appendTo(sideBar);
 		}
 
-		sideBarWrapper.css({ width: sideBar.scrollWidth });
+		//sideBarWrapper.css({ width: sideBar.scrollWidth });
 
 		return sideBarWrapper;
 	},
