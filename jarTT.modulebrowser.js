@@ -95,7 +95,7 @@ jarTT.modulebrowser = {
 		var infoPanel = $('<div />', {
 			id: 'jartt_module_info_panel'
 		}).append($('<div />', {
-			css: { float: 'left' }
+			css: { float: 'left', textAlign: 'left' }
 		}).append($('<span />', {
 			html: 'Module Title',
 			css: { fontSize: '20px', display: 'block' }
