@@ -42,14 +42,14 @@ jarTT.modulebrowser = {
 		})).append($('<td />', {
 			// module title, version and install button
 		}))).append($('<tr />', {
-			// this row contains Module details
+			// this row contains details
 		})).append($('<td />', {
-			// Module details
+			html: $('<div />', {id:'jarTT_module_details'})
 		}));
 	},
 	getModuleList: function() {
 		var sideBar = $('<div />', {
-			id: 'jartt_module_side_bar'
+			id: 'jarTT_module_side_bar'
 		});
 
 		var modules = jarTT.modulebrowser.modules,
@@ -69,7 +69,7 @@ jarTT.modulebrowser = {
 			$('<div />', {
 				css: { width: '150px', height: '75px', border: '1px solid pink' }
 			}).click(function() {
-				// Show details 
+				$('#jarTT_module_details').html(mod+' '+mod.url);
 			}).hover(function() {
 				$(this).animate({ backgroundColor: 'white' }, 200);
 			}, function() {
