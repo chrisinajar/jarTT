@@ -36,12 +36,12 @@ jarTT.modulebrowser = {
 			css: { border:'1px solid white', width: '100%' }
 		}).append($('<tr />', {
 			// this row contains top of side_bar, Module title, version and install button
+			css: { height: '15%' }
 		}).append($('<td />', {
 			css: { }, // contains list of modules
 			html: jarTT.modulebrowser.getModuleList()
 		}).attr('rowspan', '2')).append($('<td />', {
-			html: jarTT.modulebrowser.getInfoPanel(),// module title, version and install button
-			css: { width: '15%' }
+			html: jarTT.modulebrowser.getInfoPanel()// module title, version and install button
 		}))).append($('<tr />', {
 			// this row contains details
 		}).append($('<td />', {
