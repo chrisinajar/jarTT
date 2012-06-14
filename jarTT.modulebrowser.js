@@ -36,16 +36,16 @@ jarTT.modulebrowser = {
 			css: { border:'1px solid white' }
 		}).append($('<tr />', {
 			// this row contains top of side_bar, Module title, version and install button
-		})).append($('<td />', {
+		}).append($('<td />', {
 			css: { rowSpan:'2' }, // contains list of modules
 			html: jarTT.modulebrowser.getModuleList()
 		})).append($('<td />', {
 			// module title, version and install button
-		}))).append($('<tr />', {
+		})))).append($('<tr />', {
 			// this row contains details
-		})).append($('<td />', {
+		}).append($('<td />', {
 			html: $('<div />', {id:'jarTT_module_details'})
-		}));
+		})));
 	},
 	getModuleList: function() {
 		var sideBar = $('<div />', {
