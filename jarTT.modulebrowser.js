@@ -52,7 +52,7 @@ jarTT.modulebrowser = {
 	getModuleList: function() {
 		var sideBar = $('<div />', {
 			id: 'jarTT_module_side_bar',
-			css: { overflowY: 'scroll' }
+			css: { overflowY: 'scroll', height: '450px' }
 		});
 
 		var modules = jarTT.modulebrowser.modules,
