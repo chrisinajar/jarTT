@@ -36,8 +36,8 @@ jarTT.modulebrowser = {
 			css: { border:'1px solid white' }
 		}).append($('<tr />', {
 			// this row contains top of side_bar, Module title, version and install button
-		}).append($('<td />', {
-			css: { rowspan:'2' }, // contains list of modules
+		}).append($('<td rowspan="2"/>', {
+			css: { }, // contains list of modules
 			html: jarTT.modulebrowser.getModuleList()
 		})).append($('<td />', {
 			// module title, version and install button
