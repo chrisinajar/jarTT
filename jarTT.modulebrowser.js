@@ -71,10 +71,10 @@ jarTT.modulebrowser = {
 			}).click(function() {
 				// Show details 
 			}).hover(function() {
-				$(this).animate({ background: white }, 200);
+				$(this).animate({ backgroundColor: white }, 200);
 			}, function() {
 				$(this).stop(true);
-				$(this).css({ background: transparent });
+				$(this).css({ backgroundColor: transparent });
 			}).append($('<div />', { 
 					html: mod//,
 					//css: { position:'absolute', top:'0px', left:'0px' }
