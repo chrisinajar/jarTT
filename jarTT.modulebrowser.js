@@ -67,9 +67,14 @@ jarTT.modulebrowser = {
 			mod_ar.push(mod);
 			var checked = ($.inArray(mod, mods_enabled) != -1);
 			$('<div />', {
-				css: { width: '150px', height: '75px' }
+				css: { width: '150px', height: '75px', border: '1px solid pink' }
 			}).click(function() {
 				// Show details 
+			}).hover(function() {
+				$(this).animate({ background: white }, 200);
+			}, function() {
+				$(this).stop(true);
+				$(this).css({ background: transparent });
 			}).append($('<div />', { 
 					html: mod//,
 					//css: { position:'absolute', top:'0px', left:'0px' }
