@@ -287,7 +287,7 @@ jarTT.ui = {
 		box.append("<br />");
 		box.append("<br />");
 		box.append($("<button />", {
-				'text': 'Unload jarTT'
+				'text': 'Unlad jarTT'
 			}).button().click(jarTT.unload)
 		);
 
