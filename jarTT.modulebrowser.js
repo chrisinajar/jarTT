@@ -33,14 +33,15 @@ jarTT.modulebrowser = {
 
 		box.append('<h1>jarTT Modules</h1>');
 		box.append($('<table />', {
-			css: { border:'1px solid white' }
+			css: { border:'1px solid white', width: '100px' }
 		}).append($('<tr />', {
 			// this row contains top of side_bar, Module title, version and install button
 		}).append($('<td />', {
 			css: { }, // contains list of modules
 			html: jarTT.modulebrowser.getModuleList()
 		}).attr('rowspan', '2')).append($('<td />', {
-			html: jarTT.modulebrowser.getInfoPanel()// module title, version and install button
+			html: jarTT.modulebrowser.getInfoPanel(),// module title, version and install button
+			css: { width: '15%' }
 		}))).append($('<tr />', {
 			// this row contains details
 		}).append($('<td />', {
