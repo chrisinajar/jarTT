@@ -66,6 +66,8 @@ jarTT.modulebrowser = {
 			jarTT.log('testing ' + mod);
 			mod_ar.push(mod);
 			var checked = ($.inArray(mod, mods_enabled) != -1);
+
+			// Not worth trying to comprehend
 			$('<div />', {
 				css: { width: '150px', height: '75px', border: '1px solid pink' }
 			}).data('mod', mod).click(function() {
