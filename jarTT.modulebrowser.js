@@ -113,7 +113,7 @@ jarTT.modulebrowser = {
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			text: 'Install!',
-			css: { float: 'right', height: '30px', width: '125px', backgroundColor: 'green' }
+			css: { float: 'right', height: '15px', width: '45px' }
 		}).button().click(function() {
 			// Thru some sort of magic, this will install a module
 		}));
