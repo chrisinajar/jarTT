@@ -86,10 +86,10 @@ jarTT.modulebrowser = {
 				$('#jarTT_selected_mod_version').html(modules[m].version?modules[m].version:'No version # provided');
 				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
 			}).hover(function() {
-				$(this).animate({ border: '2px solid white' }, 200);
+				//$(this).animate({ border: '2px solid white' }, 200);
 			}, function() {
 				$(this).stop(true);
-				$(this).css({ border: '1px solid #FBD863' });
+				//$(this).css({ border: '1px solid #FBD863' });
 			}).append($('<div />', { 
 					html: mod//,
 					//css: { position:'absolute', top:'0px', left:'0px' }
