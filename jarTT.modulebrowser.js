@@ -173,6 +173,8 @@ jarTT.modulebrowser = {
 					//jarTTLoad.cl[m]();
 					//delete jarTTLoad.cl[m];
 				}, mod.options);
+				// add dat bitch
+				jarTT.storage.setNamedData('modules', jarTT.storage.getNamedData('modules').concat(m));
 				$('#jarTT_module_item_'+m+'> :checkbox').attr('checked', 'checked');
 			} else {
 				// Ask chris if uninstall is possible or if requires reload?
