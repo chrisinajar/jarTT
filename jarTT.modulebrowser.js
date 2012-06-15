@@ -81,7 +81,7 @@ jarTT.modulebrowser = {
 			}).data('mod', mod).click(function() {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
-				$('#jarTT_module_details').html(m+' '+modules[m].url);
+				$('#jarTT_module_details').html(jarTT.modulebrowser.getModuleDetails(m));
 				$('#jarTT_selected_mod_title').html(m);
 				$('#jarTT_selected_mod_version').html(modules[m].version?'v '+modules[m].version:'No version # provided');
 				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
@@ -135,5 +135,16 @@ jarTT.modulebrowser = {
 		}));
 
 		return headerPanel;
+	},
+	getModuleDetails: function(m) {
+		var dets = $('<div />', {
+			css: { fontSize: '16px' }
+		});
+
+		dets.aopend('<h3><u>Details</u></h3>');
+		dets.append('<br />'+modules[m].details);
+		dets.append('<br /><a href="'+modules[m].url+'"'+Source+'</a>');
+
+		return dets;
 	}
 }
