@@ -24,10 +24,33 @@ jarTT.modulebrowser = {
 	},
 	unload: function() {
 	},
+	createBox: function() {
+		var overlay = $("#overlay"),
+		    box = $("<div />", {
+			'class': "modal jarTT",
+			'id': 'jarTT_module_browser',
+			'css': {
+				'marginTop': '100px',
+				'textAlign': 'center'
+			}
+		});
+		box.append($("<div />", {
+				'class': "close-x"
+			}).click(function() {
+				box.remove();
+				overlay.hide();
+			})
+		);
+		setTimeout(function() {
+			box.appendTo(overlay);
+			overlay.show();
+		}, 10);
+		return box;
+	},
 	showModuleBrowser: function() {
-		$('#jarTT_Settings').hide(); // Not final, but for fuck sake go away, we don't all have 1600p monitors...
+		//$('#jarTT_Settings').hide(); // Not final, but for fuck sake go away, we don't all have 1600p monitors...
 
-		var box = jarTT.ui.createBox();
+		var box = jarTT.modulebrowser.createBox();
 		
 		box.width(600);
 		box.height(500);
@@ -115,7 +138,6 @@ jarTT.modulebrowser = {
 		var mods_enabled = jarTT.storage.getNamedData('modules');
 		mods_enabled=mods_enabled?mods_enabled:[];
 		var checked = ($.inArray(m, mods_enabled) != -1);
-		console.log(checked);
 		var headerWrapper = $('<div />', {
 			id: 'header_wrapper'
 		}).append($('<div />', {
