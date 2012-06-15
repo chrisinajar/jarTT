@@ -42,12 +42,12 @@ jarTT.modulebrowser = {
 				css: { width: '152px' }, // i know i know
 				html: jarTT.modulebrowser.getModuleList()
 			}).attr('rowspan', '2')).append($('<td />', {
-				html: jarTT.modulebrowser.getHeaderPanel(),
+				html: $('<div />', { id: 'jarTT_module_header' html: '<h3>Welcome to the jarTT Module Browser</h3>' },
 				css: { border: '1px solid #FBD863', padding: '5px' }
 			}))).append($('<tr />', {
 				// this row contains details
 			}).append($('<td />', {
-				html: $('<div />', { id:'jarTT_module_details', html:'<h4>Welcome to the jarTT Module Browser, check out all the cool stuff over on the side bar <.<</h4>' }),
+				html: $('<div />', { id:'jarTT_module_details', html:'<h4>Check out all the cool stuff over on the side bar <.<</h4>' }),
 				css: { border: '1px solid #FBD863' }
 			}).attr('valign', 'top'))));
 	},
@@ -82,12 +82,12 @@ jarTT.modulebrowser = {
 			}).data('mod', mod).click(function() {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
+				$('#jarTT_module_header').html(jarTT.modulebrowser.getModuleHeader(m));
 				$('#jarTT_module_details').html(jarTT.modulebrowser.getModuleDetails(m));
-				$('#jarTT_selected_mod_title').html(m);
+				/*$('#jarTT_selected_mod_title').html(m);
 				$('#jarTT_selected_mod_version').html(modules[m].version?'v '+modules[m].version:'No version # provided');
-				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
+				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');*/
 			}).hover(function() {
-				//$(this).animate({color: '#'+(Math.random()*0xFFFFFF<<0).toString(16)}, 200);
 				$(this).animate({ 
 					backgroundColor: '#FBD863',
 					color: 'black'
@@ -110,9 +110,10 @@ jarTT.modulebrowser = {
 
 		return sideBarWrapper;
 	},
-	getHeaderPanel: function() {
-		var headerPanel = $('<div />', {
-			id: 'jarTT_module_header_panel'
+	getModuleHeader: function(m) {
+		console.log(m);
+		var headerWrapper = $('<div />', {
+			id: 'header_wrapper'
 		}).append($('<div />', {
 			css: { float: 'left', textAlign: 'left' }
 		}).append($('<span />', {
@@ -145,7 +146,7 @@ jarTT.modulebrowser = {
 			// Thru some sort of magic, this will install a module
 		}));
 
-		return headerPanel;
+		return headerWrapper;
 	},
 	getModuleDetails: function(m) {
 		var modules = jarTT.modulebrowser.modules;
