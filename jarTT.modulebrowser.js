@@ -39,7 +39,6 @@ jarTT.modulebrowser = {
 				'class': "close-x"
 			}).click(function() {
 				box.remove();
-				overlay.hide();
 				$('#jarTT_Settings').show();
 			})
 		);
