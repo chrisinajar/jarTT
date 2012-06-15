@@ -100,15 +100,13 @@ jarTT.modulebrowser = {
 
 			// Not worth trying to comprehend
 			$('<div />', {
+				id: 'jarTT_module_item_'+m,
 				css: { width: '150px', height: '75px', borderBottom: '1px solid #FBD863' }
 			}).data('mod', mod).click(function() {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
 				$('#jarTT_module_header').html(jarTT.modulebrowser.getModuleHeader(m));
 				$('#jarTT_module_details').html(jarTT.modulebrowser.getModuleDetails(m));
-				/*$('#jarTT_selected_mod_title').html(m);
-				$('#jarTT_selected_mod_version').html(modules[m].version?'v '+modules[m].version:'No version # provided');
-				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');*/
 			}).hover(function() {
 				$(this).animate({ 
 					backgroundColor: '#FBD863',
@@ -168,7 +166,12 @@ jarTT.modulebrowser = {
 				textShadow: 'white 0px 1px 0, black 0 -1px 0' 
 			}
 		}).button().click(function() {
-			// Thru some sort of magic, this will install a module
+			// Load script
+			jarTTLoad.loadScript(mod.url, function() {
+				jarTTLoad.cl[m]();
+				delete jarTTLoad.cl[m];
+			}, mod.options);
+			$('#jarTT_module_item_'+m+'> :checkbox').attr('checked', 'checked');
 		}));
 
 		return headerWrapper;
