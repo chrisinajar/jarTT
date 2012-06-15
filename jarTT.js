@@ -40,7 +40,7 @@ var modules = {
 		},
 		author: 'chrisinajar',
 		version: '1.0.0',
-		details: ''
+		details: null
 	},
 	'bopomatic': {
 		deps: [], // doesn't use jarTT api..
@@ -50,7 +50,7 @@ var modules = {
 		},
 		author: 'Google',
 		version: '1.0.1',
-		details: ''
+		details: null
 	},
 	'socket.io': {
 		deps: [],
@@ -60,7 +60,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	'hivemind_raw': {
 		deps: ['socket.io', 'ttObjects'],
@@ -70,7 +70,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	'ttObjects': {
 		deps: [],
@@ -81,7 +81,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	// main jarTT, most of the code is here
 	'main': {
@@ -92,7 +92,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	// Ability to hook onto events along with the basic event driven stuff like idle timers
 	'events': {
@@ -103,7 +103,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	// Avatar related stuff, basically anything that uses identifyDiv
 	'avatar': {
@@ -114,7 +114,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	// HTML5 storage
 	'storage': {
@@ -125,7 +125,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	// UI shit
 	'ui': {
@@ -136,7 +136,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	'version': {
 		deps: ['ui'],
@@ -146,7 +146,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	// hivemind realtime communication
 	'hivemind': {
@@ -156,7 +156,7 @@ var modules = {
 		},
 		author: null,
 		version: null,
-		details: ''
+		details: null
 	},
 	'modulebrowser': {
 		deps: ['version'],
@@ -164,8 +164,8 @@ var modules = {
 		options: {
 			required: true
 		},
-		author: null,
-		version: null,
+		author: 'cannjeff',
+		version: '0.0.1',
 		details: ''
 	},
 	'testmodule': {
@@ -176,7 +176,7 @@ var modules = {
 		},
 		author: 'Frank Smith',
 		version: '1.2.3',
-		details: ''
+		details: null
 	},
 	'muteonlame': {
 		deps: ['events'],
@@ -186,7 +186,7 @@ var modules = {
 		},
 		author: 'Pete Jones',
 		version: '0.0.1',
-		details: ''
+		details: null
 	}
 	/*
 	myplugin: {
