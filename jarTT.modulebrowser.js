@@ -166,12 +166,16 @@ jarTT.modulebrowser = {
 				textShadow: 'white 0px 1px 0, black 0 -1px 0' 
 			}
 		}).button().click(function() {
-			// Load script
-			jarTTLoad.loadScript(mod.url, function() {
-				jarTTLoad.cl[m]();
-				delete jarTTLoad.cl[m];
-			}, mod.options);
-			$('#jarTT_module_item_'+m+'> :checkbox').attr('checked', 'checked');
+			if ($('#jarTT_module_item_'+m+'> :checkbox').attr('checked')) {
+				// Load script
+				jarTTLoad.loadScript(mod.url, function() {
+					jarTTLoad.cl[m]();
+					delete jarTTLoad.cl[m];
+				}, mod.options);
+				$('#jarTT_module_item_'+m+'> :checkbox').attr('checked', 'checked');
+			} else {
+				// Ask chris if uninstall is possible or if requires reload?
+			}
 		}));
 
 		return headerWrapper;
