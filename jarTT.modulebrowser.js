@@ -130,7 +130,7 @@ jarTT.modulebrowser = {
 		}))).append($('<button />', {
 			id: 'jarTT_module_install_btn',
 			text: 'Install',
-			css: { float: 'right', backgroundColor: '#FBD863', textAlign: 'center', height: '52px', width: '130px', lineHeight: '1em', fontSize: '3em', fontWeight: 'bold', textShadow: 'white 0px 1px 0, black 0 -1px 0' }
+			css: { float: 'right', backgroundColor: '#FBD863', textAlign: 'center', height: '52px', width: '130px', lineHeight: '1em', fontSize: '2em', fontWeight: 'bold', textShadow: 'white 0px 1px 0, black 0 -1px 0' }
 		}).button().click(function() {
 			// Thru some sort of magic, this will install a module
 		}));
