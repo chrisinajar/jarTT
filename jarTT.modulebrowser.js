@@ -149,14 +149,14 @@ jarTT.modulebrowser = {
 		return headerWrapper;
 	},
 	getModuleDetails: function(m) {
-		var modules = jarTT.modulebrowser.modules;
+		var mod = jarTT.modulebrowser.modules[m];
 		var dets = $('<div />', {
 			css: { fontSize: '16px' }
 		});
 
 		dets.append('<h3><u>Details</u></h3>');
-		dets.append('<br />'+modules[m].details?modules[m].details:'No details provided, check the source if you\'re curious');
-		dets.append('<br />Source: <a href="'+modules[m].url+'">clicky!</a>');
+		dets.append('<br />'+mod.details?mod.details:'No details provided, check the source if you\'re curious');
+		dets.append('<br />Source: <a href="'+mod.url+'">clicky!</a>');
 
 		return dets;
 	}
