@@ -25,6 +25,7 @@ jarTT.modulebrowser = {
 	unload: function() {
 	},
 	createBox: function() {
+		$('#jarTT_Settings').hide();
 		var overlay = $("#overlay"),
 		    box = $("<div />", {
 			'class': "modal jarTT",
@@ -39,6 +40,7 @@ jarTT.modulebrowser = {
 			}).click(function() {
 				box.remove();
 				overlay.hide();
+				$('#jarTT_Settings').show();
 			})
 		);
 		setTimeout(function() {
@@ -48,8 +50,6 @@ jarTT.modulebrowser = {
 		return box;
 	},
 	showModuleBrowser: function() {
-		//$('#jarTT_Settings').hide(); // Not final, but for fuck sake go away, we don't all have 1600p monitors...
-
 		var box = jarTT.modulebrowser.createBox();
 		
 		box.width(600);
