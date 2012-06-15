@@ -137,7 +137,7 @@ jarTT.modulebrowser = {
 				height: '52px',
 				width: '130px',
 				lineHeight: '1em',
-				fontSize: '2em',
+				fontSize: '1.5em',
 				fontWeight: 'bold',
 				textShadow: 'white 0px 1px 0, black 0 -1px 0' 
 			}
