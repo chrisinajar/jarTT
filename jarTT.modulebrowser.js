@@ -167,18 +167,15 @@ jarTT.modulebrowser = {
 			}
 		}).button().click(function() {
 			if (!$('#jarTT_module_item_'+m+'> :checkbox').attr('checked')) {
-				console.log('Installing!');
-				// Load script
-				jarTTLoad.loadScript(mod.url, m, function() {
-					//jarTTLoad.cl[m]();
-					//delete jarTTLoad.cl[m];
+				jarTTLoad.loadScript(mod.url, m, function() { // Load script
+					jarTT.log('Loading module - '+m);
 				}, mod.options);
-				// add dat bitch
-				jarTT.storage.setNamedData('modules', jarTT.storage.getNamedData('modules').concat(m));
+				jarTT.storage.setNamedData('modules', jarTT.storage.getNamedData('modules').concat(m)); // add that bitch
 				$('#jarTT_module_item_'+m+'> :checkbox').attr('checked', 'checked');
 			} else {
-				// Ask chris if uninstall is possible or if requires reload?
-				console.log('Uninstalling!');
+				var modules = jarTT.storage.getNamedData('modules')
+				jarTT.storage.setNamedData('modules', modules.splice(modules.indexOf(m), 1)); // remove that bitch
+				$('[src*="'+mod.url+'"]').remove(); // remove script from DOM
 			}
 		}));
 
