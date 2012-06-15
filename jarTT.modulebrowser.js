@@ -170,8 +170,8 @@ jarTT.modulebrowser = {
 				console.log('Installing!');
 				// Load script
 				jarTTLoad.loadScript(mod.url, m, function() {
-					jarTTLoad.cl[m]();
-					delete jarTTLoad.cl[m];
+					//jarTTLoad.cl[m]();
+					//delete jarTTLoad.cl[m];
 				}, mod.options);
 				$('#jarTT_module_item_'+m+'> :checkbox').attr('checked', 'checked');
 			} else {
