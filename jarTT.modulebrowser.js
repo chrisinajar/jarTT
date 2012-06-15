@@ -100,7 +100,7 @@ jarTT.modulebrowser = {
 
 			// Not worth trying to comprehend
 			$('<div />', {
-				id: 'jarTT_module_item_'+m,
+				id: 'jarTT_module_item_'+mod,
 				css: { width: '150px', height: '75px', borderBottom: '1px solid #FBD863' }
 			}).data('mod', mod).click(function() {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
