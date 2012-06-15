@@ -130,7 +130,7 @@ jarTT.modulebrowser = {
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			id: 'jarTT_module_install_btn',
-			text: (c?'Uninstall':'Install'),
+			text: (c=='checked'?'Uninstall':'Install'),
 			css: { float: 'right', 
 				color: '#646464',
 				backgroundColor: '#FBD863',
