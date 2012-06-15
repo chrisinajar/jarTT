@@ -122,11 +122,11 @@ jarTT.modulebrowser = {
 			css: { fontSize: '20px', display: 'block' }
 		})).append($('<span />', {
 			id: 'jarTT_selected_mod_version',
-			html: 'v '+mod.version,
+			html: mod.version?'v '+mod.version:'No version # provided',
 			css: { fontSize: '12px', display: 'block' }
 		})).append($('<span />', {
 			id: 'jarTT_select_mod_author',
-			html: mod.author,
+			html: mod.author?mod.author:'No one wants credit for this module',
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			id: 'jarTT_module_install_btn',
