@@ -82,7 +82,7 @@ jarTT.modulebrowser = {
 			}).data('mod', mod).click(function() {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
-				$('#jarTT_module_header').html(jarTT.modulebrowser.getModuleHeader(m, checked));
+				$('#jarTT_module_header').html(jarTT.modulebrowser.getModuleHeader(m));
 				$('#jarTT_module_details').html(jarTT.modulebrowser.getModuleDetails(m));
 				/*$('#jarTT_selected_mod_title').html(m);
 				$('#jarTT_selected_mod_version').html(modules[m].version?'v '+modules[m].version:'No version # provided');
@@ -110,9 +110,12 @@ jarTT.modulebrowser = {
 
 		return sideBarWrapper;
 	},
-	getModuleHeader: function(m,c) {
-		console.log(c);
+	getModuleHeader: function(m) {
 		var mod = jarTT.modulebrowser.modules[m];
+		var mods_enabled = jarTT.storage.getNamedData('modules');
+		mods_enabled=mods_enabled?mods_enabled:[];
+		var checked = ($.inArray(m, mods_enabled) != -1);
+		console.log(checked);
 		var headerWrapper = $('<div />', {
 			id: 'header_wrapper'
 		}).append($('<div />', {
@@ -131,7 +134,7 @@ jarTT.modulebrowser = {
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			id: 'jarTT_module_install_btn',
-			text: c=='checked'?'Uninstall':'Install',
+			text: checked?'Uninstall':'Install',
 			css: { float: 'right', 
 				color: '#646464',
 				backgroundColor: '#FBD863',
