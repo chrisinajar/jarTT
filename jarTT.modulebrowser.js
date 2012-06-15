@@ -137,6 +137,7 @@ jarTT.modulebrowser = {
 		return headerPanel;
 	},
 	getModuleDetails: function(m) {
+		var modules = jarTT.modulebrowser.modules;
 		var dets = $('<div />', {
 			css: { fontSize: '16px' }
 		});
