@@ -105,7 +105,7 @@ jarTT.modulebrowser = {
 					type: 'checkbox',
 					'checked': checked
 					//css: { position:'absolute', bottom:'0px', right:'0px' }
-			})).appendTo(sideBar);
+			}).attr('disabled', 'disabled')).appendTo(sideBar);
 		}
 
 		return sideBarWrapper;
