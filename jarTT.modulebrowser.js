@@ -39,7 +39,7 @@ jarTT.modulebrowser = {
 				// this row contains top of side_bar, Module title, version and install button
 				css: { height: '20%' }
 			}).append($('<td />', {
-				css: { }, // contains list of modules
+				css: { width: '152px' }, // i know i know
 				html: jarTT.modulebrowser.getModuleList()
 			}).attr('rowspan', '2')).append($('<td />', {
 				html: jarTT.modulebrowser.getHeaderPanel(),
