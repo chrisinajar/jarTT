@@ -39,7 +39,8 @@ var modules = {
 			noload: true
 		},
 		author: 'chrisinajar',
-		version: '1.0.0'
+		version: '1.0.0',
+		details: null
 	},
 	'bopomatic': {
 		deps: [], // doesn't use jarTT api..
@@ -48,7 +49,8 @@ var modules = {
 			noload: true
 		},
 		author: 'Google',
-		version: '1.0.1'
+		version: '1.0.1',
+		details: null
 	},
 	'socket.io': {
 		deps: [],
@@ -57,7 +59,8 @@ var modules = {
 			noload: true
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	'hivemind_raw': {
 		deps: ['socket.io', 'ttObjects'],
@@ -66,7 +69,8 @@ var modules = {
 			noload: true
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	'ttObjects': {
 		deps: [],
@@ -76,7 +80,8 @@ var modules = {
 			required: true
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	// main jarTT, most of the code is here
 	'main': {
@@ -86,7 +91,8 @@ var modules = {
 			required: true
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	// Ability to hook onto events along with the basic event driven stuff like idle timers
 	'events': {
@@ -96,7 +102,8 @@ var modules = {
 			required: true
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	// Avatar related stuff, basically anything that uses identifyDiv
 	'avatar': {
@@ -106,7 +113,8 @@ var modules = {
 			required: true
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	// HTML5 storage
 	'storage': {
@@ -116,7 +124,8 @@ var modules = {
 			required: true
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	// UI shit
 	'ui': {
@@ -126,7 +135,8 @@ var modules = {
 			required: true
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	'version': {
 		deps: ['ui'],
@@ -135,7 +145,8 @@ var modules = {
 			required: true
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	// hivemind realtime communication
 	'hivemind': {
@@ -144,7 +155,8 @@ var modules = {
 		options: {
 		},
 		author: null,
-		version: null
+		version: null,
+		details: null
 	},
 	'modulebrowser': {
 		deps: ['version'],
@@ -152,8 +164,9 @@ var modules = {
 		options: {
 			required: true
 		},
-		author: null,
-		version: null
+		author: 'cannjeff',
+		version: '0.0.1',
+		details: ''
 	},
 	'testmodule': {
 		deps: ['modulebrowser'],
@@ -162,7 +175,8 @@ var modules = {
 			noload: true
 		},
 		author: 'Frank Smith',
-		version: '1.2.3'
+		version: '1.2.3',
+		details: null
 	},
 	'muteonlame': {
 		deps: ['events'],
@@ -171,7 +185,8 @@ var modules = {
 			required: true
 		},
 		author: 'Pete Jones',
-		version: '0.0.1'
+		version: '0.0.1',
+		details: null
 	}
 	/*
 	myplugin: {

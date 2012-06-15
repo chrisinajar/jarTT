@@ -24,10 +24,32 @@ jarTT.modulebrowser = {
 	},
 	unload: function() {
 	},
+	createBox: function() {
+		$('#jarTT_Settings').hide();
+		var overlay = $("#overlay"),
+		    box = $("<div />", {
+			'class': "modal jarTT",
+			'id': 'jarTT_module_browser',
+			'css': {
+				'marginTop': '100px',
+				'textAlign': 'center'
+			}
+		});
+		box.append($("<div />", {
+				'class': "close-x"
+			}).click(function() {
+				box.remove();
+				$('#jarTT_Settings').show();
+			})
+		);
+		setTimeout(function() {
+			box.appendTo(overlay);
+			overlay.show();
+		}, 10);
+		return box;
+	},
 	showModuleBrowser: function() {
-		$('#jarTT_Settings').hide(); // Not final, but for fuck sake go away, we don't all have 1600p monitors...
-
-		var box = jarTT.ui.createBox();
+		var box = jarTT.modulebrowser.createBox();
 		
 		box.width(600);
 		box.height(500);
@@ -39,15 +61,16 @@ jarTT.modulebrowser = {
 				// this row contains top of side_bar, Module title, version and install button
 				css: { height: '20%' }
 			}).append($('<td />', {
-				css: { }, // contains list of modules
+				css: { width: '152px' }, // i know i know
 				html: jarTT.modulebrowser.getModuleList()
 			}).attr('rowspan', '2')).append($('<td />', {
-				html: jarTT.modulebrowser.getHeaderPanel(),
+				html: $('<div />', { id: 'jarTT_module_header', html: '<h3>Welcome to the jarTT Module Browser</h3>' }),
 				css: { border: '1px solid #FBD863', padding: '5px' }
 			}))).append($('<tr />', {
 				// this row contains details
 			}).append($('<td />', {
-				html: $('<div />', { id:'jarTT_module_details', html:'<h4>Welcome to the jarTT Module Browser, check out all the cool stuff over on the side bar <.<</h4>' })
+				html: $('<div />', { id:'jarTT_module_details', html:'<h4>Check out all the cool stuff over on the side bar <.<</h4>' }),
+				css: { border: '1px solid #FBD863' }
 			}).attr('valign', 'top'))));
 	},
 	getModuleList: function() {
@@ -77,20 +100,14 @@ jarTT.modulebrowser = {
 
 			// Not worth trying to comprehend
 			$('<div />', {
+				id: 'jarTT_module_item_'+mod,
 				css: { width: '150px', height: '75px', borderBottom: '1px solid #FBD863' }
 			}).data('mod', mod).click(function() {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
-				$('#jarTT_module_details').html(m+' '+modules[m].url);
-				$('#jarTT_selected_mod_title').html(m);
-				$('#jarTT_selected_mod_version').html(modules[m].version?'v '+modules[m].version:'No version # provided');
-				$('#jarTT_select_mod_author').html(modules[m].author?modules[m].author:'No one wants credit for this module');
-
-				$(this).animate({ backgroundColor: 'white' }, 50, function() {
-					$(this).animate({ backgroundColor: 'transparent' }, 200);
-				});
+				$('#jarTT_module_header').html(jarTT.modulebrowser.getModuleHeader(m));
+				$('#jarTT_module_details').html(jarTT.modulebrowser.getModuleDetails(m));
 			}).hover(function() {
-				//$(this).animate({color: '#'+(Math.random()*0xFFFFFF<<0).toString(16)}, 200);
 				$(this).animate({ 
 					backgroundColor: '#FBD863',
 					color: 'black'
@@ -108,36 +125,76 @@ jarTT.modulebrowser = {
 					type: 'checkbox',
 					'checked': checked
 					//css: { position:'absolute', bottom:'0px', right:'0px' }
-			})).appendTo(sideBar);
+			}).attr('disabled', 'disabled')).appendTo(sideBar);
 		}
 
 		return sideBarWrapper;
 	},
-	getHeaderPanel: function() {
-		var headerPanel = $('<div />', {
-			id: 'jarTT_module_header_panel'
+	getModuleHeader: function(m) {
+		var mod = jarTT.modulebrowser.modules[m];
+		var mods_enabled = jarTT.storage.getNamedData('modules');
+		mods_enabled=mods_enabled?mods_enabled:[];
+		var checked = ($.inArray(m, mods_enabled) != -1);
+		var headerWrapper = $('<div />', {
+			id: 'header_wrapper'
 		}).append($('<div />', {
 			css: { float: 'left', textAlign: 'left' }
 		}).append($('<span />', {
 			id: 'jarTT_selected_mod_title',
-			html: 'Module Title',
+			html: m,
 			css: { fontSize: '20px', display: 'block' }
 		})).append($('<span />', {
 			id: 'jarTT_selected_mod_version',
-			html: 'v 0.0.1',
+			html: mod.version?'v '+mod.version:'No version # provided',
 			css: { fontSize: '12px', display: 'block' }
 		})).append($('<span />', {
 			id: 'jarTT_select_mod_author',
-			html: 'Your name',
+			html: mod.author?mod.author:'No one wants credit for this module',
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			id: 'jarTT_module_install_btn',
-			text: 'Install',
-			css: { float: 'right', textAlign: 'center', height: '30px', width: '90px' }
+			text: checked?'Uninstall':'Install',
+			css: { float: 'right', 
+				color: '#646464',
+				backgroundColor: '#FBD863',
+				textAlign: 'center',
+				height: '52px',
+				width: '130px',
+				lineHeight: '1em',
+				fontSize: '1.5em',
+				fontWeight: 'bold',
+				textShadow: 'white 0px 1px 0, black 0 -1px 0' 
+			}
 		}).button().click(function() {
-			// Thru some sort of magic, this will install a module
+			if (!$('#jarTT_module_item_'+m+'> :checkbox').attr('checked')) {
+				jarTTLoad.loadScript(mod.url, m, function() { // Load script
+					jarTT.log('Loading module - '+m);
+				}, mod.options);
+				jarTT.storage.setNamedData('modules', jarTT.storage.getNamedData('modules').concat(m)); // add that bitch
+				$('#jarTT_module_item_'+m+'> :checkbox').attr('checked', 'checked');
+				$(this).text('Uninstall');
+			} else {
+				var modules = jarTT.storage.getNamedData('modules')
+				modules.splice(modules.indexOf(m), 1); // remove that bitch
+				jarTT.storage.setNamedData('modules', modules);
+				$('[src*="'+mod.url+'"]').remove(); // remove script from DOM
+				$('#jarTT_module_item_'+m+'> :checkbox').removeAttr('checked');
+				$(this).text('Install');
+			}
 		}));
 
-		return headerPanel;
+		return headerWrapper;
+	},
+	getModuleDetails: function(m) {
+		var mod = jarTT.modulebrowser.modules[m];
+		var dets = $('<div />', {
+			css: { fontSize: '16px' }
+		});
+
+		dets.append('<h3><u>Details</u></h3>');
+		dets.append((mod.details?mod.details:'No details provided, check the source if you\'re curious'));
+		dets.append('</br></br>Source: <a href="'+mod.url+'" target="_blank">clicky!</a>');
+
+		return dets;
 	}
 }
