@@ -111,6 +111,7 @@ jarTT.modulebrowser = {
 		return sideBarWrapper;
 	},
 	getModuleHeader: function(m,c) {
+		console.log(c);
 		var mod = jarTT.modulebrowser.modules[m];
 		var headerWrapper = $('<div />', {
 			id: 'header_wrapper'
@@ -130,7 +131,7 @@ jarTT.modulebrowser = {
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			id: 'jarTT_module_install_btn',
-			text: (c=='checked'?'Uninstall':'Install'),
+			text: c=='checked'?'Uninstall':'Install',
 			css: { float: 'right', 
 				color: '#646464',
 				backgroundColor: '#FBD863',
