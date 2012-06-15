@@ -32,7 +32,7 @@ jarTT.modulebrowser = {
 		box.width(600);
 		box.height(500);
 
-		box.append('<h1>jarTT Modules</h1>');
+		box.append('<h1>jarTT Module Manager</h1>');
 		box.append($('<table />', {
 			css: { border:'5px solid #FBD863', width: '100%', height: '90%' }
 			}).append($('<tr />', {
