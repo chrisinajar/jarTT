@@ -176,6 +176,7 @@ jarTT.modulebrowser = {
 				var modules = jarTT.storage.getNamedData('modules')
 				jarTT.storage.setNamedData('modules', modules.splice(modules.indexOf(m), 1)); // remove that bitch
 				$('[src*="'+mod.url+'"]').remove(); // remove script from DOM
+				$('#jarTT_module_item_'+m+'> :checkbox').removeAttr('checked');
 			}
 		}));
 
