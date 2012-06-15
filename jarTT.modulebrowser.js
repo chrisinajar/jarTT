@@ -57,17 +57,15 @@ jarTT.modulebrowser = {
 		box.append('<h1>jarTT Module Manager</h1>');
 		box.append($('<table />', {
 			css: { border:'5px solid #FBD863', width: '100%', height: '90%' }
-			}).append($('<tr />', {
-				// this row contains top of side_bar, Module title, version and install button
+			}).append($('<tr />', { // this row contains top of side_bar, Module title, version, author and install button
 				css: { height: '20%' }
 			}).append($('<td />', {
-				css: { width: '152px' }, // i know i know
+				css: { width: '152px' }, // don't worry about it
 				html: jarTT.modulebrowser.getModuleList()
 			}).attr('rowspan', '2')).append($('<td />', {
 				html: $('<div />', { id: 'jarTT_module_header', html: '<h3>Welcome friend!</h3>' }),
 				css: { border: '1px solid #FBD863', padding: '5px' }
-			}))).append($('<tr />', {
-				// this row contains details
+			}))).append($('<tr />', { // this row contains details
 			}).append($('<td />', {
 				html: $('<div />', { id:'jarTT_module_details', html:'<h4>Check out all the cool stuff over on the side bar <.<</h4>' }),
 				css: { border: '1px solid #FBD863' }
