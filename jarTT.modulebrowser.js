@@ -141,7 +141,7 @@ jarTT.modulebrowser = {
 			css: { fontSize: '16px' }
 		});
 
-		dets.aopend('<h3><u>Details</u></h3>');
+		dets.append('<h3><u>Details</u></h3>');
 		dets.append('<br />'+modules[m].details);
 		dets.append('<br /><a href="'+modules[m].url+'"'+Source+'</a>');
 
