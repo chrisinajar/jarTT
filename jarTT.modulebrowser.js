@@ -156,7 +156,7 @@ jarTT.modulebrowser = {
 
 		dets.append('<h3><u>Details</u></h3>');
 		dets.append((mod.details?mod.details:'No details provided, check the source if you\'re curious'));
-		dets.append('</br>Source: <a href="'+mod.url+'">clicky!</a>');
+		dets.append('</br></br>Source: <a href="'+mod.url+'">clicky!</a>');
 
 		return dets;
 	}
