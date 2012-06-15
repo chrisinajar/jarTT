@@ -42,7 +42,7 @@ jarTT.modulebrowser = {
 				css: { width: '152px' }, // i know i know
 				html: jarTT.modulebrowser.getModuleList()
 			}).attr('rowspan', '2')).append($('<td />', {
-				html: $('<div />', { id: 'jarTT_module_header' html: '<h3>Welcome to the jarTT Module Browser</h3>' },
+				html: $('<div />', { id: 'jarTT_module_header', html: '<h3>Welcome to the jarTT Module Browser</h3>' }),
 				css: { border: '1px solid #FBD863', padding: '5px' }
 			}))).append($('<tr />', {
 				// this row contains details
