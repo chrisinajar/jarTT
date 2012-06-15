@@ -111,22 +111,22 @@ jarTT.modulebrowser = {
 		return sideBarWrapper;
 	},
 	getModuleHeader: function(m) {
-		console.log(m);
+		var mod = jarTT.modulebrowser.modules[m];
 		var headerWrapper = $('<div />', {
 			id: 'header_wrapper'
 		}).append($('<div />', {
 			css: { float: 'left', textAlign: 'left' }
 		}).append($('<span />', {
 			id: 'jarTT_selected_mod_title',
-			html: 'Module Title',
+			html: m,
 			css: { fontSize: '20px', display: 'block' }
 		})).append($('<span />', {
 			id: 'jarTT_selected_mod_version',
-			html: 'v 0.0.1',
+			html: 'v '+mod.version,
 			css: { fontSize: '12px', display: 'block' }
 		})).append($('<span />', {
 			id: 'jarTT_select_mod_author',
-			html: 'Your name',
+			html: mod.author,
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			id: 'jarTT_module_install_btn',
