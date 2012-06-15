@@ -172,11 +172,13 @@ jarTT.modulebrowser = {
 				}, mod.options);
 				jarTT.storage.setNamedData('modules', jarTT.storage.getNamedData('modules').concat(m)); // add that bitch
 				$('#jarTT_module_item_'+m+'> :checkbox').attr('checked', 'checked');
+				$(this).text('Uninstall');
 			} else {
 				var modules = jarTT.storage.getNamedData('modules')
 				jarTT.storage.setNamedData('modules', modules.splice(modules.indexOf(m), 1)); // remove that bitch
 				$('[src*="'+mod.url+'"]').remove(); // remove script from DOM
 				$('#jarTT_module_item_'+m+'> :checkbox').removeAttr('checked');
+				$(this).text('Install');
 			}
 		}));
 
