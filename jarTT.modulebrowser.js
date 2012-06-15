@@ -82,7 +82,7 @@ jarTT.modulebrowser = {
 			}).data('mod', mod).click(function() {
 				// Couldn't hurt to check if all deps are met before installing this bitch (inform the morons on these deps, auto-install?)
 				var m = $(this).data('mod');
-				$('#jarTT_module_header').html(jarTT.modulebrowser.getModuleHeader(m));
+				$('#jarTT_module_header').html(jarTT.modulebrowser.getModuleHeader(m, checked));
 				$('#jarTT_module_details').html(jarTT.modulebrowser.getModuleDetails(m));
 				/*$('#jarTT_selected_mod_title').html(m);
 				$('#jarTT_selected_mod_version').html(modules[m].version?'v '+modules[m].version:'No version # provided');
@@ -110,7 +110,7 @@ jarTT.modulebrowser = {
 
 		return sideBarWrapper;
 	},
-	getModuleHeader: function(m) {
+	getModuleHeader: function(m,c) {
 		var mod = jarTT.modulebrowser.modules[m];
 		var headerWrapper = $('<div />', {
 			id: 'header_wrapper'
@@ -130,7 +130,7 @@ jarTT.modulebrowser = {
 			css: { fontSize: '12px', display: 'block' }
 		}))).append($('<button />', {
 			id: 'jarTT_module_install_btn',
-			text: 'Install',
+			text: (c?'Uninstall':'Install'),
 			css: { float: 'right', 
 				color: '#646464',
 				backgroundColor: '#FBD863',
@@ -156,7 +156,7 @@ jarTT.modulebrowser = {
 
 		dets.append('<h3><u>Details</u></h3>');
 		dets.append((mod.details?mod.details:'No details provided, check the source if you\'re curious'));
-		dets.append('</br></br>Source: <a href="'+mod.url+'">clicky!</a>');
+		dets.append('</br></br>Source: <a href="'+mod.url+'" target="_blank">clicky!</a>');
 
 		return dets;
 	}
