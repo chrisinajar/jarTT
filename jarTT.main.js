@@ -64,6 +64,7 @@ var jarTT = {
 				var div = jarTT.idleSigns[i];
 				if (idle > (jarTT.settings.idleLimit * 1000)) {
 					if (div == null) {
+						var left = window.laptop_locations[i][0]+20;
 						div = $("<div />", {
 							id: 'jarTT_timer' + i,
 							'class': 'jarTT jarTT_timerDiv ui-corner-all',
@@ -77,7 +78,7 @@ var jarTT = {
 								position: 'absolute',
 								top: '5px',
 								zIndex: i==4?20000:19999, // between the UI and the chat box
-								left: (85*(i+1)-15)+'px',
+								left: left+'px',
 								textAlign: 'center',
 								fontSize: '12px'
 							},
