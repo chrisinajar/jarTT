@@ -172,6 +172,11 @@ jarTT.version = {
 				hasChanges = true;
 				showSettings = true;
 			case "1.2.0":  // current version
+				changes.push("Better ui compatibility with Turntable Remix (shoutout to overra)");
+				
+				version = "1.2.1";
+				hasChanges = true;
+			case "1.2.1":  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
