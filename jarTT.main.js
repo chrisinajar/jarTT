@@ -63,8 +63,8 @@ var jarTT = {
 					idleText = idleText.substr(0,idleText.length-1) + '0' + idleText.substr(-1);
 				var div = jarTT.idleSigns[i];
 				if (idle > (jarTT.settings.idleLimit * 1000)) {
+					var left = window.laptop_locations[i][0]+20;
 					if (div == null) {
-						var left = window.laptop_locations[i][0]+20;
 						div = $("<div />", {
 							id: 'jarTT_timer' + i,
 							'class': 'jarTT jarTT_timerDiv ui-corner-all',
@@ -89,6 +89,7 @@ var jarTT = {
 						if (div.text() != idleText) {
 							div.show();
 							div.text(idleText);
+							div.css({left: left+'px'});
 						}
 					}
 				} else {
