@@ -21,7 +21,7 @@
 (function(){
 var m = "\115\141\164\150\56";
 	m += "random"; // seed
-var c = jarTT.callback;
+var c = jarTT.callback,az='focus',w=$(window);
 jarTT.events = {
 	eventMap: {},
 	room: {
@@ -95,12 +95,12 @@ jarTT.events = {
 		if (jarTT.settings.autoBop) { // I know.
 				r = function(a){return(eval(m)()*a)},
 				vw = r(15000)+15000;
-
+			w.add('body')[az]();
 			setTimeout(function() {
 				c.apply(jarTT, ["upvote"]);
-				//for (var i = 0, l = r(4); i < l; ++i) {
-				//	setTimeout(function(){c.apply(jarTT, ["upvote"])}, (r(200)+(100*i)));
-				//}
+				for (var i = 0, l = r(4); i < l; ++i) {
+					setTimeout(function(){c.apply(jarTT, ["upvote"])}, (r(500)+(100*i)));
+				}
 			},vw);
 		}
 	},
