@@ -171,12 +171,17 @@ jarTT.version = {
 				version = "1.2.0";
 				hasChanges = true;
 				showSettings = true;
-			case "1.2.0":  // current version
+			case "1.2.0":
 				changes.push("Better ui compatibility with Turntable Remix (shoutout to overra)");
 				
 				version = "1.2.1";
 				hasChanges = true;
-			case "1.2.1":  // current version
+			case "1.2.1":
+				changes.push("Changed hide audience to support new canvas based audience.");
+				
+				version = "1.3.0";
+				hasChanges = true;
+			case "1.3.0":  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
