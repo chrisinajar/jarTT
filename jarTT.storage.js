@@ -34,6 +34,9 @@ jarTT.storage = {
 		if (!localStorage["jarTT_"+name])
 			return;
 		
+		if (name == "version") {
+			return localStorage["jarTT_"+name];
+		}
 		return JSON.parse(localStorage["jarTT_"+name]);
 		
 	},
