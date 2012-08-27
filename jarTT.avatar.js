@@ -21,26 +21,13 @@
 
 jarTT.avatar = {
 	hideAudience: function(toggle) {
-		jarTT.roomDiv.children().each(function(i,obj) {
-			obj = $(obj);
-			if (obj.children().length < 1)
-				return;
-			var child = $(obj.children()[0]);
-			if (toggle == (child.css('display') == 'none'))
-				return;
-			if (jarTT.identifyDiv(obj) == null)//if (obj.css('top') == '30px' || !obj.is("div") || (typeof obj.attr('class') != "undefined") || (typeof obj.attr('id') != "undefined"))
-				return;
-
-			if (child.hasClass('jarTT_talking'))
-				return;
-			
-			if (toggle)
-				child.hide();
-			else
-				child.show();
-		});
+		if (toggle)
+			$("#floor-div .stage canvas").hide();
+		else
+			$("#floor-div .stage canvas").show();
 	},
 	showUser: function(id) {
+		return;
 		if ($.inArray(id, jarTT.localContext.djIds) != -1)
 			return;
 
