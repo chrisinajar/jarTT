@@ -182,6 +182,11 @@ jarTT.version = {
 				version = "1.3.0";
 				hasChanges = true;
 			case "1.3.0":  // current version
+				changes.push("Rewrote hide audience support to use their animation system! Added support for opacity based animations, as well.");
+
+				version = "1.4.0";
+				hasChanges = true;
+			case "1.4.0":  // current version
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();

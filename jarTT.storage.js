@@ -41,7 +41,13 @@ jarTT.storage = {
 		
 	},
 	setNamedData: function(name, d) {
-		localStorage["jarTT_"+name] = JSON.stringify(d);
+		try {
+			localStorage["jarTT_"+name] = JSON.stringify(d);
+		} catch (e) {
+			//console.log(d);
+			//console.log(localStorage["jarTT_"+name]);
+			//console.log(JSON.stringify(d));
+		}
 	},
 	/*
 	getNamedData: function(name) {

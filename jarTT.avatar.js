@@ -20,43 +20,157 @@
 // avatar, anything involving fucking with the avatar images or avatar system code in TTfm.
 
 jarTT.avatar = {
+	draw: function(c, d, b) {
+		if (this.hidden) {
+			return true;
+		}
+		if (!this.imagesLoaded) {
+			return false;
+		}
+		var e = {};
+		if (this.animating && this.animation && !b) {
+			e = this.tween(d - this.startTime);
+		}
+		var k = true;
+		var q = this.data.states[this.state];
+		var l = q.length;
+		for (var j = 0; j < l; j++) {
+			var r = q[j],
+				p = r[0],
+				h = this.parts[p];
+			if (!b && (p in e) && e[p].swap) {
+				h = this.parts[e[p].swap];
+			}
+			if (!h.width || !h.height) {
+				k = false;
+				break;
+			}
+			if (this.opacity === undefined) {
+				this.opacity = 1;
+			}
+			var opacity = this.opacity;
+			var g = h.width / 2;
+			var m = h.height / 2;
+			var o = r[1];
+			var n = r[2];
+			var f = 0;
+			if (p in e) {
+				if (e[p].opacity) {
+					opacity = this.opacity = e[p].opacity;
+				}
+				o += e[p].x || 0;
+				n += e[p].y || 0;
+				f = (e[p].angle || 0) * Math.PI / 180;
+			}
+			if (b) {
+				h = this.colorizedParts[p];
+			}
+			if (h) {
+				if (f) {
+					c.save();
+					c.translate(o + g, n + m);
+					c.rotate(f);
+					c.globalAlpha = opacity;
+					c.drawImage(h, - g, - m, h.width, h.height);
+					c.restore();
+					c.globalAlpha = 1;
+				} else {
+					c.globalAlpha = opacity;
+					c.drawImage(h, o, n, h.width, h.height);
+					c.globalAlpha = opacity;
+				}
+			} else {
+				k = false;
+			}
+		}
+		return k;
+	},
 	hideAudience: function(toggle) {
-		if (toggle)
-			$("#floor-div .stage canvas").hide();
-		else
-			$("#floor-div .stage canvas").show();
+		if (!jarTT.settings.hideAudience)
+			return;
+		var dancerMap = ttObjects.manager.dancerMap;
+		for (var id in dancerMap) {
+			var tinyDancer = dancerMap[id];
+			if (!tinyDancer.jarTT) {
+				// initialize extra jarTT shit
+				jarTT.avatar.holdClosely(tinyDancer);
+			}
+			if (id.length !== 24)
+				continue;
+			if (id in ttObjects.manager.djs_uid) {
+				tinyDancer.hidden = false;
+				continue;
+			}
+
+			if (tinyDancer.hideAudience !== toggle) {
+				tinyDancer.setAnimation(toggle ? 'fadeOut' : 'fadeIn', true);
+				tinyDancer.tween(2000);
+				
+				(function(tinyDancer) {
+					setTimeout(function() {
+						tinyDancer.setAnimation(toggle ? 'fadeOut' : 'fadeIn', true);
+						tinyDancer.start();
+					}, 5000);
+					setTimeout(function() {
+						tinyDancer.opacity = toggle ? 0 : 1;
+					}, 6000);
+				})(tinyDancer);
+				tinyDancer.hideAudience = toggle;
+			}
+		}
+	},
+	holdClosely: function(tinyDancer) {
+		if (!jarTT.settings.hideAudience)
+			return;
+		tinyDancer.jarTT = true;
+
+		tinyDancer.add_source_animation(
+			"this isn't used, i don't know why the first variable is here. It's " +
+			"supposed to be the name, but then the implementation simply iterates " +
+			"over the map for the name, ever even referencing this. Not that it's " +
+			"a bad thing, I've done that before, it's just funny.", 
+
+			jarTT.avatar.extraAnimations);
+
+		tinyDancer.draw = jarTT.avatar.draw;
+		$.each(["Out", "In"], function(i, state){
+			var lstate = state.toLowerCase();
+			tinyDancer["fade"+state] = function() {
+				if (tinyDancer.fadestate == lstate)
+					return;
+				if (!tinyDancer.fadestate) {
+					tinyDancer.fadestate = true;
+					tinyDancer.setAnimation("fade"+state);
+					tinyDancer.tween(1000);
+					setTimeout(function() {
+						tinyDancer["fade"+state]();
+					}, 1000);
+					return;
+				}
+				tinyDancer.fadestate = lstate;
+				tinyDancer.setAnimation("fade"+state);
+				tinyDancer.start();
+				setTimeout(function() {
+					tinyDancer.opacity = i;
+				}, 1000);
+			};
+		});
+
+		return tinyDancer;
 	},
 	showUser: function(id) {
-		return;
-		if ($.inArray(id, jarTT.localContext.djIds) != -1)
+		if (id in ttObjects.manager.djs_uid)
 			return;
 
 		if (!jarTT.settings.hideAudience)
 			return;
 
-		jarTT.getUserInfo(id, function(user) {
-			var dj = user.getDj();
-			jarTT.log(dj);
-			if (dj == null)
-				return;
-			var obj = dj.div;
-			var child = $(obj.children()[0])
-			
-			child.stop(true);
-			child.attr('class', 'jarTT_talking');
-			child.css({opacity:1, display:'block'});
-			var tid = child.data('jarTT_speakTimer');
-			if (tid)
-				clearTimeout(tid);
-			
-			child.data('jarTT_speakTimer', setTimeout(function() {
-				child.animate({opacity: 0}, 1000, function() {
-					child.removeAttr('class');
-					child.hide();
-					child.css({opacity:1});
-				});
-			}, 10000));
-		});
+		var tinyDancer = ttObjects.manager.dancerMap[id];
+		tinyDancer.fadeIn();
+
+		setTimeout(function() {
+			tinyDancer.fadeOut();
+		}, 10000)
 	},
 	tick: function() {
 		jarTT.avatar.hideAudience(jarTT.settings.hideAudience);
@@ -108,7 +222,39 @@ jarTT.avatar = {
 	showUserEvent: function(data) {
 		jarTT.avatar.showUser(data.userid);
 	},
+	extraAnimations: {
+		fadeIn: {
+			id: "fadeIn",
+			keyframes: [{
+				"headback,headfront": {
+					opacity: 0
+				},
+				duration: 1
+			},{
+				"headback,headfront": {
+					opacity: 1
+				},
+				duration: 1000
+			}]
+		},
+		fadeOut: {
+			id: "fadeOut",
+			keyframes: [{
+				"headback,headfront": {
+					opacity: 1
+				},
+				duration: 1
+			},{
+				"headback,headfront": {
+					opacity: 0
+				},
+				duration: 1000
+			}]
+		}
+	},
 	load: function() {
+
+
 			jarTT.events.registerEvent("jarTT_loaded", jarTT.avatar.initCache);
 			jarTT.events.registerEvent("jarTT_unloaded", jarTT.avatar.unload);
 			jarTT.events.registerEvent("jarTT_tick", jarTT.avatar.tick);
