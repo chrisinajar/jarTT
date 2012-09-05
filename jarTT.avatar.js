@@ -283,7 +283,8 @@ jarTT.avatar = {
 				if (msg.msg.api == "getUserCache") {
 					hivemind.send(msg.from, {
 						api: 'userCache',
-						cache: jarTT.userCache
+						cache: jarTT.userCache,
+						time: (new Date()).getTime()
 					});
 					return;
 				}
@@ -294,15 +295,22 @@ jarTT.avatar = {
 				if (wantsCache && msg.msg.api == "userCache") {
 					//wantsCache = false;
 					var cache = msg.msg.cache;
+					var scew = (msg.msg.time || (new Date()).getTime()) - (new Date()).getTime();
+
+					var fixTimes = function(user, timeIndex) {
+						if (typeof jarTT.userCache[user][timeIndex] !== 'number')
+							jarTT.userCache[user][timeIndex] = (new Date(jarTT.userCache[user][timeIndex])).getTime();
+						jarTT.userCache[user][timeIndex] -= scew;
+						jarTT.userCache[user][timeIndex] = new Date(jarTT.userCache[user][timeIndex]);
+					};
 					for (var user in cache) {
 						jarTT.log('Loading cache for user: ' + user);
 						jarTT.userCache[user] = msg.msg.cache[user];
-						if (typeof jarTT.userCache[user].createdTime === 'string')
-							jarTT.userCache[user].createdTime = new Date(jarTT.userCache[user].createdTime);
-						if (typeof jarTT.userCache[user].lastMessage === 'string')
-							jarTT.userCache[user].lastMessage = new Date(jarTT.userCache[user].lastMessage);
-						if (typeof jarTT.userCache[user].lastUpdate === 'string')
-							jarTT.userCache[user].lastUpdate = new Date(jarTT.userCache[user].lastUpdate);
+						
+						fixTimes(user, "createdTime");
+						fixTimes(user, "lastMessage");
+						fixTimes(user, "lastUpdate");
+
 						jarTT.fixCachePrototype(user);
 					}
 					return;

@@ -181,12 +181,17 @@ jarTT.version = {
 				
 				version = "1.3.0";
 				hasChanges = true;
-			case "1.3.0":  // current version
+			case "1.3.0":
 				changes.push("Rewrote hide audience support to use their animation system! Added support for opacity based animations, as well.");
 
 				version = "1.4.0";
 				hasChanges = true;
-			case "1.4.0":  // current version
+			case "1.4.0":
+				changes.push("Changed hivemind logic to take into account clock scew. Should fix insane values.");
+
+				version = "1.4.1";
+				hasChanges = true;
+			case "1.4.1":
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
