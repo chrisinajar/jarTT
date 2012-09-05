@@ -192,6 +192,11 @@ jarTT.version = {
 				version = "1.4.1";
 				hasChanges = true;
 			case "1.4.1":
+				changes.push("Fixed bug with version numbers super expanding and crashing the console.");
+
+				version = "1.4.2";
+				hasChanges = true;
+			case "1.4.2":
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();

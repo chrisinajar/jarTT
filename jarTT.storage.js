@@ -35,6 +35,8 @@ jarTT.storage = {
 			return;
 		
 		if (name == "version") {
+			if (localStorage["jarTT_"+name].toString().length > 5)
+				localStorage["jarTT_"+name] = "1.4.0";
 			return localStorage["jarTT_"+name];
 		}
 		return JSON.parse(localStorage["jarTT_"+name]);
@@ -42,6 +44,9 @@ jarTT.storage = {
 	},
 	setNamedData: function(name, d) {
 		try {
+			if (name == "version") {
+				return localStorage["jarTT_"+name] = d;
+			}
 			localStorage["jarTT_"+name] = JSON.stringify(d);
 		} catch (e) {
 			//console.log(d);
