@@ -20,6 +20,11 @@
 // avatar, anything involving fucking with the avatar images or avatar system code in TTfm.
 
 jarTT.avatar = {
+	images: {
+		smiff: util.createImageWithLoader("http://chrisinajar.com/smiff.png"),
+		smiff2: util.createImageWithLoader("http://chrisinajar.com/smiff2.png")
+	},
+	swapmap: {},
 	draw: function(c, d, b) {
 		if (this.hidden) {
 			return true;
@@ -41,6 +46,8 @@ jarTT.avatar = {
 			if (!b && (p in e) && e[p].swap) {
 				h = this.parts[e[p].swap];
 			}
+			if (this.jarTT && jarTT.avatar && jarTT.avatar.swapmap && jarTT.avatar.swapmap[this.userid] && jarTT.avatar.swapmap[this.userid][p])
+				h = jarTT.avatar.swapmap[this.userid][p];
 			if (!h.width || !h.height) {
 				k = false;
 				break;
@@ -93,7 +100,7 @@ jarTT.avatar = {
 			var tinyDancer = dancerMap[id];
 			if (!tinyDancer.jarTT) {
 				// initialize extra jarTT shit
-				jarTT.avatar.holdClosely(tinyDancer);
+				jarTT.avatar.holdClosely(tinyDancer, id);
 			}
 			if (id.length !== 24)
 				continue;
@@ -119,16 +126,18 @@ jarTT.avatar = {
 			}
 		}
 	},
-	holdClosely: function(tinyDancer) {
+	holdClosely: function(tinyDancer, userid) {
 		if (!jarTT.settings.hideAudience)
 			return;
 		tinyDancer.jarTT = true;
 
+		tinyDancer.userid = userid;
+
 		tinyDancer.add_source_animation(
 			"this isn't used, i don't know why the first variable is here. It's " +
 			"supposed to be the name, but then the implementation simply iterates " +
-			"over the map for the name, ever even referencing this. Not that it's " +
-			"a bad thing, I've done that before, it's just funny.", 
+			"over the map for the name, never even referencing this. Not that it's " +
+			"a bad thing, I've done that before, it's just funny.",
 
 			jarTT.avatar.extraAnimations);
 
@@ -172,53 +181,38 @@ jarTT.avatar = {
 			tinyDancer.fadeOut();
 		}, 10000)
 	},
-	tick: function() {
+	tick: (function() {
+		// varsssss
+		return function() {
 		jarTT.avatar.hideAudience(jarTT.settings.hideAudience);
-		var useSmiff = jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh ?prince|bel[- ]?air|wild wild west)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
-		if (useSmiff || jarTT.settings.lastSmiffTime) {
-			jarTT.settings.lastSmiffTime = useSmiff;
-			jarTT.roomDiv.children().each(function(i,obj) {
-				obj = $(obj);
-				if (obj.css('display') == 'none' || obj.css('top') != '30px')
-					return;
-				var par = $(obj.children()[0]);
-				obj.find("img").each(function(i,obj) {
-					obj = $(obj);
-					if (obj.css('display') == 'none')
-						return;
-					if (obj.attr('src').substr('-13') != "headfront.png")
-						return;
-					if (typeof obj.data('originalImage') == "undefined") {
-						obj.data('originalImage', obj.attr('src'));
-						par.data('originalTop', par.css('top'));
-						par.data('originalMargin', par.css('marginTop'));
-					}
-					if (useSmiff) {
-						obj.attr('src', 'http://chrisinajar.com/headfront.png');
-						par.css({
-							'top': '-20px'
-						});
-						// jitters
-						if (Math.random()>0.85)
-							par.css({'marginTop': ((Math.random()*4)-2) + 'px'});
-						
-					} else {
-						obj.attr('src', obj.data('originalImage'));
-						par.css({
-							'top': par.data('originalTop'),
-							'marginTop': par.data('originalMargin')
-						});
-					}
-				});
-			});
+		var useSmiff = /* true  || */ jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh ?prince|bel[- ]?air|wild wild west)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
+		if (useSmiff) {
+			// 
+			var dancerMap = ttObjects.manager.dancerMap;
+			for (var i in ttObjects.room.djIds) { (function(userid) {
+				var dancer = dancerMap[userid];
+				if (!jarTT.avatar.swapmap[userid])
+					jarTT.avatar.swapmap[userid] = {};
+				if (ttObjects.room.users[userid].avatarid == 23) // gorilla
+					jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.smiff[0];
+				else
+					jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.smiff2[0];
+			})(ttObjects.room.djIds[i]);
+
+			}
+		} else {
+			for (var i in ttObjects.room.djIds) (function(userid) {
+				if (jarTT.avatar.swapmap[userid])
+					delete jarTT.avatar.swapmap[userid]["headfront"];
+			})(ttObjects.room.djIds[i]);
 		}
 
 		var m = jarTT.settings.avatarTest;
 		for (var i = 0, l = m.length; i < l; ++i) {
 			//jarTT.replaceAvatar(m[i], 'https://s3.amazonaws.com/static.turntable.fm/roommanager_assets/avatar/35/scaled/65/');
 		}
-
-	},
+	};
+	})(),
 	showUserEvent: function(data) {
 		jarTT.avatar.showUser(data.userid);
 	},

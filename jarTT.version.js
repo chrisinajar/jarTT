@@ -197,6 +197,12 @@ jarTT.version = {
 				version = "1.4.2";
 				hasChanges = true;
 			case "1.4.2":
+				changes.push("Fixed smiff mode. Heck yeah!");
+
+				version = "1.5.0";
+				hasChanges = true;
+				showSettings = true;
+			case "1.5.0":
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
