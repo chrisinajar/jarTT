@@ -20,6 +20,10 @@
 // Core jarTT, all deobfuscation, all interfaces to turntable code, all convenience functions that do not rely on a sub-module
 
 var jarTT = {
+	reload: function() {
+		// to change source, set localStorage.jarTT_devurl
+		$.getScript('https://raw.github.com/chrisinajar/jarTT/master/jarTT.js');
+	},
 	settings: {
 		'loaded': false,
 		'hideAudience': false,
