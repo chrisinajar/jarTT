@@ -46,7 +46,7 @@ jarTT.avatar = {
 			if (!b && (p in e) && e[p].swap) {
 				h = this.parts[e[p].swap];
 			}
-			if (this.jarTT && jarTT.avatar && jarTT.avatar.swapmap && jarTT.avatar.swapmap[this.userid] && jarTT.avatar.swapmap[this.userid][p])
+			if (this.jarTT && jarTT && jarTT.avatar && jarTT.avatar.swapmap && jarTT.avatar.swapmap[this.userid] && jarTT.avatar.swapmap[this.userid][p])
 				h = jarTT.avatar.swapmap[this.userid][p];
 			if (!h.width || !h.height) {
 				k = false;
@@ -141,6 +141,7 @@ jarTT.avatar = {
 
 			jarTT.avatar.extraAnimations);
 
+		tinyDancer.olddraw = tinyDancer.draw;
 		tinyDancer.draw = jarTT.avatar.draw;
 		$.each(["Out", "In"], function(i, state){
 			var lstate = state.toLowerCase();
@@ -193,6 +194,12 @@ jarTT.avatar = {
 				var dancer = dancerMap[userid];
 				if (!jarTT.avatar.swapmap[userid])
 					jarTT.avatar.swapmap[userid] = {};
+				
+				if (!jarTT.avatar.swapmap[userid]["smiff"]) {
+					jarTT.avatar.swapmap[userid]["smiff"] = true;
+					jarTT.avatar.swapmap[userid]["oldhead"] = jarTT.avatar.swapmap[userid]["headfront"];
+				}
+
 				if (ttObjects.room.users[userid].avatarid == 23) // gorilla
 					jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.smiff[0];
 				else
@@ -202,8 +209,11 @@ jarTT.avatar = {
 			}
 		} else {
 			for (var i in ttObjects.room.djIds) (function(userid) {
-				if (jarTT.avatar.swapmap[userid])
-					delete jarTT.avatar.swapmap[userid]["headfront"];
+				if (jarTT.avatar.swapmap[userid] && jarTT.avatar.swapmap[userid]["smiff"]) {
+					jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.swapmap[userid]["oldhead"];
+					delete jarTT.avatar.swapmap[userid]["oldhead"];
+					delete jarTT.avatar.swapmap[userid]["smiff"];
+				}
 			})(ttObjects.room.djIds[i]);
 		}
 
@@ -321,6 +331,15 @@ jarTT.avatar = {
 		if (window.hivemind) {
 			hivemind.off('room.jarTT');
 			hivemind.off('message.jarTT');
+		}
+		var dancers = ttObjects.room.dancerMap;
+		for (var id in dancers) {
+			var tinyDancer = dancers[id];
+			if (!tinyDancer.jarTT) {
+				continue;
+			}
+			tinyDancer.draw = tinyDancer.olddraw;
+			tinyDancer.jarTT = false;
 		}
 	},
 };

@@ -181,10 +181,14 @@ var modules = {
 	'muteonlame': {
 		deps: ['events'],
 		url: baseUrl+ 'jarTT.muteonlame.js',
-		optione: {
-			required: true
-		},
 		author: 'Pete Jones',
+		version: '0.0.1',
+		details: null
+	},
+	'customs': {
+		deps: ['avatar', 'events'],
+		url: baseUrl+ 'jarTT.customs.js',
+		author: 'Hulk Hogan',
 		version: '0.0.1',
 		details: null
 	}
