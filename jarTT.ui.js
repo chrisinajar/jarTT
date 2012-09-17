@@ -182,21 +182,6 @@ jarTT.ui = {
 	showSettings: function() {
 		var box = jarTT.ui.createBox();
 		box.append("<h1>jarTT Settings</h1>");
-		box.append("<br />Speed up Animations: ");
-		box.append($("<input />", {
-				'type': 'checkbox',
-				'checked': jarTT.settings.fixAnimations
-			}).click(function() {
-				jarTT.settings.fixAnimations = this.checked;
-				jarTT.ui.saveSettings();
-				if (this.checked) {
-					CSS3Helpers.findProperty = jarTT.findProp.optimized;
-				} else {
-					CSS3Helpers.findProperty = jarTT.findProp.original;
-				}
-			})
-		);
-
 		box.append("<br />Hide Audience: ");
 		box.append($("<input />", {
 				'type': 'checkbox',
@@ -207,25 +192,22 @@ jarTT.ui = {
 			})
 		);
 		
-		box.append("<br />Kill Bubbles: ");
-		box.append($("<input />", {
-				'type': 'checkbox',
-				'checked': jarTT.settings.killbubbles
-			}).click(function() {
-				jarTT.settings.killbubbles = this.checked;
-				jarTT.ui.saveSettings();
-				
-				if (!jarTT.settings.killbubbles)
-					$(".laptopCanvas").show();
-			})
-		);
-		
 		box.append("<br />Mute on double lame: ");
 		box.append($("<input />", {
 				'type': 'checkbox',
 				'checked': jarTT.settings.muteonlame
 			}).click(function() {
 				jarTT.settings.muteonlame = this.checked;
+				jarTT.ui.saveSettings();
+			})
+		);
+		
+		box.append('<br />Show <a href="http://TurntableCustoms.com/" target="_blank">TurntableCustoms</a> Avatars ');
+		box.append($("<input />", {
+				'type': 'checkbox',
+				'checked': jarTT.settings.customs
+			}).click(function() {
+				jarTT.settings.customs = this.checked;
 				jarTT.ui.saveSettings();
 			})
 		);
