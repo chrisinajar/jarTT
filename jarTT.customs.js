@@ -63,6 +63,7 @@ jarTT.customs = {
 		})(userid, data[userid]);
 	},
 	load: function() {
+		return;
 		$.ajax({
 			dataType: 'json', 
 			url: 'http://turntablecustoms.com/mods/customavatardatabasenew.php',
