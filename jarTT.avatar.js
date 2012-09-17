@@ -39,6 +39,47 @@ jarTT.avatar = {
 		var k = true;
 		var q = this.data.states[this.state];
 		var l = q.length;
+
+		var avatar = null;
+		if (this.jarTT && jarTT && jarTT.avatar && jarTT.avatar.swapmap && jarTT.avatar.swapmap[this.userid])
+			avatar = jarTT.avatar.swapmap[this.userid];
+
+		var user = ttObjects.getRoom().users[this.userid];
+		if (user) {
+			if (avatar && jarTT.settings.customs && avatar.assets == 0 && avatar.avatarid) {
+				if (user.avatarid != avatar.avatarid) {
+					q = avatars[avatar.avatarid].states[this.state];
+					l = q.length;
+
+					var doIt = true;
+
+					for (var j = 0; j < l; j++) {
+						var r = q[j],
+							p = r[0];
+						if (typeof avatar[p] == "function") {
+							avatar[p]();
+							doIt = false;
+						}
+					}
+
+					if (doIt) {
+						user.oldavatarid = user.avatarid;
+						user.avatarid = avatar.avatarid;
+
+						ttObjects.room.refreshRoomUser(user);
+					} else {
+						q = this.data.states[this.state];
+						l = q.length;
+					}
+				}
+			} else if (user.oldavatarid) {
+				user.avatarid = user.oldavatarid;
+				delete user.oldavatarid;
+				ttObjects.room.refreshRoomUser(user);
+			}
+		}
+
+
 		for (var j = 0; j < l; j++) {
 			var r = q[j],
 				p = r[0],
@@ -46,8 +87,13 @@ jarTT.avatar = {
 			if (!b && (p in e) && e[p].swap) {
 				h = this.parts[e[p].swap];
 			}
-			if (this.jarTT && jarTT && jarTT.avatar && jarTT.avatar.swapmap && jarTT.avatar.swapmap[this.userid] && jarTT.avatar.swapmap[this.userid][p])
-				h = jarTT.avatar.swapmap[this.userid][p];
+			if (avatar && avatar[p]) {
+				if (typeof avatar[p] == "function") {
+					avatar[p]();
+				} else if (jarTT.settings.customs && avatar.assets == 0) {
+					h = avatar[p];
+				}
+			}
 			if (!h.width || !h.height) {
 				k = false;
 				break;

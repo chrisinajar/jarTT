@@ -20,45 +20,46 @@
 // show ttcustoms avatars. heck yeah!
 
 jarTT.customs = {
+	avatarList: {},
 	loadAvatars: function(data) {
+		//console.log('loadAvatars is running ', data);
 		for (var userid in data) (function(userid, avatar) {
 			userid = avatar.userid;
-			//if (userid == "4e26e4214fe7d05f3a07a176")
-				//userid = '4f9ab294eb35c15fda0002b6';
-
-			var user = ttObjects.room.users[userid];
-			if (!user)
-				return;
-
-			if (avatar.baseid)
-				user.avatarid = avatar.baseid;
-
-			console.log("Avatar ", avatar);
 
 			if (avatar.processing) {
 				for (var i in avatar.processing) (function(i, swap) {
-					console.log('heres a swap ', swap);
+					//console.log('heres a swap ', swap);
 
 					if (!jarTT.avatar.swapmap[userid])
-						jarTT.avatar.swapmap[userid] = {};
-					var img = util.createImageWithLoader(swap[1]);
-					var deff = img[1];
-					img = img[0];
+						jarTT.avatar.swapmap[userid] = {
+							assets: 0
+						};
 
-					deff.done(function() {
-						var scaleFactor = 2;//1+(avatar.scale/100);
-						img.width *= scaleFactor;
-						img.height *= scaleFactor;
-						img.x *= scaleFactor;
-						img.y *= scaleFactor;
-						jarTT.avatar.swapmap[userid][swap[0]] = img;
-					}).fail(function() {
+					jarTT.avatar.swapmap[userid][swap[0]] = (function() {
+						jarTT.avatar.swapmap[userid].assets++;
+						delete jarTT.avatar.swapmap[userid][swap[0]];
+						var img = util.createImageWithLoader(swap[1]);
+						var deff = img[1];
+						img = img[0];
+
+						if (avatar.baseid)
+							jarTT.avatar.swapmap[userid].avatarid = avatar.baseid;
+
+						deff.done(function() {
+							var scaleFactor = 2;//100/avatar.scale;
+							img.width *= scaleFactor;
+							img.height *= scaleFactor;
+							img.x *= scaleFactor;
+							img.y *= scaleFactor;
+							jarTT.avatar.swapmap[userid][swap[0]] = img;
+							jarTT.avatar.swapmap[userid].assets--;
+						}).fail(function() {
+
+						});
 
 					});
 				})(i, avatar.processing[i]);
 			}
-
-			ttObjects.room.refreshRoomUser(user);
 		})(userid, data[userid]);
 	},
 	load: function() {
@@ -66,6 +67,7 @@ jarTT.customs = {
 			dataType: 'json', 
 			url: 'http://turntablecustoms.com/mods/customavatardatabasenew.php',
 			success: function(data) {
+				jarTT.customs.avatarList = data;
 				jarTT.customs.loadAvatars(data);
 			}
 		});
