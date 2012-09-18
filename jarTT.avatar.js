@@ -21,6 +21,16 @@
 
 jarTT.avatar = {
 	images: {
+		psy: (function() {
+			var img = util.createImageWithLoader("http://chrisinajar.com/psy.png");
+			var scaleFactor = 55/100;
+			img[1].done(function() {
+				img[0].height *= scaleFactor;
+				img[0].width *= scaleFactor;
+			});
+
+			return img;
+		})(),
 		smiff: util.createImageWithLoader("http://chrisinajar.com/smiff.png"),
 		smiff2: util.createImageWithLoader("http://chrisinajar.com/smiff2.png")
 	},
@@ -232,24 +242,33 @@ jarTT.avatar = {
 		// varsssss
 		return function() {
 		jarTT.avatar.hideAudience(jarTT.settings.hideAudience);
-		var useSmiff = /* true  || */ jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh ?prince|bel[- ]?air|wild wild west)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
-		if (useSmiff) {
-			// 
+
+		var useSmiff =  jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh ?prince|bel[- ]?air|wild wild west)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
+		var usePsy = !useSmiff && ((jarTT.localContext.currentSong != null && ((/gang[nm]a[nm] .*style/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song))));
+
+		if (useSmiff || usePsy) {
 			var dancerMap = ttObjects.manager.dancerMap;
 			for (var i in ttObjects.room.djIds) { (function(userid) {
 				var dancer = dancerMap[userid];
 				if (!jarTT.avatar.swapmap[userid])
-					jarTT.avatar.swapmap[userid] = {};
+					jarTT.avatar.swapmap[userid] = {assets: 0};
 				
 				if (!jarTT.avatar.swapmap[userid]["smiff"]) {
 					jarTT.avatar.swapmap[userid]["smiff"] = true;
 					jarTT.avatar.swapmap[userid]["oldhead"] = jarTT.avatar.swapmap[userid]["headfront"];
 				}
 
-				if (ttObjects.room.users[userid].avatarid == 23) // gorilla
-					jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.smiff[0];
-				else
-					jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.smiff2[0];
+				if (useSmiff) {
+					if (ttObjects.room.users[userid].avatarid == 23) // gorilla
+						jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.smiff[0];
+					else
+						jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.smiff2[0];
+				} else if (usePsy) {
+					if (ttObjects.room.users[userid].avatarid == 23) // gorilla
+						jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.psy[0];
+					else
+						jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.psy[0];
+				}
 			})(ttObjects.room.djIds[i]);
 
 			}
