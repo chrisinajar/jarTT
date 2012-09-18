@@ -46,7 +46,7 @@ jarTT.customs = {
 							jarTT.avatar.swapmap[userid].avatarid = avatar.baseid;
 
 						deff.done(function() {
-							var scaleFactor = 2;//100/avatar.scale;
+							var scaleFactor = 0.8 + avatar.scale/55;
 							img.width *= scaleFactor;
 							img.height *= scaleFactor;
 							img.x *= scaleFactor;
@@ -63,7 +63,6 @@ jarTT.customs = {
 		})(userid, data[userid]);
 	},
 	load: function() {
-		return;
 		$.ajax({
 			dataType: 'json', 
 			url: 'http://turntablecustoms.com/mods/customavatardatabasenew.php',

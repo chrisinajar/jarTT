@@ -203,6 +203,13 @@ jarTT.version = {
 				hasChanges = true;
 				showSettings = true;
 			case "1.5.0":
+				changes.push("Turntable Customs support (kind of)!");
+				changes.push("Gangnam Style. That is all.");
+
+				version = "1.6.0";
+				hasChanges = true;
+				showSettings = true;
+			case "1.6.0":
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
