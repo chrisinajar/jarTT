@@ -220,7 +220,8 @@ var autoLoad = [
 	'hivemind',
 	'muteonlame',
 	'modulebrowser',
-	'customs'
+	'customs',
+	'songshare'
 ];
 
 if (localStorage.jarTT_modules) {
