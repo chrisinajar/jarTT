@@ -197,7 +197,10 @@ var modules = {
 		url: 'https://raw.github.com/gist/75297cc418375d79b5ec/gistfile1.js',
 		author: 'Overra',
 		version: '1.0',
-		details: null
+		details: null,
+		options: {
+			noload: true
+		}
 	}
 	/*
 	myplugin: {
