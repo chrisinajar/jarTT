@@ -32,7 +32,8 @@ jarTT.avatar = {
 			return img;
 		})(),
 		smiff: util.createImageWithLoader("http://chrisinajar.com/smiff.png"),
-		smiff2: util.createImageWithLoader("http://chrisinajar.com/smiff2.png")
+		smiff2: util.createImageWithLoader("http://chrisinajar.com/smiff2.png"),
+		shatner: util.createImageWithLoader("http://i.imgur.com/715MU.png")
 	},
 	swapmap: {},
 	draw: function(c, d, b) {
@@ -245,8 +246,9 @@ jarTT.avatar = {
 
 		var useSmiff =  jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh ?prince|bel[- ]?air|wild wild west)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
 		var usePsy = !useSmiff && ((jarTT.localContext.currentSong != null && ((/gang[nm]a[nm] .*style/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song))));
+		var useShatner = !useSmiff && ((jarTT.localContext.currentSong != null && ((/(priceline|shatner|back to the ship|capt(ain)? kirk)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song))));
 
-		if (useSmiff || usePsy) {
+		if (useSmiff || usePsy || useShatner) {
 			var dancerMap = ttObjects.manager.dancerMap;
 			for (var i in ttObjects.room.djIds) { (function(userid) {
 				var dancer = dancerMap[userid];
@@ -268,6 +270,11 @@ jarTT.avatar = {
 						jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.psy[0];
 					else
 						jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.psy[0];
+				} else if (useShatner) {
+					if (ttObjects.room.users[userid].avatarid == 23) // gorilla
+						jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.shatner[0];
+					else
+						jarTT.avatar.swapmap[userid]["headfront"] = jarTT.avatar.images.shatner[0];
 				}
 			})(ttObjects.room.djIds[i]);
 

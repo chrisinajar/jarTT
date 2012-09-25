@@ -113,6 +113,11 @@ jarTT.version = {
 				hasChanges = true;
 				showSettings = true;
 			case "1.6.0":
+				changes.push("\"I need to get back to the ship, I can't breath.\"");
+
+				version = "1.6.1";
+				hasChanges = true;
+			case "1.6.1":
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();
