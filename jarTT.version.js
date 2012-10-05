@@ -118,6 +118,11 @@ jarTT.version = {
 				version = "1.6.1";
 				hasChanges = true;
 			case "1.6.1":
+				changes.push("Better compatibility with Turntable Remix");
+
+				version = "1.6.2";
+				hasChanges = true;
+			case "1.6.2":
 		};
 		if (hasChanges) {
 			// jarTT.ui.showSettings();

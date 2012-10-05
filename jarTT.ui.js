@@ -38,6 +38,11 @@ jarTT.ui = {
 		})
 		.click(jarTT.ui.showSettings)
 		.insertBefore($("#menuh > div:last"));
+
+		if (remix) {
+			$('#settingsPanel').remove();
+			$('#right-panel').append(util.buildTree(remix.room.layouts.settingsPanel(true)));
+		}
 	},
 	unload: function() {
 		// remove event listeners
@@ -46,6 +51,11 @@ jarTT.ui = {
 		// clean up our ui shit
 		$(".jarTT").remove();
 		$("#overlay").hide();
+
+		if (remix) {
+			$('#settingsPanel').remove();
+			$('#right-panel').append(util.buildTree(remix.room.layouts.settingsPanel(true)));
+		}
 	},
 	killBubbles: function() {
 		if (!jarTT.settings.killbubbles)
@@ -286,6 +296,6 @@ jarTT.ui = {
 		box.append("<br /><br /><br /><p>This mod is optimized and based entirely on the suggestions of the <a href=\"http://codingsoundtrack.com\" target=\"_blank\">Coding Soundtrack</a> family.</p>");
 		box.append("<p><span style=\"font-size: 8px;\"><i>(who are a bunch of creepy gingers and should not be trusted).<i></span></p>");
 		box.append("<p><span style=\"font-size: 8px;\"><i>(Thanks to @cannjeff for the heroics and <a href=\"http://tinyurl.com/6q8ed8v\" target=\"_blank\">GM script</a>).<i></span></p>");
-		box.append("<p><span style=\"font-size: 8px;\"><i>(ULTRA Thanks to Phlare for being the first person to ever donate to jarTT!!!<i></span></p>");
+		box.append("<p><span style=\"font-size: 8px;\"><i>(ULTRA Thanks to Phlare for being the first person to ever donate to jarTT!!!)<i></span></p>");
 	}
 };
