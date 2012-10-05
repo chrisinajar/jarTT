@@ -39,7 +39,7 @@ jarTT.ui = {
 		.click(jarTT.ui.showSettings)
 		.insertBefore($("#menuh > div:last"));
 
-		if (remix) {
+		if (window.remix) {
 			$('#settingsPanel').remove();
 			$('#right-panel').append(util.buildTree(remix.room.layouts.settingsPanel(true)));
 		}
@@ -52,7 +52,7 @@ jarTT.ui = {
 		$(".jarTT").remove();
 		$("#overlay").hide();
 
-		if (remix) {
+		if (window.remix) {
 			$('#settingsPanel').remove();
 			$('#right-panel').append(util.buildTree(remix.room.layouts.settingsPanel(true)));
 		}
