@@ -244,7 +244,7 @@ jarTT.avatar = {
 		return function() {
 		jarTT.avatar.hideAudience(jarTT.settings.hideAudience);
 
-		var useSmiff =  jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh ?prince|bel[- ]?air|wild wild west)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
+		var useSmiff =  jarTT.settings.smiffTime || (jarTT.localContext.currentSong != null && (/((skr|w)ill ?smi(th|ff)|fresh(est)? ?prince|bel[- ]?air|wild wild west)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song));
 		var usePsy = !useSmiff && ((jarTT.localContext.currentSong != null && ((/gang[nm]a[nm] .*style/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song))));
 		var useShatner = !useSmiff && ((jarTT.localContext.currentSong != null && ((/(priceline|shatner|back to the ship|capt(ain)? kirk)/i).test(jarTT.localContext.currentSong.metadata.artist + jarTT.localContext.currentSong.metadata.song))));
 
