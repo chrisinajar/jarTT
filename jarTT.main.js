@@ -40,14 +40,6 @@ var jarTT = {
 	log: function(){
 		
 	},
-	findProp: {
-		original: CSS3Helpers.findProperty,
-		optimized: function(a,b){
-			if(b=="transform" && (typeof $(a).attr('id') == "undefined"))
-				return;
-			return jarTT.findProp.original(a,b);
-		}
-	},
 	roomDiv: {},
 	timerId: {},
 	idleSigns: [null,null,null,null,null],
