@@ -191,7 +191,8 @@ var modules = {
 		author: 'Hulk Hogan',
 		version: '0.0.1',
 		details: null
-	},
+	}
+	/*
 	'songshare': {
 		deps: [],
 		url: 'https://raw.github.com/gist/75297cc418375d79b5ec/gistfile1.js',
@@ -202,7 +203,6 @@ var modules = {
 			noload: true
 		}
 	}
-	/*
 	myplugin: {
 		deps: ['events', 'storage'],
 		url: https://github.com/chrisinajar/myplugin.js
