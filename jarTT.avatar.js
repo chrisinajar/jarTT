@@ -228,7 +228,7 @@ jarTT.avatar = {
 		return tinyDancer;
 	},
 	showUser: function(id) {
-		returnl
+		return;
 		if (id in ttObjects.manager.djs_uid)
 			return;
 
