@@ -45,6 +45,7 @@ var jarTT = {
 	idleSigns: [null,null,null,null,null],
 	ticking: false,
 	tickFunction: function(jarTT) {
+		return;
 		if (jarTT.ticking || !jarTT.settings.loaded)
 			return;
 		jarTT.ticking = true;
