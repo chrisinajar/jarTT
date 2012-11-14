@@ -167,7 +167,7 @@ var jarTT = {
 		jarTT.settings.loaded = false;
 		
 		// reenable the normal turntabl CSS3Helpers thing
-		CSS3Helpers.findProperty = jarTT.findProp.original;
+		// CSS3Helpers.findProperty = jarTT.findProp.original;
 		
 		jarTT.events.dispatchEvent("jarTT_unloaded");
 		
