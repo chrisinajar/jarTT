@@ -32,12 +32,12 @@ jarTT.ui = {
 		// jarTT.events.registerEvent("update_votes", jarTT.ui.redrawUpDown);
 		// jarTT.events.registerEvent("newsong", jarTT.ui.redrawUpDown);
 		
-		$("<div />", {
-			'class': "jarTT menuItem",
+		$("<li />", {
+			'class': "jarTT option",
 			'text': "jarTT Settings"
 		})
 		.click(jarTT.ui.showSettings)
-		.insertBefore($("#menuh > div:last"));
+		.insertBefore($("#settings-dropdown > li:last"));
 
 		if (window.remix) {
 			$('#settingsPanel').remove();
