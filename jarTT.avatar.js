@@ -149,7 +149,8 @@ jarTT.avatar = {
 		}
 		return k;
 	},
-	hideAudience: function(toggle) {
+	hideAudience: function(toggle) {},
+/*
 		if (!jarTT.settings.hideAudience)
 			return;
 		var dancerMap = ttObjects.manager.dancerMap;
@@ -183,6 +184,7 @@ jarTT.avatar = {
 			}
 		}
 	},
+*/
 	holdClosely: function(tinyDancer, userid) {
 		if (!jarTT.settings.hideAudience)
 			return;
